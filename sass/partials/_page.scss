@@ -1,0 +1,117 @@
+
+/*
+ * General styles
+ */
+body {
+  background: darken( $bg-color, 5% );
+  color: $text-color;
+  font: #{$base-font-size}/#{$base-line-height} $base-font-family;
+}
+
+
+/*
+ * Main layout
+ */
+#header,
+#footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  .nav {
+    margin-left: auto;
+    margin-right: auto;
+    width: $base-page-width;
+    .nav-items {
+      @include nav-list;
+    }
+  }
+}
+#header {
+  top: 0;
+  z-index: 30;
+}
+#footer {
+  bottom: 0;
+  z-index: 20;
+}
+#main {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  .content {
+    border: 1px solid yellow;
+    margin: 4 * $base-vmargin auto;
+    width: $base-page-width;
+  }
+}
+
+
+/*
+ * Header section
+ */
+#header {
+  border-top: .5 * $base-vmargin solid $bg-color;
+  a {
+    @include unstyled-link;
+  }
+  .nav {
+    .nav-items {
+      .nav-item {
+        a {
+          @include transition;
+          background: $text-color;
+          color: $bg-color;
+          margin-right: .5 * $base-hmargin;
+        }
+        &.nav-item-home {
+          a {
+            font-size: $large-font-size;
+          }
+        }
+        &.nav-item-planner,
+        &.nav-item-contact {
+          a {
+            padding-top: 16px;
+            margin-top: -3px;
+            text-transform: uppercase;
+          }
+        }
+        &.nav-item-selected {
+          a {
+            background: $bg-color;
+            color: $text-color;
+          }
+        }
+        &:focus,
+        &:hover {
+          a {
+            background: $bg-color;
+            color: $text-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+/*
+ * Main section
+ */
+#main {
+  @include background-size( cover );
+  background: image-url('photos/l/jerker_mg_4065.jpg') center;
+}
+
+/*
+ * Footer section
+ */
+#footer {
+  background: $text-color;
+  color: $bg-color;
+  a {
+    @include unstyled-link;
+  }
+}

@@ -1,0 +1,45 @@
+
+/*
+ * Typography
+ * Roughly a 3:5 Fibonacci scale: 12, 14, 22, 36 (see http://lamb.cc/typograph/)
+ */
+$base-font-family:        unquote('PT Sans, sans-serif');
+$base-font-size:          14px;
+$base-line-height:        1.2857;   // ~18px
+
+$small-font-size:         0.8571em; // ~12px
+$large-font-size:         1.5714em; // ~22px
+$xlarge-font-size:        2.5714em; // ~36px
+
+
+/*
+ * Colors
+ */
+$bg-color:                white;
+$text-color:              #514b46;  // Dark tan
+
+$decor-bg-color:          #aacc87;  // Light green
+$decor-text-color:        #364328;  // Dark green
+
+$link-color:              #708955;  // Green
+$link-hover-color:        lighten( $link-color, 20% );
+$link-active-color:       darken( $link-color, 20% );
+$link-visited-color:      $link-color;
+$link-focus-color:        $link-active-color;
+
+
+/*
+ * Measurements
+ */
+$base-page-width:         978px;
+
+$base-hmargin:            $base-font-size * $base-line-height; // ~18px
+$base-vmargin:            $base-hmargin;
+
+
+/*
+ * Compass defaults
+ */
+$default-transition-duration:     .4s;
+$default-border-radius:           1px;
+
