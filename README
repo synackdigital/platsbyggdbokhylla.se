@@ -1,0 +1,5 @@
+# Platsbyggd Bokhylla
+
+This project uses Sass and Compass. Compile CSS from the root directory with the following command:
+
+    compass compile -c config/compass.rb
