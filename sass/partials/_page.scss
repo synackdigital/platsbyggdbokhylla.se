@@ -76,9 +76,7 @@ body {
     .nav-items {
       .nav-item {
         a {
-          @include transition;
-          background: $text-color;
-          color: $bg-color;
+          @include button( inverted );
           margin-right: .5 * $base-hmargin;
         }
         &.nav-item-home {
@@ -95,13 +93,6 @@ body {
           }
         }
         &.nav-item-selected {
-          a {
-            background: $bg-color;
-            color: $text-color;
-          }
-        }
-        &:focus,
-        &:hover {
           a {
             background: $bg-color;
             color: $text-color;
@@ -125,10 +116,11 @@ body {
     @include unstyled-link;
   }
   .button-control {
-    display: block;
-    background: $bg-color;
-    padding: .5 * $base-vmargin .5 * $base-hmargin;
+    @include button;
     text-transform: uppercase;
+    &.play-toggle {
+
+    }
   }
 }
 

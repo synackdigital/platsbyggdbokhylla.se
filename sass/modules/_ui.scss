@@ -11,3 +11,31 @@
     }
   }
 }
+
+@mixin button ( $_theme: false ) {
+  $_bg-color: $bg-color;
+  $_text-color: $text-color;
+  
+  @include transition;
+  @include unstyled-link;
+  @include inline-block;
+
+  @if ( $_theme == inverted ) {
+    $_bg-color: $text-color;
+    $_text-color: $bg-color;
+  }
+  @else if ( $_theme == decor ) {
+    $_bg-color: $decor-bg-color;
+    $_text-color: $decor-text-color;
+  }
+
+  background: $_bg-color;
+  color: $_text-color;
+  padding: .5 * $base-vmargin .5 * $base-hmargin;
+  
+  &:focus,
+  &:hover {
+    background: $_text-color;
+    color: $_bg-color;
+  }
+}
