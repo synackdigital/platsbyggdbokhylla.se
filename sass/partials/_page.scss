@@ -14,13 +14,16 @@ body {
  */
 #header,
 #footer {
+  padding-left: .5 * $base-hmargin;
+  padding-right: .5 * $base-hmargin;
   position: absolute;
   left: 0;
   right: 0;
   .nav {
     margin-left: auto;
     margin-right: auto;
-    width: $base-page-width;
+    min-width: $min-page-width;
+    max-width: $max-page-width;
     .nav-items {
       @include nav-list;
     }
@@ -35,6 +38,8 @@ body {
   z-index: 20;
 }
 #main {
+  padding-left: .5 * $base-hmargin;
+  padding-right: .5 * $base-hmargin;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -42,10 +47,20 @@ body {
   right: 0;
   z-index: 10;
   .content {
+    @include box-sizing( border-box );
     border: 1px solid yellow;
-    margin: 4 * $base-vmargin auto;
-    width: $base-page-width;
+    margin: 0 auto;
+    padding: 4 * $base-vmargin 0;
+    min-height: 100%;
+    min-width: $min-page-width;
+    max-width: $max-page-width;
+    position: relative;
   }
+}
+#slideshow-controls {
+  position: absolute;
+  top: 50%;
+  border: 1px solid green;
 }
 
 
@@ -103,6 +118,18 @@ body {
 #main {
   @include background-size( cover );
   background: image-url('photos/l/jerker_mg_4065.jpg') center;
+}
+#slideshow-controls {
+  background: rgba( blue, .1 );
+  a {
+    @include unstyled-link;
+  }
+  .button-control {
+    display: block;
+    background: $bg-color;
+    padding: .5 * $base-vmargin .5 * $base-hmargin;
+    text-transform: uppercase;
+  }
 }
 
 /*

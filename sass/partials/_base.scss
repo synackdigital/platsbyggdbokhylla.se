@@ -31,7 +31,8 @@ $link-focus-color:        $link-active-color;
 /*
  * Measurements
  */
-$base-page-width:         978px;
+$min-page-width:          748px;
+$max-page-width:          1218px;
 
 $base-hmargin:            $base-font-size * $base-line-height; // ~18px
 $base-vmargin:            $base-hmargin;
