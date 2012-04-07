@@ -18,7 +18,6 @@
   
   @include transition;
   @include unstyled-link;
-  @include inline-block;
 
   @if ( $_theme == inverted ) {
     $_bg-color: $text-color;
@@ -31,6 +30,8 @@
 
   background: $_bg-color;
   color: $_text-color;
+
+  display: block;
   padding: .5 * $base-vmargin .5 * $base-hmargin;
   
   &:focus,
