@@ -57,6 +57,15 @@ body {
     max-width: $max-page-width;
     position: relative;
   }
+.primary {
+  background: white;
+  padding-left: $base-hmargin;
+  padding-right: $base-hmargin;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 300px;
+}
 }
 #slideshow-controls {
   position: absolute;
@@ -85,6 +94,7 @@ body {
             font-size: $large-font-size;
           }
         }
+        &.nav-item-about,
         &.nav-item-planner,
         &.nav-item-contact {
           a {
@@ -123,6 +133,9 @@ body {
 
     }
   }
+}
+#primary {
+
 }
 
 /*
