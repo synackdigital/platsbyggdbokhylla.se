@@ -24,10 +24,7 @@ a {
   left: 0;
   right: 0;
   .nav {
-    margin-left: auto;
-    margin-right: auto;
-    min-width: $min-page-width;
-    max-width: $max-page-width;
+    margin-left: 1.5 * $base-hmargin;
     .nav-items {
       @include nav-list;
     }
@@ -50,30 +47,23 @@ a {
   left: 0;
   right: 0;
   z-index: 10;
-  .content {
-    @include box-sizing( border-box );
-    margin: 0 auto;
-    padding: 4 * $base-vmargin 0;
-    min-height: 100%;
-    min-width: $min-page-width;
-    max-width: $max-page-width;
-    position: relative;
+  .primary {
+    @include border-radius(2px);
+    @include single-box-shadow(rgba(black,.2), 0, 2px, 2px);
+    background: white;
+    padding-left: $base-hmargin;
+    padding-right: $base-hmargin;
+    position: absolute;
+    top: 4 * $base-vmargin;
+    right: 2 * $base-hmargin;
+    width: 460px;
   }
-.primary {
-  @include border-radius(2px);
-  @include single-box-shadow(rgba(black,.2), 0, 2px, 2px);
-  background: white;
-  padding-left: $base-hmargin;
-  padding-right: $base-hmargin;
-  position: absolute;
-  top: 60px;
-  right: 0;
-  width: 300px;
-}
 }
 #slideshow-controls {
   position: absolute;
   top: 50%;
+  left: 2 * $base-hmargin;
+  margin-top: -2 * $base-line-height;
 }
 
 
@@ -136,7 +126,6 @@ a {
  * Main section
  */
 #slideshow-controls {
-  background: rgba( blue, .1 );
   a {
     @include unstyled-link;
   }
@@ -179,7 +168,7 @@ a {
   @include single-box-shadow(rgba(black,.2), 0, 2px, 2px);
   background: $bg-color;
   position: fixed;
-  bottom: $base-vmargin; left: $base-hmargin;
+  bottom: $base-vmargin; left: 2 * $base-hmargin;
   padding: .5 * $base-vmargin .5 * $base-hmargin; 
   img {
     width: .5 * image-width('jiof-logo.png');
