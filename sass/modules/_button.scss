@@ -1,17 +1,4 @@
 
-@mixin nav-list {
-  margin: 0;
-  padding: 0;
-  list-style: 0;
-  li {
-    @include inline-block;
-    a {
-      display: block;
-      padding: .5 * $base-vmargin .5 * $base-hmargin;
-    }
-  }
-}
-
 @mixin button ( $_theme: false ) {
   $_bg-color: $bg-color;
   $_text-color: $text-color;

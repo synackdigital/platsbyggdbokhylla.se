@@ -12,14 +12,16 @@
 // Base params
 @import "partials/base";
 
+// Normalize
+@import "partials/normalize";
+
 // Compass
 @import "compass/css3";
 @import "compass/typography";
 
 // Modules
-@import "modules/ui";
+@import "modules/button";
+@import "modules/nav";
 
 // Layout
-@import "partials/normalize";
-@import "partials/page";
-@import "partials/media";
+@import "partials/layout";
