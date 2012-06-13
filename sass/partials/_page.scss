@@ -94,8 +94,17 @@ body {
             font-size: $large-font-size;
           }
         }
-        &.nav-item-about,
-        &.nav-item-planner,
+        &.nav-item-davidhall,
+        &.nav-item-ribersborg {
+          a {
+            background-color: $decor-bg-color;
+            color: $decor-text-color;
+          }
+        }
+        &.nav-item-davidhall,
+        &.nav-item-ribersborg,
+        &.nav-item-funkar,
+        &.nav-item-ritverktyg,
         &.nav-item-contact {
           a {
             padding-top: 16px;
@@ -119,7 +128,6 @@ body {
  */
 #main {
   @include background-size( cover );
-  background: image-url('photos/l/jerker_mg_3693.jpg') center;
 }
 #slideshow-controls {
   background: rgba( blue, .1 );
@@ -134,13 +142,26 @@ body {
     }
   }
 }
-#primary {
 
+/*
+ * Background graphics
+ */
+#main {
+  background: image-url('photos/l/jerker_mg_2004_1.jpg') center;
+  body.start & {
+    background: image-url('photos/l/jerker_mg_1956.jpg') center;
+  }
+  body.ribersborg & {
+    background: image-url('photos/l/jerker_mg_3597.jpg') center;
+  }
 }
-
 /*
  * Footer section
  */
+#logo {
+  position: absolute;
+  bottom: 20px; right: 20px;
+}
 #footer {
   background: $text-color;
   color: $bg-color;
