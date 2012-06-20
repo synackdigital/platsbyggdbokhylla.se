@@ -49,14 +49,23 @@ a {
   z-index: 10;
   .primary {
     @include border-radius(2px);
+    @include box-sizing(border-box);
     @include single-box-shadow(rgba(black,.2), 0, 2px, 2px);
     background: $bg-color;
     padding-left: $base-hmargin;
     padding-right: $base-hmargin;
+    max-height: 80%;
+    overflow: scroll;
     position: absolute;
-    top: 4 * $base-vmargin;
-    right: 2 * $base-hmargin;
-    width: 460px;
+    top: 12%;
+    right: 3%;
+    width: 36%;
+    html.rgba & {
+      background: rgba(white, .9);
+    }
+    body.ritverktyg & {
+      width: 93.5%;
+    }
   }
 }
 #slideshow-controls {
@@ -160,6 +169,7 @@ a {
     background-image: image-url('photos/l/jerker_mg_3693.jpg');
   }
 }
+
 /*
  * Footer section
  */
