@@ -1,0 +1,9 @@
+# Add files and commands to this file, like the example:
+#   watch('file/path') { `command(s)` }
+#
+guard 'shell' do
+  watch(%r{^src\/(.+)\.js}) do |file|
+    `growlnotify -m "#{file} changed, running rake dist" -t "Konfigurator"`
+    `bundle exec rake dist`
+  end
+end

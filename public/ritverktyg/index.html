@@ -41,19 +41,45 @@
     </nav>
   </header>
   <div id="main" role="main">
-    <div id="canvas">
-      ritverktyg
-      <!-- MARTIN, TAKE IT FROM HERE -->
+    <div id="stageinner">
+
     </div>
     <div id="controls">
-      kontroller
-      <!-- MARTIN, TAKE IT FROM HERE -->
+      <form id="orderForm">
+        <div class="item">
+          <label>
+            Bredd
+          </label>
+          <input type="text" name="w" value="5400">
+        </div>
+        <div class="item">
+          <label>
+            H&ouml;jd
+          </label>
+          <input type="text" name="h" value="2400">
+        </div>
+        <div class="item">
+          <label>
+            Kolumner
+          </label>
+          <input type="text" name="col" value="6">
+        </div>
+        <div class="item">
+          <label>
+            Hyllplan
+          </label>
+          <input type="text" name="row" value="7">
+        </div>
+        <div class="item">
+          <input type="submit" value="Uppdatera">
+        </div>
     </div>
   </div>
 
 
   <!-- scripts concatenated and minified via build script -->
-  <script src="/js/script.js"></script>
+  <script src="/js/ritverktyg/req.js"></script>
+  <script src="/js/ritverktyg/build.js"></script>
   <!-- end scripts -->
 
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
