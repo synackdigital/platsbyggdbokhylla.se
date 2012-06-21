@@ -1,3 +1,20 @@
 
-#canvas {
+#stage {
+  background: white;
+  padding: $base-vmargin $base-hmargin;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 25%;
+}
+
+#controls {
+  background: white;
+  padding: $base-vmargin $base-hmargin;
+  position: absolute;
+  top: 80%;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
