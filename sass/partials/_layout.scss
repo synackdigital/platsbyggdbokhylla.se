@@ -18,13 +18,14 @@ a {
  */
 #header,
 #footer {
-  padding-left: .5 * $base-hmargin;
-  padding-right: .5 * $base-hmargin;
+  padding-left: 1.5 * $base-hmargin;
+  padding-right: 1.5 * $base-hmargin;
   position: absolute;
+  top: 0;
   left: 0;
   right: 0;
   .nav {
-    margin-left: 1.5 * $base-hmargin;
+    margin-right: 1.5 * $base-hmargin;
     .nav-items {
       @include nav-list;
     }
