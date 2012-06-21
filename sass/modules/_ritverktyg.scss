@@ -18,3 +18,13 @@
   right: 0;
   bottom: 0;
 }
+
+#floor {
+  background: image-url('woodfloor.jpg') no-repeat center center;
+  @include background-size(cover);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 200px;
+  right: 0;
+}
