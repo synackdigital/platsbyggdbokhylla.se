@@ -15,8 +15,32 @@ var k = {
 		row:7
 	},
 	validate:{
+		item:function(item){
+			trace("validate.item");
+			trace(item.name);
+			trace(item.val);
+			trace("min:"+k.validate[item.name].min(item.order));
+			trace("max:"+k.validate[item.name].max(item.order));
+			var valid = false;
+			var color = "#F00";
+			if ((item.val>=k.validate[item.name].min(item.order)) && (item.val<=k.validate[item.name].max(item.order))){
+				trace("validates");
+				color = "#FFF";
+				valid = true;
+			} else {
+				trace("doesn't validate")
+			}
+			$$('#orderForm .item[item='+item.name+']').each(function(el){
+				if(valid) {
+					el.removeClassName("error");
+				} else {
+					el.addClassName("error");
+				}
+			});
+			return valid;
+		},
 		w:{
-			min:function(order) {return k.parts.side*2;},
+			min:function(order) {return k.parts.side.w*2;},
 			max:function(order) {return 10000;}
 		},
 		h:{
@@ -35,12 +59,14 @@ var k = {
 				return max;
 			}
 		},
-		plane:{
+		row:{
 			min:function(order) {
+				trace("validate.row.min");
 				var min = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.maxw+k.parts.kol.w));
 				return min;
 			},
 			max:function(order) {
+				trace("validate.row.max");
 				var max = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.minw+k.parts.kol.w));
 
 				(2300-(22))/(350+22)
@@ -85,13 +111,12 @@ var k = {
 		var order = form.serialize(true);
 		var oneFail = false;
 		Object.keys(order).each(function(item){
-			var val = parseInt(order[item]);;
-			if(val>=1){
+			var val = parseInt(order[item]);
+			if(k.validate.item({val:val,name:item,order:order})){
 				k.order[item] = val;
 			} else {
 				oneFail = true;
 			}
-
 		});
 		if(oneFail){
 
@@ -165,7 +190,6 @@ var hylla = function(p, x, y, w, h, kol, plan){
 	trace("x:"+x+" y:"+y);
 	this.drawBox = function(w,h,x,y,options){
 		if(!options) options = {};
-		trace("Drawbox: W:"+w+" H:"+h+" x:"+x+" y:"+y);
 		var boxArr = [
 			x+","+y,
 			(x+w)+","+y,
@@ -175,7 +199,6 @@ var hylla = function(p, x, y, w, h, kol, plan){
 		];
 
 		var pathstr = "M" + boxArr.join(",L") + ",Z"
-		trace(pathstr);
 
 		var line = this._p.path(pathstr);
 		if(options.linecolor){

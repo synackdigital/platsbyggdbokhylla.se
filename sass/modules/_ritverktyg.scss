@@ -17,4 +17,14 @@
   left: 0;
   right: 0;
   bottom: 0;
+  .item {
+    &.error {
+      label {
+        font-size:30px;
+        color:red;
+      }
+      
+    }
+  }
 }
+
