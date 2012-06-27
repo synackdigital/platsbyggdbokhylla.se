@@ -28,13 +28,18 @@
   left: 0;
   right: 0;
   bottom: 0;
-  .item {
-    &.error {
-      label {
-        color:red;
+  form {
+    width:300px;
+    float:left;
+    .item {
+      &.error {
+        label {
+          color:red;
+        }
       }
     }
   }
+  
 }
 
 
@@ -43,9 +48,9 @@
   @include background-size(cover);
   border-top: 1px solid #f6e1cb;
   position: absolute;
-  bottom: .5 * $base-hmargin;
+  bottom: 0px;
   left: .5 * $base-vmargin;
   right: .5 * $base-vmargin;
-  height: 20%;
+  height: 100px;
   z-index: 20;
 }

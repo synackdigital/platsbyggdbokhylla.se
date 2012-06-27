@@ -1,42 +1,51 @@
 Event.observe(window,"load",function(){
-	trace("hEJ!");
 	k.setup();
 });
 
 var k = {
 	paper:null,
 	settings:{
-		margin:100,
+		margin:100
 	},
-	order:{
-		w:3800,
-		h:4200,
-		col:7,
-		row:7
-	},
+	order:[
+		{
+			w:1800,
+			h:2400,
+			col:4,
+			row:4
+		},
+		{
+			w:1200,
+			h:1000,
+			col:4,
+			row:4
+		},
+		{
+			w:1800,
+			h:2400,
+			col:4,
+			row:4
+		}
+	],
 	validate:{
-		item:function(item){
-			trace("validate.item");
-			trace(item.name);
-			trace(item.val);
+		item:function(theForm,item){
+			if(item.name=="id") return true;
 			var min = k.validate[item.name].min(item.order);
 			var max = k.validate[item.name].max(item.order);
 			var valid = false;
 			var color = "#F00";
 			if ((item.val>=k.validate[item.name].min(item.order)) && (item.val<=k.validate[item.name].max(item.order))){
-				trace("validates");
 				color = "#FFF";
 				valid = true;
 			} else {
 				trace("doesn't validate")
 			}
-			var itemElement = $('orderForm').down('.item[item='+item.name+']');
+			var itemElement = theForm.down('.item[item='+item.name+']');
 			if(valid) {
 				itemElement.removeClassName("error");
 			} else {
 				itemElement.addClassName("error");
 			}
-			trace(item.val);
 			itemElement.down('.value').update(item.val);
 			itemElement.down('.max').update(max);
 			itemElement.down('.min').update(min);
@@ -68,14 +77,11 @@ var k = {
 		},
 		row:{
 			min:function(order) {
-				trace("validate.row.min");
 				var min = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.maxw+k.parts.kol.w));
 				return min;
 			},
 			max:function(order) {
-				trace("validate.row.max");
 				var max = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.minw+k.parts.kol.w));
-
 				(2300-(22))/(350+22)
 				return max;
 			}
@@ -119,14 +125,14 @@ var k = {
 		var oneFail = false;
 		Object.keys(order).each(function(item){
 			var val = parseInt(order[item]);
-			if(k.validate.item({val:val,name:item,order:order})){
-				k.order[item] = val;
+			if(k.validate.item(form,{val:val,name:item,order:order})){
+				k.order[order.id][item] = val;
 			} else {
 				oneFail = true;
 			}
 		});
 		if(oneFail){
-
+			trace("one item failed");
 		} else {
 			this.redraw();
 		}
@@ -136,34 +142,84 @@ var k = {
 		var windowAddEvent = window.attachEvent || window.addEventListener;
 
 		Event.observe(window,"resize", function(){
-			trace("on resize");
 			k.resizePaper();
 		});
-		$("orderForm").getInputs().each(function(item){
+
+		k.order.each(function(order,index){
+			k.addForm(index,order);
+		});
+		$$("#controls form").each(function(aForm){
+			k.updateOrder(aForm);
+		});
+	},
+	addForm:function(id,data){
+		var newForm = $("orderForm").clone(true);
+		newForm.down('input[name=id]').value=id;
+		newForm.getInputs().each(function(item){
+			if(item.name!="id"){
+				item.value = data[item.name];
+			}
 			item.observe("change",function(e){
-				k.updateOrder($("orderForm"));
-				trace(this.up());
+					k.updateOrder(this.up('form'));
 			});
 		});
-		$("orderForm").observe("submit",function(e){
+		newForm.show();
+		newForm.observe("submit",function(e){
 			e.stop();
-			k.updateOrder($("orderForm"));
+			k.updateOrder(this);
 		});
-
-		k.updateOrder($("orderForm"));
+		$("controls").insert(newForm);
+	},
+	removeForm:function(form){
+		var order = form.serialize(true);
+		form.remove();
+		var newOrderArr = [];
+		for(var i = 0; i < this.order.length; i++){
+			if(order.id!=i){
+				newOrderArr.push(this.order[i]);
+			}
+		}
+		this.order = newOrderArr;
+		this.redraw();
 	},
 	redraw:function(){
 		var s = this.settings;
 		var o = this.order;
+		var w = 0;
+		var h = 0;
+		for(var i = 0; i < this.order.length; i++){
+			w+=this.order[i].w;
+			if(this.order[i].h>h){
+				h=this.order[i].h;
+			}
+		}
+		w += (s.margin*2);
+		h += (s.margin*2);
 
-		var w = o.w+(s.margin*2);
-		var h = o.h+(s.margin*2);
+
 
 		trace("paper w:"+w);
 		trace("paper h:"+h);
 
-		this.paper = new ScaleRaphael("stageinner", o.w+(s.margin*2),o.h+(s.margin*2));
-		this.hylla = new hylla(this.paper,s.margin,(o.h+s.margin),o.w,o.h,o.col,o.row);
+		this.paper = new ScaleRaphael("stageinner", w,h);
+		var lastX = s.margin;
+		for(var i = 0; i < this.order.length; i++){
+			var o = this.order[i];
+			var position = 3;
+			if(this.order.length>1){
+				if(i==0){
+					position=0;
+				} else if(i>0 && i<(this.order.length-1)){
+					position=1;
+				} else {
+					position=2;
+				}
+			}
+			this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,{
+				position:position
+			});
+			lastX = lastX + (o.w);
+		}
 
 		this.resizePaper();
 
@@ -173,20 +229,41 @@ var k = {
 		if(!this.paper){
 			return;
 		}
-		trace("resize paper");
 		var s = this.settings;
 	   var w = 0, h = 0;
 	   var dim = $("stage").getDimensions();
 	   w = dim.width;
 	   h = dim.height;
 
+
 	   this.paper.changeSize(w-20, h-20, true, false);
+
+	   var scale = this.paper.height / this.paper.h;
+	   if(this.paper.w>this.paper.h){
+	   	scale = this.paper.width / this.paper.w;
+	   }
+	   trace(this.paper);
+	   trace(scale);
+
+	   var innerHeight = Math.ceil(this.paper.h * scale);
+	   var outerHeight = $("stageinner").getDimensions().height;
+	   if(innerHeight>outerHeight){
+	   	outerHeight = innerHeight;
+	   }
+	   var floorHeight = ((outerHeight - innerHeight)/2)+50;
+
+	   trace("outerHeight:"+outerHeight);
+	   trace("innerHeight:"+innerHeight);
+	   $("floor").setStyle({
+	   	height:floorHeight+"px"
+	   });
 	}
 
 
 }
 
-var hylla = function(p, x, y, w, h, kol, plan){
+var hylla = function(p, x, y, w, h, kol, plan,options){
+	if(!options) options = {position:3};
 	this._p = p;
 	this._x = x;
 	this._y = y;
@@ -211,6 +288,9 @@ var hylla = function(p, x, y, w, h, kol, plan){
 		var pathstr = "M" + boxArr.join(",L") + ",Z"
 
 		var line = this._p.path(pathstr);
+		if(options.id){
+			line.id = options.id;
+		}
 		if(options.linecolor){
 			line.attr("stroke", options.linecolor);
 		} else {
@@ -223,10 +303,6 @@ var hylla = function(p, x, y, w, h, kol, plan){
 
 	}
 	this.redraw = function(){
-		$A(this.lines).each(function(line){
-
-		})
-
 		var borderSize = 1;
 
 		var maxX = this._x + this._w;
@@ -235,6 +311,7 @@ var hylla = function(p, x, y, w, h, kol, plan){
 		this.drawBox(this._w,this._h,this._x,this._y,{
 			linecolor:"rgba(255,0,0,0.3)",
 			fillcolor:k.style.bg,
+			id:"bg"
 		});
 
 
@@ -245,33 +322,30 @@ var hylla = function(p, x, y, w, h, kol, plan){
 		var innerHeight = this._h;
 		var innerWidth = (this._w + this._x) - (p.side.w);
 		var kolBottom = this._y;
+		if(options.position==1){
+			innerWidth = (this._w + this._x);
+		} else {
+			this.drawBox(p.side.w , innerHeight ,this._x, kolBottom,{
+				fillcolor:k.style.sidefill
+			});
 
-		trace("left");
-		this.drawBox(p.side.w , innerHeight ,this._x, kolBottom,{
-			fillcolor:k.style.sidefill
-		});
-
-		trace("right");
-		this.drawBox(p.side.w , innerHeight , innerWidth, kolBottom,{
-			fillcolor:k.style.sidefill
-		});
-
-
-		var perKol = (this._w - ((p.kol.w * (this._kol-1)) + (p.side.w * 2))) / this._kol;
-		trace("inner:"+(this._w-(p.side.w*2)));
-		trace("perKol:"+perKol);
-		var perPlan = (this._h - ((p.plane.h * (this._plan-1)))) / this._plan;
-		trace("perPlan:"+perPlan);
-
-		trace(this._kol);
-		for(var i = 1; i < this._kol; i++){
-			var colX = this._x + p.side.w + (i * perKol);
+			this.drawBox(p.side.w , innerHeight , innerWidth, kolBottom,{
+				fillcolor:k.style.sidefill
+			});
 		}
 
+
+		var sideWidth = p.side.w;
+		if(options.position==1){
+			sideWidth = 0;
+		}
+
+		var perKol = (this._w - ((p.kol.w * (this._kol-1)) + (sideWidth * 2))) / this._kol;
+		var perPlan = (this._h - ((p.plane.h * (this._plan-1)))) / this._plan;
+
 		for(var i = 0; i < this._kol; i++){
-			var colX = this._x + p.side.w + (i * perKol);
+			var colX = this._x + sideWidth + (i * perKol);
 			colX  = colX + (i * p.kol.w);
-			trace("col:"+i);
 			if(i>0){
 				this.drawBox(p.kol.w,innerHeight,(colX-p.kol.w) ,kolBottom,{
 					fillcolor:k.style.kolfill

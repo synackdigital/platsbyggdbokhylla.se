@@ -43,12 +43,13 @@
   <div id="main" role="main">
     <div id="stage">
       <div id="stageinner">
-        foo
+        
       </div>
       <div id="floor"></div>
     </div>
     <div id="controls">
-      <form id="orderForm">
+      <form id="orderForm" style="display:none;">
+        <input type="hidden" name="id" value="0">
         <div class="item" item="w">
           <label>
             Bredd
@@ -89,9 +90,7 @@
           <span class="max">0</span>
           
         </div>
-        <div class="item">
-          <input type="submit" value="Uppdatera" max="0" min="0">
-        </div>
+      </form>
     </div>
   </div>
 
