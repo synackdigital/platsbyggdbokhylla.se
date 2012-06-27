@@ -1,12 +1,23 @@
 
 #stage {
   background: white;
-  padding: $base-vmargin $base-hmargin;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 25%;
+  background: #fafafa image-url('wallpaper.jpg') no-repeat bottom center;
+  @include background-size(cover);
+}
+
+#stageinner {
+  
+  position: absolute;
+  top: .5 * $base-hmargin;
+  left: .5 * $base-vmargin;
+  right: .5 * $base-vmargin;
+  height: 80%;
+  z-index: 30;
 }
 
 #controls {
@@ -22,8 +33,19 @@
       label {
         color:red;
       }
-      
     }
   }
 }
 
+
+#floor {
+  background: image-url('woodfloor.jpg') no-repeat top center;
+  @include background-size(cover);
+  border-top: 1px solid #f6e1cb;
+  position: absolute;
+  bottom: .5 * $base-hmargin;
+  left: .5 * $base-vmargin;
+  right: .5 * $base-vmargin;
+  height: 20%;
+  z-index: 20;
+}
