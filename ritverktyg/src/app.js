@@ -19,8 +19,8 @@ var k = {
 			trace("validate.item");
 			trace(item.name);
 			trace(item.val);
-			trace("min:"+k.validate[item.name].min(item.order));
-			trace("max:"+k.validate[item.name].max(item.order));
+			var min = k.validate[item.name].min(item.order);
+			var max = k.validate[item.name].max(item.order);
 			var valid = false;
 			var color = "#F00";
 			if ((item.val>=k.validate[item.name].min(item.order)) && (item.val<=k.validate[item.name].max(item.order))){
@@ -30,13 +30,20 @@ var k = {
 			} else {
 				trace("doesn't validate")
 			}
-			$$('#orderForm .item[item='+item.name+']').each(function(el){
-				if(valid) {
-					el.removeClassName("error");
-				} else {
-					el.addClassName("error");
-				}
-			});
+			var itemElement = $('orderForm').down('.item[item='+item.name+']');
+			if(valid) {
+				itemElement.removeClassName("error");
+			} else {
+				itemElement.addClassName("error");
+			}
+			trace(item.val);
+			itemElement.down('.value').update(item.val);
+			itemElement.down('.max').update(max);
+			itemElement.down('.min').update(min);
+			var input = itemElement.down('input');
+			input.writeAttribute("max",max);
+			input.writeAttribute("min",min);
+
 			return valid;
 		},
 		w:{
@@ -133,14 +140,17 @@ var k = {
 			k.resizePaper();
 		});
 		$("orderForm").getInputs().each(function(item){
-			item.observe("keyup",function(e){
+			item.observe("change",function(e){
 				k.updateOrder($("orderForm"));
+				trace(this.up());
 			});
 		});
 		$("orderForm").observe("submit",function(e){
 			e.stop();
 			k.updateOrder($("orderForm"));
 		});
+
+		k.updateOrder($("orderForm"));
 	},
 	redraw:function(){
 		var s = this.settings;
