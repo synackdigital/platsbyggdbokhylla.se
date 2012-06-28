@@ -3,6 +3,7 @@ Event.observe(window,"load",function(){
 });
 
 var k = {
+	updateInterval:null,
 	paper:null,
 	settings:{
 		margin:100
@@ -14,7 +15,7 @@ var k = {
 			col:4,
 			row:4
 		},
-		{
+		/**{
 			w:1200,
 			h:1000,
 			col:4,
@@ -25,7 +26,7 @@ var k = {
 			h:2400,
 			col:4,
 			row:4
-		}
+		}**/
 	],
 	validate:{
 		item:function(theForm,item){
@@ -77,12 +78,11 @@ var k = {
 		},
 		row:{
 			min:function(order) {
-				var min = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.maxw+k.parts.kol.w)); 
+				var min = k.parts.plane.minamount;
 				return min;
 			},
 			max:function(order) {
-				var max = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.minw+k.parts.kol.w)); 
-				(2300-(22))/(350+22)
+				var max = Math.ceil((order.h-k.parts.plane.h) / (k.parts.plane.h)); 
 				return max;
 			}
 		}
@@ -90,8 +90,10 @@ var k = {
 	parts:{
 		bottom:{h:22,b:0},
 		side:{w:22},
-		plane:{h:22},
-		kol:{w:22,minw:350,maxw:750}
+		plane:{h:22,minamount:1},
+		kol:{w:22,minw:350,maxw:750},
+		dvd:{h:190,w:18,name:"DVD",image:"dvd"},
+		blueray:{h:172,w:16,name:"Blueray",image:"blueray"}
 	},
 	styleback:{
 		bg:"135-#fff-#eee",
@@ -149,18 +151,28 @@ var k = {
 			k.addForm(index,order);
 		});
 		$$("#controls form").each(function(aForm){
-			k.updateOrder(aForm);
+			if(aForm.identify()!="orderForm"){
+				k.updateOrder(aForm);
+			}
 		});
+		this.resizePaper();
 	},
 	addForm:function(id,data){
 		var newForm = $("orderForm").clone(true);
+		newForm.writeAttribute("id","form_"+id);
 		newForm.down('input[name=id]').value=id;
 		newForm.getInputs().each(function(item){
 			if(item.name!="id"){
 				item.value = data[item.name];
 			}
 			item.observe("change",function(e){
+				k.updateInterval = clearInterval(k.updateInterval);
+				k.updateInterval = setInterval(function(){
+					k.updateInterval = clearInterval(k.updateInterval);
+					trace("update now!");
 					k.updateOrder(this.up('form'));				
+				}.bind(this),1000);
+					
 			});
 		});
 		newForm.show();
@@ -255,8 +267,6 @@ var k = {
 	   if(this.paper.w>this.paper.h){
 	   	scale = this.paper.width / this.paper.w;
 	   }
-	   trace(this.paper);
-	   trace(scale);
 
 	   var innerHeight = Math.ceil(this.paper.h * scale);
 	   var outerHeight = $("stageinner").getDimensions().height;
@@ -265,8 +275,6 @@ var k = {
 	   }
 	   var floorHeight = ((outerHeight - innerHeight)/2)+50;
 
-	   trace("outerHeight:"+outerHeight);
-	   trace("innerHeight:"+innerHeight);
 	   $("floor").setStyle({
 	   	height:floorHeight+"px"
 	   });
@@ -285,12 +293,10 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 	this._kol = kol;
 	this._plan = plan;
 	this.lines = [];
-	trace("hylla:");
-	trace("w:"+w+" h:"+h);
-	trace("x:"+x+" y:"+y);
+
 	this.drawBox = function(w,h,x,y,options){
 		if(!options) options = {};
-		//trace("Drawbox: W:"+w+" H:"+h+" x:"+x+" y:"+y);
+
 		var boxArr = [
 			x+","+y,
 			(x+w)+","+y,
@@ -300,7 +306,6 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		];
 
 		var pathstr = "M" + boxArr.join(",L") + ",Z"
-		//trace(pathstr);
 		
 		var line = this._p.path(pathstr);
 		if(options.id){
@@ -314,9 +319,22 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		if(options.fillcolor){
 			line.attr("fill", options.fillcolor);
 		}
+		if(options.fillimage){
+			line.attr("fill", options.fillimage);
+		}
+
 		line.attr("stroke-width", "1");		
 		
-	}
+	};
+	this.fillWith = function(thing,theX,theY,width){
+		if(thing){
+			var p = k.parts;
+			var thingY  = (theY-p.plane.h)-thing.h;
+			for(var x = 0; x < Math.floor(width/thing.w); x++){
+				this._p.image("/images/"+thing.image+".png",theX+(x*thing.w),thingY,thing.w,thing.h);
+			}
+		}
+	};
 	this.redraw = function(){		
 		//basics
 		var borderSize = 1;
@@ -332,22 +350,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		
 
 		var p = k.parts;
-		
-		
-		//bottomfill
-		/**
-		trace("bottom");
-		this.drawBox(this._w ,p.bottom.h, this._x, this._y,{
-			fillcolor:k.style.bottomfill
-		});
-
-		//top
-		trace("top");
-		this.drawBox(this._w, p.top.h, this._x, maxY+p.top.h,{
-			fillcolor:k.style.topfill
-		});
-		**/
-		
+				
 		var innerHeight = this._h;
 		var innerWidth = (this._w + this._x) - (p.side.w);
 		var kolBottom = this._y;
@@ -376,6 +379,19 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		var perKol = (this._w - ((p.kol.w * (this._kol-1)) + (sideWidth * 2))) / this._kol;
 		var perPlan = (this._h - ((p.plane.h * (this._plan-1)))) / this._plan;
 
+		var whatFits = function(w,h){
+			var stuff = ["dvd","blueray"];
+			var fits = [];
+			for(var i = 0; i < stuff.length; i++){
+				var thing = stuff[i];
+				if(p[thing].w<w && p[thing].h<h){
+					fits.push(p[thing]);
+				}
+			}
+			return fits;
+		};
+
+
 		for(var i = 0; i < this._kol; i++){
 			var colX = this._x + sideWidth + (i * perKol);
 			colX  = colX + (i * p.kol.w);
@@ -390,6 +406,14 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 				this.drawBox(perKol,p.plane.h,(colX),planY,{
 					fillcolor:k.style.planefill
 				});
+
+				//fill the plane up
+				var fits = whatFits(perKol,perPlan);
+				if(fits.length>0){
+					var thing = fits[Math.round(Math.random()*(fits.length-1))];
+					this.fillWith(thing,colX,planY,perKol);
+				}
+				
 			}
 
 			//bottom
@@ -398,6 +422,13 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 			this.drawBox(perKol,p.plane.h,(colX),(kolBottom-p.bottom.b),{
 				fillcolor:k.style.planefill
 			});
+
+			//fill the bottom plane up
+			var thing = fits[Math.round(Math.random()*(fits.length-1))];
+			this.fillWith(thing,colX,(kolBottom-p.bottom.b),perKol);
+
+
+
 			//top
 			var planY = kolBottom - (u * perPlan);
 			planY  = planY - ((u-1) * p.plane.h);
@@ -418,7 +449,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 
 		//kols
 		var perKol = this._w / this._kol;
-		trace(this._kol);
+		
 		for(var i = 1; i < this._kol; i++){
 			var colX = (i * perKol);
 			
@@ -432,7 +463,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		var perPlan = this._h / (this._plan+1);
 		for(var u = 0; u < this._kol; u++){
 			for(var i = 0; i < this._plan; i++){
-				trace("a plan");
+
 				var planX = (u * perKol);
 				var planY = (i * perPlan) + perPlan;
 				var planXend = planX + perKol;
