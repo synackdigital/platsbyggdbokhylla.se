@@ -1,21 +1,21 @@
 
 /*
  * Typography
- * Roughly a 3:5 Fibonacci scale: 12, 14, 22, 36 (see http://lamb.cc/typograph/)
+ * Roughly a 3:5 Fibonacci scale: 12, 14, 24, 36 (see http://lamb.cc/typograph/)
  */
 $base-font-family:        unquote('PT Sans, sans-serif');
 $base-font-size:          14px;
 $base-line-height:        1.2857;   // ~18px
 
 $small-font-size:         0.8571em; // ~12px
-$large-font-size:         1.5714em; // ~22px
+$large-font-size:         1.7143em; // ~22px
 $xlarge-font-size:        2.5714em; // ~36px
 
 
 /*
  * Colors
  */
-$bg-color:                white;
+$bg-color:                darken(white, 5%);
 $text-color:              #514b46;  // Dark tan
 
 $decor-bg-color:          #aacc87;  // Light green
