@@ -84,9 +84,11 @@
       }
       .value {
         @include inline-block;
+        background: image-url('editicon.png') center right no-repeat;
         line-height: 17px;
         font-size: 17px;
         width: 5em;
+        cursor: pointer;
       }
       .control {
         display: none;
