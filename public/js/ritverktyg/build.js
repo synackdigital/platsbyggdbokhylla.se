@@ -82,13 +82,26 @@ var k = {
 			} else {
 				trace("doesn't validate")
 			}
+
+
+
 			var itemElement = theForm.down('.item[item='+item.name+']');
 			if(valid) {
 				itemElement.removeClassName("error");
 			} else {
+					if(item.val>max){
+					trace("set to max");
+					var newval = max;
+				} else if(item.val < min){
+					trace("set to min");
+					var newval = min;
+				}
 				itemElement.addClassName("error");
 				setTimeout(function(){
-					this.removeClassName("error");
+					this.removeClassName("error")
+					this.value=newval;
+					k.updateOrder(this.up('form'));
+
 				}.bind(itemElement),1000);
 			}
 
@@ -96,19 +109,9 @@ var k = {
 			input.writeAttribute("max",max);
 			input.writeAttribute("min",min);
 
-			var newval = item.val;
-
-			if(item.val>max){
-				trace("set to max");
-				newval = max;
-			} else if(item.val < min){
-				trace("set to min");
-				newval = min;
-			}
-			itemElement.down('.value').update(newval);
+			itemElement.down('.value').update(item.val);
 			itemElement.down('.max').update(max);
 			itemElement.down('.min').update(min);
-			input.value = newval;
 
 			trace(input);
 			return true;
@@ -233,21 +236,34 @@ var k = {
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
 		newForm.down('input[name=id]').value=id;
-		newForm.getInputs().each(function(item){
+		var sliders = newForm.getInputs();
+		var exactVals = newForm.select("span[contenteditable=true]");
+		var all = sliders.concat(exactVals);
+		all.each(function(item){
 			if(item.name!="id"){
 				item.value = data[item.name];
 			}
-			item.observe("change",function(e){
-				this.up().down(".value").update(this.value);
-				k.updateInterval = clearInterval(k.updateInterval);
-				k.updateInterval = setInterval(function(){
-					k.updateInterval = clearInterval(k.updateInterval);
-					trace("update now!");
+			var eventName = "change";
+			if(item.readAttribute("contenteditable")){
+				item.observe("blur",function(e){
+					trace(this.up(1));
+					trace(this.up(1).down("input"));
+					trace(this.up(1).down("input").value);
+					this.up(1).down("input").value=parseInt(this.innerHTML);
 					k.updateOrder(this.up('form'));
+				});
+			} else {
+				item.observe("change",function(e){
+					this.up().down(".value").update(this.value);
+					k.updateInterval = clearInterval(k.updateInterval);
+					k.updateInterval = setInterval(function(){
+						k.updateInterval = clearInterval(k.updateInterval);
+						trace("update now!");
+						k.updateOrder(this.up('form'));
+					}.bind(this),200);
+				});
+			}
 
-				}.bind(this),200);
-
-			});
 		});
 		newForm.show();
 		newForm.observe("submit",function(e){
