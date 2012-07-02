@@ -29,9 +29,31 @@
   right: 0;
   bottom: 0;
   form {
-    width:300px;
-    float:left;
     .item {
+      label {
+        @include inline-block;
+        font-weight: bold;
+        width: 9em;
+      }
+      input {
+        @include inline-block;
+      }
+      .min {
+        @include inline-block;
+        width: 4em;
+        text-align: right;
+      }
+      .value {
+        font-size: 17px;
+        vertical-align: baseline;
+      }
+      .max {
+        @include inline-block;
+      }
+      &.sections {
+        margin-top: .5 * $base-vmargin;
+        line-height: 17px;
+      }
       &.error {
         label {
           color:red;
@@ -53,3 +75,4 @@
   height: 100px;
   z-index: 20;
 }
+
