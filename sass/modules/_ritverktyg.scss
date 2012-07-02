@@ -19,6 +19,44 @@
   z-index: 30;
 }
 
+
+#rita_start {
+  z-index: 300;
+  padding:50px;
+  position:absolute;
+  top:50px;
+  bottom:150px;
+  left:50px;
+  right:50px;
+  background-color:rgba(242,242,242,0.7);
+  -webkit-transition:opacity 1s ease-out;
+  &.hide {
+    opacity:0;
+  }
+  h1 {
+    margin-left:20px;
+  }
+  .choice {
+    width:33.3%;
+    height:50%;
+    float:left;
+    .inner {
+      font-size:14px;
+      margin:auto;
+      text-align:center;
+      width:90%;
+      height:90%;
+      background-color:#FFF;
+      line-height:200px;
+      cursor:pointer;
+      border: solid 5px #FFF;
+      &:hover {
+        border: solid 5px #999;
+      }
+    }
+  }
+}
+
 #controls {
   background: white;
   padding: $base-vmargin $base-hmargin;
@@ -29,6 +67,9 @@
   right: 0;
   bottom: 0;
   form {
+    float:left;
+    background-color:#F2F2F2;
+    margin-right:20px;
     .item {
       label {
         @include inline-block;

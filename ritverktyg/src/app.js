@@ -8,26 +8,67 @@ var k = {
 	settings:{
 		margin:100
 	},
-	order:[
-		{
+	templates:{
+		standard:[{
 			w:1800,
 			h:2400,
 			col:4,
 			row:4
-		},
-		/**{
-			w:1200,
-			h:1000,
-			col:4,
-			row:4
-		},
-		{
-			w:1800,
-			h:2400,
-			col:4,
-			row:4
-		}**/
-	],
+		}],
+		onewin:[
+			{
+				w:1800,
+				h:2400,
+				col:4,
+				row:4
+			},
+			{
+				w:1200,
+				h:500,
+				col:2,
+				row:2
+			},
+			{
+				w:1800,
+				h:2400,
+				col:4,
+				row:4
+			}
+		],
+		twowin:[
+			{
+				w:1800,
+				h:2400,
+				col:4,
+				row:8
+			},
+			{
+				w:1200,
+				h:500,
+				col:2,
+				row:2
+			},
+			{
+				w:1800,
+				h:2400,
+				col:4,
+				row:8
+			},
+			{
+				w:1200,
+				h:500,
+				col:2,
+				row:2
+			},
+			{
+				w:1800,
+				h:2400,
+				col:4,
+				row:8
+			}
+		],
+	},
+	order:[],
 	validate:{
 		item:function(theForm,item){
 			if(item.name=="id") return true;
@@ -46,15 +87,31 @@ var k = {
 				itemElement.removeClassName("error");
 			} else {
 				itemElement.addClassName("error");
+				setTimeout(function(){
+					this.removeClassName("error");
+				}.bind(itemElement),1000);
 			}
-			itemElement.down('.value').update(item.val);
-			itemElement.down('.max').update(max);
-			itemElement.down('.min').update(min);
+			
 			var input = itemElement.down('input');
 			input.writeAttribute("max",max);
 			input.writeAttribute("min",min);
 
-			return valid;
+			var newval = item.val;
+
+			if(item.val>max){
+				trace("set to max");
+				newval = max;
+			} else if(item.val < min){
+				trace("set to min");
+				newval = min;
+			}
+			itemElement.down('.value').update(newval);
+			itemElement.down('.max').update(max);
+			itemElement.down('.min').update(min);
+			input.value = newval;
+
+			trace(input);
+			return true;
 		},
 		w:{
 			min:function(order) {return k.parts.side.w*2;},
@@ -147,6 +204,21 @@ var k = {
 			k.resizePaper();
 		});
 
+		$$(".choice").each(function(choice){
+			choice.observe("click",function(){
+				
+				$("rita_start").addClassName("hide");
+				setTimeout(function(){
+					$("rita_start").remove();
+					k.startUp(this.readAttribute("template"));
+				}.bind(this),1100);
+			})
+		});
+
+		
+	},
+	startUp:function(template){
+		k.order = this.templates[template];
 		k.order.each(function(order,index){
 			k.addForm(index,order);
 		});
@@ -166,12 +238,14 @@ var k = {
 				item.value = data[item.name];
 			}
 			item.observe("change",function(e){
+				this.up().down(".value").update(this.value);
 				k.updateInterval = clearInterval(k.updateInterval);
 				k.updateInterval = setInterval(function(){
 					k.updateInterval = clearInterval(k.updateInterval);
 					trace("update now!");
 					k.updateOrder(this.up('form'));				
-				}.bind(this),1000);
+
+				}.bind(this),200);
 					
 			});
 		});
