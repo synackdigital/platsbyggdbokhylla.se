@@ -355,6 +355,8 @@ var k = {
 	   $("floor").setStyle({
 	   	height:floorHeight+"px"
 	   });
+
+	   this.paper.text(200,100,"").attr("font","30px Arial").attr("fill","#ffffff");
 	}
 
 
