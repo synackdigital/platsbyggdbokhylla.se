@@ -65,31 +65,42 @@
     <div id="controls">
       <form id="orderForm" style="display:none;">
         <input type="hidden" name="id" value="0">
+        <strong>Sektion 1</strong>
         <div class="item width" item="w">
-          <label>Bredd: <span class="value" contenteditable="true">0</span> mm</label>
-          <span class="min">0</span>
-          <input type="range" name="w" value="5400" max="100000" min="0">
-          <span class="max">0</span>
+          <label>Bredd</label>
+          <span class="value" contenteditable="true">0 <span class="unit">mm</span></span>
+          <div class="control">
+            <span class="min">0</span>
+            <input type="range" name="w" value="5400" max="100000" min="0">
+            <span class="max">0</span>
+          </div>
         </div>
-        <div class="item height" item="h">
-          <label>H&ouml;jd: <span class="value" contenteditable="true">0</span> mm</label>
-          <span class="min">0</span>
-          <input type="range" name="h" value="2400" max="100000" min="0">
-          <span class="max">0</span>
+        <div class="item width" item="h">
+          <label>Höjd</label>
+          <span class="value" contenteditable="true">0 <span class="unit">mm</span></span>
+          <div class="control">
+            <span class="min">0</span>
+            <input type="range" name="h" value="2400" max="100000" min="0">
+            <span class="max">0</span>
+          </div>
         </div>
         <div class="item sections" item="col">
-          <label>Antal sektioner: <span class="value">0</span></label>
-          <span class="min">0</span>
-          <input type="range" name="col" value="7" max="100000" min="0">
-          <span class="max">0</span>
-          
+          <label>Sektioner</label>
+          <span class="value" contenteditable="true">0</span>
+          <div class="control">
+            <span class="min">0</span>
+            <input type="range" name="col" value="7" max="10000" min="0">
+            <span class="max">0</span>
+          </div>
         </div>
         <div class="item shelves" item="row">
-          <label>Antal hyllplan: <span class="value">0</span></label>
-          <span class="min">0</span>
-          <input type="range" name="row" value="7" max="100000" min="0">
-          <span class="max">0</span>
-          
+          <label>Hyllplan</label>
+          <span class="value" contenteditable="true">0</span>
+          <div class="control">
+            <span class="min">0</span>
+            <input type="range" name="row" value="7" max="100000" min="0">
+            <span class="max">0</span>
+          </div>
         </div>
       </form>
     </div>

@@ -67,29 +67,57 @@
   right: 0;
   bottom: 0;
   form {
-    float:left;
-    background-color:#F2F2F2;
-    margin-right:20px;
+    float: left;
+    margin-right: 3 * $base-hmargin;
     .item {
+      border-top: 1px dotted #ccc;
+      margin-bottom: .25 * $base-vmargin;
+      padding-top: .25 * $base-vmargin;
+      position: relative;
       label {
         @include inline-block;
+        line-height: 17px;
         font-weight: bold;
-        width: 9em;
-      }
-      input {
-        @include inline-block;
-      }
-      .min {
-        @include inline-block;
-        width: 4em;
-        text-align: right;
+        font-variant: small-caps;
+        text-transform: lowercase;
+        width: 5em;
       }
       .value {
-        font-size: 17px;
-        vertical-align: baseline;
-      }
-      .max {
         @include inline-block;
+        line-height: 17px;
+        font-size: 17px;
+        width: 5em;
+      }
+      .control {
+        display: none;
+
+        @include single-box-shadow;
+        @include border-radius;
+        background: $text-color;
+        color: $bg-color;
+        position: absolute;
+        width: 18em;
+        right: -16em;
+        top: 50%;
+        margin-top: -1.5em;
+        height: 3em;
+        z-index: 100;
+        input {
+          @include inline-block;
+          margin-top: 1em;
+          width: 8em;
+        }
+        .min {
+          @include inline-block;
+          margin-top: 1em;
+          width: 4em;
+          text-align: right;
+        }
+        .max {
+          @include inline-block;
+          margin-top: 1em;
+          width: 4em;
+        }
       }
       &.sections {
         margin-top: .5 * $base-vmargin;
