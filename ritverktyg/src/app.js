@@ -27,6 +27,20 @@ var k = {
 				h:1000,
 				col:2,
 				row:2
+			}
+		],
+		twowin:[
+			{
+				w:1800,
+				h:2400,
+				col:4,
+				row:4
+			},
+			{
+				w:1200,
+				h:1000,
+				col:2,
+				row:2
 			},
 			{
 				w:1800,
@@ -35,7 +49,7 @@ var k = {
 				row:4
 			}
 		],
-		twowin:[
+		threewin:[
 			{
 				w:1800,
 				h:2400,
@@ -148,21 +162,34 @@ var k = {
 		}
 	},
 	parts:{
-		bottom:{h:22,b:0},
+		overlay:{minw:300,maxw:2010,minh:200,maxh:1000},
+		bottom:{h:22,b:60},
 		side:{w:22},
 		plane:{h:22,minamount:1},
 		kol:{w:22,minw:350,maxw:750},
 		dvd:{h:190,w:18,name:"DVD",image:"dvd"},
-		blueray:{h:172,w:16,name:"Blueray",image:"blueray"}
+		blueray:{h:172,w:16,name:"Blueray",image:"blueray"},
+		cd:{h:120,w:12,name:"CD-skiva",image:"dvd"}
 	},
-	styleback:{
+	styleblack:{
 		bg:"135-#fff-#eee",
-		linecolor:"rgba(102,102,102,1)",
-		planefill:null,
-		kolfill:null,
-		sidefill:null,
-		topfill:null,
-		bottomfill:null,
+		linecolor:"rgba(255,255,255,1)",
+		planefill:"0-#333-#666",
+		kolfill:"0-#333-#666",
+		sidefill:"0-#333-#666",
+		topfill:"0-#333-#666",
+		bottomfill:"0-#333-#666",
+		sockelfill:"90#333-#666"
+	},
+	stylered:{
+		bg:"135-#fff-#eee",
+		linecolor:"rgba(255,200,200,1)",
+		planefill:"0-#a90329-#6d0019",
+		kolfill:"0-#a90329-#6d0019",
+		sidefill:"0-#a90329-#6d0019",
+		topfill:"0-#a90329-#6d0019",
+		bottomfill:"0-#a90329-#6d0019",
+		sockelfill:"90-#a90329-#6d0019",
 	},
 	styleback2:{
 		bg:"135-#fff-#eee",
@@ -181,6 +208,7 @@ var k = {
 		sidefill:"0-#F5F5F5-#fff",
 		topfill:"90-#F5F5F5-#fff",
 		bottomfill:"90-#F5F5F5-#fff",
+		sockelfill:"90#F5F5F5-#fff"
 	},
 	updateOrder:function(form){
 		var order = form.serialize(true);
@@ -222,6 +250,7 @@ var k = {
 	},
 	startUp:function(template){
 		k.order = this.templates[template];
+		var orderCount = k.order.length;
 		k.order.each(function(order,index){
 			k.addForm(index,order);
 		});
@@ -236,6 +265,7 @@ var k = {
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
 		newForm.down('input[name=id]').value=id;
+		newForm.down('strong').update("Sektion "+(id+1));
 		var sliders = newForm.getInputs();
 		var exactVals = newForm.select("span[contenteditable=true]");
 		var all = sliders.concat(exactVals);
@@ -246,11 +276,11 @@ var k = {
 			var eventName = "change";
 			if(item.readAttribute("contenteditable")){
 				item.observe("blur",function(e){
-					trace(this.up(1));
-					trace(this.up(1).down("input"));
-					trace(this.up(1).down("input").value);
-					this.up(1).down("input").value=parseInt(this.innerHTML);
+					this.up().down("input").value=parseInt(this.innerHTML);
 					k.updateOrder(this.up('form'));
+				});
+				item.observe("click",function(){
+					this.down(".control").show();
 				});
 			} else {
 				item.observe("change",function(e){
@@ -262,6 +292,7 @@ var k = {
 						k.updateOrder(this.up('form'));				
 					}.bind(this),200);
 				});
+
 			}
 			
 		});
@@ -437,11 +468,13 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		var maxX = this._x + this._w;
 		var maxY = this._y -this._h;
 
+		
 		this.drawBox(this._w,this._h,this._x,this._y,{
 			linecolor:"rgba(255,0,0,0.3)",
 			fillcolor:k.style.bg,
 			id:"bg"
 		});
+		
 		
 
 		var p = k.parts;
@@ -475,7 +508,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		var perPlan = (this._h - ((p.plane.h * (this._plan-1)))) / this._plan;
 
 		var whatFits = function(w,h){
-			var stuff = ["dvd","blueray"];
+			var stuff = ["dvd","blueray","cd"];
 			var fits = [];
 			for(var i = 0; i < stuff.length; i++){
 				var thing = stuff[i];
@@ -522,6 +555,14 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 			var thing = fits[Math.round(Math.random()*(fits.length-1))];
 			this.fillWith(thing,colX,(kolBottom-p.bottom.b),perKol);
 
+			//sockel
+
+			var planY = kolBottom - (u * perPlan);
+			planY  = planY - ((u-1) * p.plane.h);
+			this.drawBox(perKol,p.bottom.b,(colX),(kolBottom),{
+				fillcolor:k.style.sockelfill
+			});
+
 
 
 			//top
@@ -530,6 +571,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 			this.drawBox(perKol,p.plane.h,(colX),((kolBottom-this._h)+p.plane.h),{
 				fillcolor:k.style.planefill
 			});
+
 		}
 
 		return;
