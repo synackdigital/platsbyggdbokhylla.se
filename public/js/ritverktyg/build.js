@@ -24,7 +24,7 @@ var k = {
 			},
 			{
 				w:1200,
-				h:500,
+				h:1000,
 				col:2,
 				row:2
 			},
@@ -44,7 +44,7 @@ var k = {
 			},
 			{
 				w:1200,
-				h:500,
+				h:1000,
 				col:2,
 				row:2
 			},
@@ -56,7 +56,7 @@ var k = {
 			},
 			{
 				w:1200,
-				h:500,
+				h:1000,
 				col:2,
 				row:2
 			},
@@ -315,6 +315,9 @@ var k = {
 					position=1;
 				} else {
 					position=2;
+				}
+				if((position==1) && (this.order.length==5) && (i==2)){
+					position = 3;
 				}
 			}
 			this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,{
