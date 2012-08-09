@@ -3,7 +3,7 @@
  * General styles
  */
 body {
-  background: $bg-color;
+  background: darken($bg-color, 10%);
   color: $text-color;
   font: #{$base-font-size}/#{$base-line-height} $base-font-family;
 }
@@ -17,11 +17,10 @@ a {
  * Main layout
  */
 #header {
-  border-top: .5 * $base-vmargin solid $bg-color;
   padding-left: 1.5 * $base-hmargin;
   padding-right: 1.5 * $base-hmargin;
   position: absolute;
-  top: .5 * $base-vmargin;
+  top: $base-vmargin;
   left: 0;
   right: 0;
   z-index: 30;
