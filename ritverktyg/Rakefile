@@ -64,8 +64,10 @@ task :compile do
 end
 
 task :dist do
+  print "sprocketizing\n"
   KickassProjectHelper.sprocketize("src", "req.js")
   KickassProjectHelper.sprocketize("src", "build.js")
+  print "sprocketizing...done\n"
 end
 
 task :deploy => [:dist, :package] do

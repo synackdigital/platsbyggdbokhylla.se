@@ -3,7 +3,6 @@
 #
 guard 'shell' do
   watch(%r{^src\/(.+)\.js}) do |file|
-    `growlnotify -m "#{file} changed, running rake dist" -t "Konfigurator"`
     `bundle exec rake dist`
   end
 end

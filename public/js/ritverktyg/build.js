@@ -10,6 +10,7 @@ var k = {
 	},
 	templates:{
 		standard:[{
+			type:"single",
 			w:1800,
 			h:2400,
 			col:4,
@@ -17,32 +18,37 @@ var k = {
 		}],
 		onewin:[
 			{
+				type:"std",
 				w:1800,
 				h:2400,
 				col:4,
 				row:4
 			},
 			{
+				type:"over",
 				w:1200,
 				h:1000,
 				col:2,
 				row:2
 			}
 		],
-		twowin:[
+		onewinmiddle:[
 			{
+				type:"std",
 				w:1800,
 				h:2400,
 				col:4,
 				row:4
 			},
 			{
+				type:"over",
 				w:1200,
 				h:1000,
 				col:2,
 				row:2
 			},
 			{
+				type:"std",
 				w:1800,
 				h:2400,
 				col:4,
@@ -51,30 +57,35 @@ var k = {
 		],
 		threewin:[
 			{
+				type:"std",
 				w:1800,
 				h:2400,
 				col:4,
 				row:8
 			},
 			{
+				type:"over",
 				w:1200,
 				h:1000,
 				col:2,
 				row:2
 			},
 			{
+				type:"std",
 				w:1800,
 				h:2400,
 				col:4,
 				row:8
 			},
 			{
+				type:"over",
 				w:1200,
 				h:1000,
 				col:2,
 				row:2
 			},
 			{
+				type:"std",
 				w:1800,
 				h:2400,
 				col:4,
@@ -229,6 +240,7 @@ var k = {
 
 	},
 	setup:function(){
+		trace("setup");
 		var windowAddEvent = window.attachEvent || window.addEventListener;
 
 		Event.observe(window,"resize", function(){
@@ -282,6 +294,13 @@ var k = {
 				item.observe("click",function(){
 					this.down(".control").show();
 				});
+				item.observe("keypress",function(e){
+					trace("keyyo");
+					if(e.keyCode == Event.KEY_RETURN) {
+						this.blur();
+						k.updateOrder(this.up('form'));
+					}
+				});
 			} else {
 				item.observe("change",function(e){
 					this.up().down(".value").update(this.value);
@@ -292,6 +311,7 @@ var k = {
 						k.updateOrder(this.up('form'));
 					}.bind(this),200);
 				});
+
 
 			}
 
@@ -338,8 +358,14 @@ var k = {
 		var lastX = s.margin;
 		for(var i = 0; i < this.order.length; i++){
 			var o = this.order[i];
+			var type = o.type;
+			trace("type:"+type);
 			var position = 3;
 			if(this.order.length>1){
+				if(this.order.length>2){
+				} else {
+					trace("hej");
+				}
 				if(i==0){
 					position=0;
 				} else if(i>0 && i<(this.order.length-1)){
@@ -352,7 +378,7 @@ var k = {
 				}
 			}
 			this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,{
-				position:position
+				position:position, type:type
 			});
 			lastX = lastX + (o.w);
 		}
@@ -397,7 +423,8 @@ var k = {
 }
 
 var hylla = function(p, x, y, w, h, kol, plan,options){
-	if(!options) options = {position:3};
+	if(!options) options = {position:3, type:"std"};
+	this._type=options.type;
 	this._p = p;
 	this._x = x;
 	this._y = y;
@@ -468,8 +495,16 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		var innerHeight = this._h;
 		var innerWidth = (this._w + this._x) - (p.side.w);
 		var kolBottom = this._y;
+		trace("type:"+this._type);
+		trace("position:"+options.position);
 		if(options.position==1){
 			innerWidth = (this._w + this._x);
+		} else if (options.position==2){
+
+			this.drawBox(p.side.w , innerHeight , innerWidth, kolBottom,{
+				fillcolor:k.style.sidefill
+			});
+
 		} else {
 			this.drawBox(p.side.w , innerHeight ,this._x, kolBottom,{
 				fillcolor:k.style.sidefill
@@ -482,12 +517,15 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 
 
 		var sideWidth = p.side.w;
-		if(options.position==1){
-			sideWidth = 0;
-		}
-
 		var perKol = (this._w - ((p.kol.w * (this._kol-1)) + (sideWidth * 2))) / this._kol;
 		var perPlan = (this._h - ((p.plane.h * (this._plan-1)))) / this._plan;
+
+		if(options.position==2){
+			perKol = (this._w - ((p.kol.w * (this._kol-1)) + sideWidth)) / this._kol;
+		}
+		if(options.position==1){
+			perKol = (this._w - (p.kol.w * (this._kol-1))) / this._kol;
+		}
 
 		var whatFits = function(w,h){
 			var stuff = ["dvd","blueray","cd"];
@@ -504,53 +542,108 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 
 		for(var i = 0; i < this._kol; i++){
 			var colX = this._x + sideWidth + (i * perKol);
+			if(options.position==2){
+				colX = this._x + (i * perKol);
+			}
+
 			colX  = colX + (i * p.kol.w);
-			if(i>0){
-				this.drawBox(p.kol.w,innerHeight,(colX-p.kol.w) ,kolBottom,{
-					fillcolor:k.style.kolfill
-				})
+			if(this._type=="std"){
+				if(i>0){
+					this.drawBox(p.kol.w,innerHeight,(colX-p.kol.w) ,kolBottom,{
+						fillcolor:k.style.kolfill
+					})
+				}
+				for(var u = 1; u < this._plan; u++){
+					var planY = kolBottom - (u * perPlan);
+					planY  = planY - ((u-1) * p.plane.h);
+					this.drawBox(perKol,p.plane.h,(colX),planY,{
+						fillcolor:k.style.planefill
+					});
+
+					var fits = whatFits(perKol,perPlan);
+					if(fits.length>0){
+						var thing = fits[Math.round(Math.random()*(fits.length-1))];
+						this.fillWith(thing,colX,planY,perKol);
+					}
+
+				}
+			}
+
+
+
+
+			if(this._type=="std"){
+				var planY = kolBottom - (u * perPlan);
+				planY  = planY - ((u-1) * p.plane.h);
+				this.drawBox(perKol,p.plane.h,(colX),((kolBottom-this._h)+p.plane.h),{
+					fillcolor:k.style.planefill
+				});
+				var planY = kolBottom - (u * perPlan);
+				planY  = planY - ((u-1) * p.plane.h);
+				this.drawBox(perKol,p.plane.h,(colX),(kolBottom-p.bottom.b),{
+					fillcolor:k.style.planefill
+				});
+				var planY = kolBottom - (u * perPlan);
+				planY  = planY - ((u-1) * p.plane.h);
+				this.drawBox(perKol,p.bottom.b,(colX),(kolBottom),{
+					fillcolor:k.style.sockelfill
+				});
+				var thing = fits[Math.round(Math.random()*(fits.length-1))];
+				this.fillWith(thing,colX,(kolBottom-p.bottom.b),perKol);
+			} else {
+
+
+			}
+
+
+
+
+		}
+
+
+
+		if(this._type=="over"){
+			var planWidth = (this._w - (sideWidth * 2));
+			var startX = this._x + p.side.w;
+			if(options.position==2){
+				startX = this._x;
+				planWidth = (this._w - sideWidth);
 			}
 			for(var u = 1; u < this._plan; u++){
 				var planY = kolBottom - (u * perPlan);
 				planY  = planY - ((u-1) * p.plane.h);
-				this.drawBox(perKol,p.plane.h,(colX),planY,{
+				if(u>0){
+				this.drawBox(planWidth,p.plane.h,startX,planY,{
 					fillcolor:k.style.planefill
 				});
+				}
+				for(var i = 0; i < this._kol; i++){
+					var colX = this._x + sideWidth + (i * perKol);
+					if(options.position==2){
+						colX = this._x + (i * perKol);
+					}
+					colX  = colX + (i * p.kol.w);
+					if(i>0){
+						this.drawBox(p.kol.w,(perPlan-p.plane.h),(colX-p.kol.w) ,(planY-p.plane.h),{
+							fillcolor:k.style.kolfill
+						})
+					}
 
-				var fits = whatFits(perKol,perPlan);
-				if(fits.length>0){
-					var thing = fits[Math.round(Math.random()*(fits.length-1))];
-					this.fillWith(thing,colX,planY,perKol);
 				}
 
 			}
 
-			var planY = kolBottom - (u * perPlan);
+			return;
+
+			this.drawBox(planWidth,p.plane.h,startX,((kolBottom-this._h)+p.plane.h),{
+				fillcolor:k.style.planefill
+
+			});
 			planY  = planY - ((u-1) * p.plane.h);
-			this.drawBox(perKol,p.plane.h,(colX),(kolBottom-p.bottom.b),{
+			this.drawBox(planWidth,p.plane.h,startX,(kolBottom),{
 				fillcolor:k.style.planefill
 			});
-
-			var thing = fits[Math.round(Math.random()*(fits.length-1))];
-			this.fillWith(thing,colX,(kolBottom-p.bottom.b),perKol);
-
-
-			var planY = kolBottom - (u * perPlan);
-			planY  = planY - ((u-1) * p.plane.h);
-			this.drawBox(perKol,p.bottom.b,(colX),(kolBottom),{
-				fillcolor:k.style.sockelfill
-			});
-
-
-
-			var planY = kolBottom - (u * perPlan);
-			planY  = planY - ((u-1) * p.plane.h);
-			this.drawBox(perKol,p.plane.h,(colX),((kolBottom-this._h)+p.plane.h),{
-				fillcolor:k.style.planefill
-			});
-
 		}
-
 		return;
 
 
