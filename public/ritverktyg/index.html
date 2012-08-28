@@ -43,17 +43,41 @@
   </header>
   <div id="main" role="main">
     <div id="stage">
-        <div id="rita_start">
-        <h1>
-          Välj grundformen för din platsbyggda bokhylla.
-        </h1>
-        <div class="choice" template="standard">
-          <div class="inner">
-            <img src="img/1.png"/>
-            <span>
-              Standard
-            </span>
+        <div id="ritar" class="">
+            Platsbygger din bokhylla...
         </div>
+        <div id="rita_modell" class="guidestep unused hide">
+          <h1>
+            Välj modell
+          </h1>
+          <div class="choice" template="davidhall">
+            <div class="inner">
+              <img src="/images/photos/l/jerker_mg_2004_1.jpg"/>
+              <span>
+                Davidhall
+              </span>
+            </div>
+          </div>
+          <div class="choice" template="ribersborg">
+            <div class="inner">
+              <img src="/images/photos/l/jerker_mg_3597.jpg"/>
+              <span>
+                Ribersborg
+              </span>
+            </div>
+          </div>
+        </div>
+        <div id="rita_start" class="guidestep unused hide">
+          <h1>
+            Välj grundformen för din platsbyggda bokhylla.
+          </h1>
+          <div class="choice" template="standard">
+            <div class="inner">
+              <img src="img/1.png"/>
+              <span>
+                Standard
+              </span>
+          </div>
         </div>
         <div class="choice" template="onewin">
           <div class="inner">
@@ -78,6 +102,27 @@
               2 dörrar / fönster
             </span>
           </div>
+        </div>
+      </div>
+      <div id="rita_base" class="guidestep unused hide">
+        <h1>
+          Mata in yttermått för din hylla
+        </h1>
+        <div class="choiceone">
+          <div class="inner">
+            <form id="baseform" style="">
+              <div class="item width" item="w">
+                <label>Bredd</label>
+                <input type="text" name="w" value="1000">
+                </div>
+              </div>
+              <div class="item height" item="h">
+                <label>Höjd</label>
+                <input type="text" name="w" value="1000">
+              </div>
+            </form>
+            <a href="#" id="startRita">Visa hylla</a>
+          </div>            
         </div>
       </div>
       <div id="stageinner">

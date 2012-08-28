@@ -1,3 +1,141 @@
+var TEMPLATES = {
+	standard:[{
+		type:"single",
+		w:1800,
+		h:2400,
+		col:4,
+		row:4
+	}],
+	onewin:[
+		{
+			type:"std",
+			w:1800,
+			h:2400,
+			col:4,
+			row:4
+		},
+		{
+			type:"over",
+			w:1200,
+			h:1000,
+			col:2,
+			row:2
+		}
+	],
+	onewinmiddle:[
+		{
+			type:"std",
+			w:1800,
+			h:2400,
+			col:4,
+			row:4
+		},
+		{
+			type:"over",
+			w:1200,
+			h:1000,
+			col:2,
+			row:2
+		},
+		{
+			type:"std",
+			w:1800,
+			h:2400,
+			col:4,
+			row:4
+		}
+	],
+	threewin:[
+		{
+			type:"std",
+			w:1800,
+			h:2400,
+			col:4,
+			row:8
+		},
+		{
+			type:"over",
+			w:1200,
+			h:1000,
+			col:2,
+			row:2
+		},
+		{
+			type:"std",
+			w:1800,
+			h:2400,
+			col:4,
+			row:8
+		},
+		{
+			type:"over",
+			w:1200,
+			h:1000,
+			col:2,
+			row:2
+		},
+		{
+			type:"std",
+			w:1800,
+			h:2400,
+			col:4,
+			row:8
+		}
+	],
+};
+
+
+var PARTS = {
+	overlay:{minw:300,maxw:2010,minh:200,maxh:1000},
+	bottom:{h:22,b:60},
+	side:{w:22},
+	plane:{h:22,minamount:1},
+	kol:{w:22,minw:350,maxw:750},
+	dvd:{h:190,w:18,name:"DVD",image:"dvd"},
+	blueray:{h:172,w:16,name:"Blueray",image:"blueray"},
+	cd:{h:120,w:12,name:"CD-skiva",image:"cd"},
+	pocket:{h:180,w:30,name:"Pocket",image:"pocket"}
+};
+
+var STYLE_BLACK = {
+	bg:"135-#fff-#eee",
+	linecolor:"rgba(255,255,255,1)",
+	planefill:"0-#333-#666",
+	kolfill:"0-#333-#666",
+	sidefill:"0-#333-#666",
+	topfill:"0-#333-#666",
+	bottomfill:"0-#333-#666",
+	sockelfill:"90#333-#666"
+};
+var STYLE_RED = {
+	bg:"135-#fff-#eee",
+	linecolor:"rgba(255,200,200,1)",
+	planefill:"0-#a90329-#6d0019",
+	kolfill:"0-#a90329-#6d0019",
+	sidefill:"0-#a90329-#6d0019",
+	topfill:"0-#a90329-#6d0019",
+	bottomfill:"0-#a90329-#6d0019",
+	sockelfill:"90-#a90329-#6d0019",
+};
+var STYLE_BACK2 = {
+	bg:"135-#fff-#eee",
+	linecolor:"rgba(102,102,102,1)",
+	planefill:"90-#eee-#fff",
+	kolfill:"0-#eee-#fff",
+	sidefill:"0-#eee-#fff",
+	topfill:"90-#eee-#fff",
+	bottomfill:"90-#eee-#fff",
+};
+var STYLE = {
+	bg:"135-#fff-#eee",
+	linecolor:"rgba(30,30,30,1)",
+	planefill:"90-#F5F5F5-#fff",
+	kolfill:"0-#F5F5F5-#fff",
+	sidefill:"0-#F5F5F5-#fff",
+	topfill:"90-#F5F5F5-#fff",
+	bottomfill:"90-#F5F5F5-#fff",
+	sockelfill:"90#F5F5F5-#fff"
+};
 Event.observe(window,"load",function(){
 	k.setup();
 });
@@ -8,90 +146,12 @@ var k = {
 	settings:{
 		margin:100
 	},
-	templates:{
-		standard:[{
-			type:"single",
-			w:1800,
-			h:2400,
-			col:4,
-			row:4
-		}],
-		onewin:[
-			{
-				type:"std",
-				w:1800,
-				h:2400,
-				col:4,
-				row:4
-			},
-			{
-				type:"over",
-				w:1200,
-				h:1000,
-				col:2,
-				row:2
-			}
-		],
-		onewinmiddle:[
-			{
-				type:"std",
-				w:1800,
-				h:2400,
-				col:4,
-				row:4
-			},
-			{
-				type:"over",
-				w:1200,
-				h:1000,
-				col:2,
-				row:2
-			},
-			{
-				type:"std",
-				w:1800,
-				h:2400,
-				col:4,
-				row:4
-			}
-		],
-		threewin:[
-			{
-				type:"std",
-				w:1800,
-				h:2400,
-				col:4,
-				row:8
-			},
-			{
-				type:"over",
-				w:1200,
-				h:1000,
-				col:2,
-				row:2
-			},
-			{
-				type:"std",
-				w:1800,
-				h:2400,
-				col:4,
-				row:8
-			},
-			{
-				type:"over",
-				w:1200,
-				h:1000,
-				col:2,
-				row:2
-			},
-			{
-				type:"std",
-				w:1800,
-				h:2400,
-				col:4,
-				row:8
-			}
-		],
+	templates:TEMPLATES,
+	baseOrder:{
+		modell:null,
+		template:null,
+		height:0,
+		width:0
 	},
 	order:[],
 	validate:{
@@ -123,9 +183,7 @@ var k = {
 				}
 				itemElement.addClassName("error");
 				setTimeout(function(){
-					this.removeClassName("error")
 					this.value=newval;
-					k.updateOrder(this.up('form'));
 
 				}.bind(itemElement),1000);
 			}
@@ -146,8 +204,16 @@ var k = {
 			max:function(order) {return 10000;}
 		},
 		h:{
-			min:function(order) {return 1000;},
-			max:function(order) {return 3050;}
+			min:function(order) {
+				trace("h.min");
+				trace(order);
+				return 1000;
+			},
+			max:function(order) {
+				trace("h.max");
+				trace(order);
+				return 3050;
+			}
 		},
 		col:{
 			min:function(order) {
@@ -172,56 +238,10 @@ var k = {
 			}
 		}
 	},
-	parts:{
-		overlay:{minw:300,maxw:2010,minh:200,maxh:1000},
-		bottom:{h:22,b:60},
-		side:{w:22},
-		plane:{h:22,minamount:1},
-		kol:{w:22,minw:350,maxw:750},
-		dvd:{h:190,w:18,name:"DVD",image:"dvd"},
-		blueray:{h:172,w:16,name:"Blueray",image:"blueray"},
-		cd:{h:120,w:12,name:"CD-skiva",image:"dvd"}
-	},
-	styleblack:{
-		bg:"135-#fff-#eee",
-		linecolor:"rgba(255,255,255,1)",
-		planefill:"0-#333-#666",
-		kolfill:"0-#333-#666",
-		sidefill:"0-#333-#666",
-		topfill:"0-#333-#666",
-		bottomfill:"0-#333-#666",
-		sockelfill:"90#333-#666"
-	},
-	stylered:{
-		bg:"135-#fff-#eee",
-		linecolor:"rgba(255,200,200,1)",
-		planefill:"0-#a90329-#6d0019",
-		kolfill:"0-#a90329-#6d0019",
-		sidefill:"0-#a90329-#6d0019",
-		topfill:"0-#a90329-#6d0019",
-		bottomfill:"0-#a90329-#6d0019",
-		sockelfill:"90-#a90329-#6d0019",
-	},
-	styleback2:{
-		bg:"135-#fff-#eee",
-		linecolor:"rgba(102,102,102,1)",
-		planefill:"90-#eee-#fff",
-		kolfill:"0-#eee-#fff",
-		sidefill:"0-#eee-#fff",
-		topfill:"90-#eee-#fff",
-		bottomfill:"90-#eee-#fff",
-	},
-	style:{
-		bg:"135-#fff-#eee",
-		linecolor:"rgba(30,30,30,1)",
-		planefill:"90-#F5F5F5-#fff",
-		kolfill:"0-#F5F5F5-#fff",
-		sidefill:"0-#F5F5F5-#fff",
-		topfill:"90-#F5F5F5-#fff",
-		bottomfill:"90-#F5F5F5-#fff",
-		sockelfill:"90#F5F5F5-#fff"
-	},
+	parts:PARTS,
+	style:STYLE,
 	updateOrder:function(form){
+		trace("updateOrder");
 		var order = form.serialize(true);
 		var oneFail = false;
 		Object.keys(order).each(function(item){
@@ -235,9 +255,25 @@ var k = {
 		if(oneFail){
 			trace("one item failed");
 		} else {
+			trace("redraw in update order");
 			this.redraw();
 		}
 
+	},
+	nextGuideStep:function(){
+		var next = $$(".guidestep.unused").first();
+		$$(".guidestep.active").each(function(item){
+			trace("adding hide to active guidestep");
+			item.addClassName("hide");
+		});
+		if(next){
+			next.show();
+			setTimeout(function(){
+				next.removeClassName("unused");
+				next.removeClassName("hide");
+				next.addClassName("active");
+			},100);
+		}
 	},
 	setup:function(){
 		trace("setup");
@@ -247,16 +283,28 @@ var k = {
 			k.resizePaper();
 		});
 
-		$$(".choice").each(function(choice){
-			choice.observe("click",function(){
+		$$(".guidestep").each(function(guidestep){
+			guidestep.hide();
+		});
 
-				$("rita_start").addClassName("hide");
-				setTimeout(function(){
-					$("rita_start").remove();
-					k.startUp(this.readAttribute("template"));
-				}.bind(this),1100);
+		$$("#rita_modell .choice").each(function(choice){
+			choice.observe("click",function(){
+				k.baseOrder.modell = this.readAttribute("template");
+				k.nextGuideStep();
 			})
 		});
+		$$("#rita_start .choice").each(function(choice){
+			choice.observe("click",function(){
+				k.baseOrder.template = this.readAttribute("template");
+				k.nextGuideStep();
+			})
+		});
+		$("startRita").observe("click",function(e){
+			e.stop();
+			k.nextGuideStep();
+			k.startUp(k.baseOrder.template);
+		});
+		k.nextGuideStep();
 
 
 	},
@@ -274,8 +322,10 @@ var k = {
 		this.resizePaper();
 	},
 	addForm:function(id,data){
+		trace("addForm")
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
+		newForm.writeAttribute("type",data.type);
 		newForm.down('input[name=id]').value=id;
 		newForm.down('strong').update("Sektion "+(id+1));
 		var sliders = newForm.getInputs();
@@ -333,57 +383,72 @@ var k = {
 			}
 		}
 		this.order = newOrderArr;
+		trace("remove form redraw");
 		this.redraw();
 	},
 	redraw:function(){
-		var s = this.settings;
-		var o = this.order;
-		var w = 0;
-		var h = 0;
-		for(var i = 0; i < this.order.length; i++){
-			w+=this.order[i].w;
-			if(this.order[i].h>h){
-				h=this.order[i].h;
-			}
-		}
-		w += (s.margin*2);
-		h += (s.margin*2);
-
-
-
-		trace("paper w:"+w);
-		trace("paper h:"+h);
-
-		this.paper = new ScaleRaphael("stageinner", w,h);
-		var lastX = s.margin;
-		for(var i = 0; i < this.order.length; i++){
-			var o = this.order[i];
-			var type = o.type;
-			trace("type:"+type);
-			var position = 3;
-			if(this.order.length>1){
-				if(this.order.length>2){
-				} else {
-					trace("hej");
-				}
-				if(i==0){
-					position=0;
-				} else if(i>0 && i<(this.order.length-1)){
-					position=1;
-				} else {
-					position=2;
-				}
-				if((position==1) && (this.order.length==5) && (i==2)){
-					position = 3;
+		trace("redrawar");
+		if($("ritar").hasClassName("show")) return;
+		$("ritar").addClassName("show");
+		setTimeout(function(){
+			var s = this.settings;
+			var o = this.order;
+			var w = 0;
+			var h = 0;
+			for(var i = 0; i < this.order.length; i++){
+				w+=this.order[i].w;
+				if(this.order[i].h>h){
+					h=this.order[i].h;
 				}
 			}
-			this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,{
-				position:position, type:type
-			});
-			lastX = lastX + (o.w);
-		}
+			w += (s.margin*2);
+			h += (s.margin*2);
 
-		this.resizePaper();
+
+
+			trace("paper w:"+w);
+			trace("paper h:"+h);
+
+			this.paper = new ScaleRaphael("stageinner", w,h);
+			var lastX = s.margin;
+			for(var i = 0; i < this.order.length; i++){
+				var o = this.order[i];
+				var type = o.type;
+				trace("type:"+type);
+				var position = 3;
+				if(this.order.length>1){
+					if(this.order.length>2){
+					} else {
+						trace("hej");
+					}
+					if(i==0){
+						position=0;
+					} else if(i>0 && i<(this.order.length-1)){
+						position=1;
+					} else {
+						position=2;
+					}
+					if((position==1) && (this.order.length==5) && (i==2)){
+						position = 3;
+					}
+				}
+				this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,{
+					position:position, type:type
+				});
+				lastX = lastX + (o.w);
+			}
+
+
+			setTimeout(function(){
+				k.resizePaper();
+			},100);
+			setTimeout(function(){
+				k.resizePaper();
+			},200);
+			setTimeout(function(){
+				$("ritar").removeClassName("show");
+			},300);
+		}.bind(this),300);
 
 
 	},
@@ -528,7 +593,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		}
 
 		var whatFits = function(w,h){
-			var stuff = ["dvd","blueray","cd"];
+			var stuff = ["dvd","blueray","cd","pocket"];
 			var fits = [];
 			for(var i = 0; i < stuff.length; i++){
 				var thing = stuff[i];
@@ -609,14 +674,10 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 				startX = this._x;
 				planWidth = (this._w - sideWidth);
 			}
-			for(var u = 1; u < this._plan; u++){
+			for(var u = 0; u < this._plan; u++){
 				var planY = kolBottom - (u * perPlan);
 				planY  = planY - ((u-1) * p.plane.h);
-				if(u>0){
-				this.drawBox(planWidth,p.plane.h,startX,planY,{
-					fillcolor:k.style.planefill
-				});
-				}
+
 				for(var i = 0; i < this._kol; i++){
 					var colX = this._x + sideWidth + (i * perKol);
 					if(options.position==2){
@@ -624,16 +685,25 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 					}
 					colX  = colX + (i * p.kol.w);
 					if(i>0){
-						this.drawBox(p.kol.w,(perPlan-p.plane.h),(colX-p.kol.w) ,(planY-p.plane.h),{
+						trace("U");
+						trace(u);
+						this.drawBox(p.kol.w,(perPlan-p.plane.h),(colX-p.kol.w) ,(planY-(p.plane.h*(2-u))),{
 							fillcolor:k.style.kolfill
 						})
 					}
 
 				}
 
+				if(u>0){
+				this.drawBox(planWidth,p.plane.h,startX,planY,{
+					fillcolor:k.style.planefill
+				});
+				}
+
 			}
 
-			return;
+
+
 
 			this.drawBox(planWidth,p.plane.h,startX,((kolBottom-this._h)+p.plane.h),{
 				fillcolor:k.style.planefill
@@ -654,7 +724,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 
 
 	}
-
+	trace("call redraw 1");
 	this.redraw();
 }
 
