@@ -91,6 +91,22 @@ var TEMPLATES = {
 			col:4,
 			row:8,
 			sockel:60
+		},
+		{
+			type:"over",
+			w:1200,
+			h:602,
+			col:2,
+			row:2,
+			sockel:0
+		},
+		{
+			type:"std",
+			w:1800,
+			h:2400,
+			col:4,
+			row:8,
+			sockel:60
 		}
 	],
 };
@@ -100,10 +116,18 @@ var PRICELIST = {
 	bakstycke:1120,
 	hyllplan:382,
 	oversmall:1985,
-	overbig:2580
+	overbig:2580,
+	gavel_davidhall:2400,
+	oversmall_davidhall:2985,
+	overbig_davidhall:3580,
+	skap:6850
 }
 
 var PARTS = {
+	skap:{
+		h:750,
+		skiva:32
+	},
 	overlay:{minw:300,maxw:2010,minh:200,maxh:1000},
 	bottom:{h:22,b:60},
 	side:{w:22},

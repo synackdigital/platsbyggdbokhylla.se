@@ -91,6 +91,22 @@ var TEMPLATES = {
 			col:4,
 			row:8,
 			sockel:60
+		},
+		{
+			type:"over",
+			w:1200,
+			h:602,
+			col:2,
+			row:2,
+			sockel:0
+		},
+		{
+			type:"std",
+			w:1800,
+			h:2400,
+			col:4,
+			row:8,
+			sockel:60
 		}
 	],
 };
@@ -100,10 +116,18 @@ var PRICELIST = {
 	bakstycke:1120,
 	hyllplan:382,
 	oversmall:1985,
-	overbig:2580
+	overbig:2580,
+	gavel_davidhall:2400,
+	oversmall_davidhall:2985,
+	overbig_davidhall:3580,
+	skap:6850
 }
 
 var PARTS = {
+	skap:{
+		h:750,
+		skiva:32
+	},
 	overlay:{minw:300,maxw:2010,minh:200,maxh:1000},
 	bottom:{h:22,b:60},
 	side:{w:22},
@@ -176,12 +200,16 @@ var k = {
 		width:0
 	},
 	order:[],
+	orderDetails:{
+		price:0,
+	},
 	validate:{
 		item:function(theForm,item){
 			trace("validate.item");
 			trace(item.name)
 			if(item.name=="id") return true;
 			if(item.name=="type") return true;
+			if(item.name=="modell") return true;
 			var min = k.validate[item.name].min(item.order);
 			var max = k.validate[item.name].max(item.order);
 			var valid = false;
@@ -282,13 +310,20 @@ var k = {
 		var order = form.serialize(true);
 		var oneFail = false;
 		Object.keys(order).each(function(item){
+			trace("order key:"+item);
 			if(item!="type"){
-			var val = parseInt(order[item]);
-			if(k.validate.item(form,{val:val,name:item,order:order})){
-				k.order[order.id][item] = val;
-			} else {
-				oneFail = true;
-			}
+				if(item=="modell"){
+					trace("key:modell");
+					k.order[order.id][item]=order[item];
+					trace(k.order[order.id]);
+				} else {
+					var val = parseInt(order[item]);
+					if(k.validate.item(form,{val:val,name:item,order:order})){
+						k.order[order.id][item] = val;
+					} else {
+						oneFail = true;
+					}
+				}
 			}
 		});
 		if(oneFail){
@@ -339,7 +374,7 @@ var k = {
 		$("startRita").observe("click",function(e){
 			e.stop();
 			k.nextGuideStep();
-			k.startUp(k.baseOrder.template);
+			k.startUp(k.baseOrder.modell,k.baseOrder.template);
 		});
 
 		$("fillwithform").getInputs("checkbox").each(function(box){
@@ -354,7 +389,7 @@ var k = {
 
 
 	},
-	startUp:function(template){
+	startUp:function(modell, template){
 		k.order = this.templates[template];
 		var orderCount = k.order.length;
 		var sectionCount = 1;
@@ -365,7 +400,7 @@ var k = {
 			} else {
 				count = sectionCount++;
 			}
-			k.addForm(index,order,count);
+			k.addForm(index,order,count,modell);
 		});
 		$$("#controls form").each(function(aForm){
 			if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform"){
@@ -374,10 +409,11 @@ var k = {
 		});
 		this.resizePaper();
 	},
-	addForm:function(id,data,counter){
+	addForm:function(id,data,counter,modell){
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
 		newForm.writeAttribute("type",data.type);
+		newForm.down('input[name=modell]').value=modell;
 		newForm.down('input[name=id]').value=id;
 		newForm.down('input[name=type]').value=data.type;
 		newForm.down('strong').update("Sektion "+(counter));
@@ -427,8 +463,6 @@ var k = {
 						k.updateOrder(this.up('form'));
 					}.bind(this),200);
 				});
-
-
 			}
 
 		});
@@ -457,29 +491,41 @@ var k = {
 			bakstycke:0,
 			hyllplan:0,
 			oversmall:0,
-			overbig:0
+			overbig:0,
+			skap:0
 		};
+
 		for(var i = 0; i < this.order.length; i++){
 			var hyllprice = this.order[i].hylla.price;
-			total.gavel+=hyllprice.gavel;
 			total.bakstycke+=hyllprice.bakstycke;
 			total.hyllplan+=hyllprice.hyllplan;
+			total.gavel+=hyllprice.gavel;
 			total.oversmall+=hyllprice.oversmall;
 			total.overbig+=hyllprice.overbig;
+			total.skap+=hyllprice.skap;
 		}
-		trace("TOTAL PRICE");
-		trace(total);
-
 		var totalprice = 0;
-		totalprice = total.gavel*PRICELIST.gavel;
-		totalprice += total.bakstycke*PRICELIST.bakstycke;
-		totalprice += total.hyllplan*PRICELIST.hyllplan;
-		totalprice += total.oversmall*PRICELIST.oversmall;
-		totalprice += total.overbig*PRICELIST.overbig;
+
+		if(k.baseOrder.modell=="davidhall"){
+			totalprice = total.gavel*PRICELIST.gavel_davidhall;
+			totalprice += total.bakstycke*PRICELIST.bakstycke;
+			totalprice += total.hyllplan*PRICELIST.hyllplan;
+			totalprice += total.oversmall*PRICELIST.oversmall_davidhall;
+			totalprice += total.overbig*PRICELIST.overbig_davidhall;
+			totalprice += total.skap*PRICELIST.skap;
+		} else {
+			totalprice = total.gavel*PRICELIST.gavel;
+			totalprice += total.bakstycke*PRICELIST.bakstycke;
+			totalprice += total.hyllplan*PRICELIST.hyllplan;
+			totalprice += total.oversmall*PRICELIST.oversmall;
+			totalprice += total.overbig*PRICELIST.overbig;
+		}
+
+		this.orderDetails.priceTotal = totalprice;
 
 		$("pricevalue").update(totalprice+":-");
 
-		pricevalue
+
 
 	},
 	redraw:function(){
@@ -508,6 +554,7 @@ var k = {
 			for(var i = 0; i < this.order.length; i++){
 				var o = this.order[i];
 				var type = o.type;
+				var modell = o.modell;
 				var position = 3;
 				if(o.type=="over"){
 					if(i==this.order.length-1){
@@ -516,9 +563,9 @@ var k = {
  						position = 1;
  					}
 				}
-				trace("new hylla, position:"+position+", type:"+type);
+				trace("new hylla, position:"+position+", type:"+type+", modell:"+modell);
 				this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,o.sockel,{
-					position:position, type:type
+					position:position, type:type, modell:modell
 				});
 				lastX = lastX + (o.w);
 			}
@@ -575,7 +622,9 @@ var k = {
 }
 
 var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
-	if(!options) options = {position:3, type:"std"};
+	trace("new hylla");
+	trace(options);
+	if(!options) options = {position:3, type:"std", modell:"ribersborg"};
 	this._type=options.type;
 	this._p = p;
 	this._x = x;
@@ -585,6 +634,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	this._kol = kol;
 	this._plan = plan;
 	this._sockel = sockel;
+	this._modell = options.modell;
 	this.lines = [];
 
 	this.drawBox = function(w,h,x,y,options){
@@ -656,6 +706,11 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		var innerHeight = this._h;
 		var innerWidth = (this._w + this._x) - (p.side.w);
 		var kolBottom = this._y;
+
+		if(this._modell=="davidhall"){
+			kolBottom = this._y - (p.skap.h+p.skap.skiva);
+		}
+
 		if(options.position==1){
 			innerWidth = (this._w + this._x);
 		} else if (options.position==2){
@@ -837,6 +892,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		}
 
 		price.bakstycke = (price.gavel>0) ? (price.gavel - 1) : 0;
+		price.skap = (price.gavel>0) ? (price.gavel - 1) : 0;
 
 		this.price = price;
 		trace(price);
