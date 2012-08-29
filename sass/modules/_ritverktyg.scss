@@ -5,11 +5,10 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 20%;
+  bottom: 170px;
   background: #fafafa image-url('wallpaper.jpg') no-repeat bottom center;
   @include background-size(cover);
   overflow:hidden;
-  border:solid 2px #F00;
 }
 
 #stageinner {
@@ -17,8 +16,9 @@
   top: .5 * $base-hmargin;
   left: .5 * $base-vmargin;
   right: .5 * $base-vmargin;
-  bottom: 20%;
+  bottom: 170px;
   z-index: 30;
+  overflow:hidden;
 }
 
 #ritar {
@@ -88,7 +88,8 @@
   padding: $base-vmargin $base-hmargin;
   padding-left: image-width('jiof-logo.png');
   position: absolute;
-  top: 80%;
+  z-index:400;
+  height:170px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -161,15 +162,82 @@
   
 }
 
+#rita_modell {
+  .choice {
+    span {
+      font-size:40px;
+      line-height:200px;
+    }
+  }
+}
+#rita_base {
+  .choiceone {
+    width:100%;
+    .inner {
+      padding:10px;
+      font-size:14px;
+      width:100%;
+      bottom:0px;
+      background-color:#FFF;
+      border: solid 5px #FFF;
+      .item {
+        float:left;
+        width:33%;
+        label {
+          display:block;
+        }
+        input {
+          display:block;
+          font-size:16px;
+          margin-bottom:20px;
+        }
+      }
+      .clearLeft {
+        clear:left;
+      }
+    }
+  }
+}
+
+#startRita {
+  clear:left;
+}
+
 #floor {
   background: image-url('woodfloor.jpg') no-repeat top center;
   @include background-size(cover);
   border-top: 1px solid #f6e1cb;
   position: absolute;
   bottom: 0px;
-  left: .5 * $base-vmargin;
-  right: .5 * $base-vmargin;
+  left: 0px;
+  right: 0px;
   height: 100px;
   z-index: 20;
 }
 
+
+
+#price {
+  font-size:20px;
+  position:absolute;
+  right:15px;
+  text-align:right;
+  width:200px;
+  height:70px;
+  bottom:10px;
+  .obs {
+    font-size:10px;
+  }
+}
+
+#fillwith {
+  right:15px;
+  top:15px;
+  position:absolute;
+  label {
+    font-weight:bold;
+  }
+  input {
+    margin-left:5px;
+  }
+}

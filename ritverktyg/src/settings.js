@@ -1,10 +1,11 @@
 var TEMPLATES = {
 	standard:[{
-		type:"single",
+		type:"std",
 		w:1800,
 		h:2400,
 		col:4,
-		row:4
+		row:4,
+		sockel:60
 	}],
 	onewin:[
 		{
@@ -16,8 +17,8 @@ var TEMPLATES = {
 		},
 		{
 			type:"over",
-			w:1200,
-			h:1000,
+			w:1500,
+			h:500,
 			col:2,
 			row:2
 		}
@@ -33,7 +34,7 @@ var TEMPLATES = {
 		{
 			type:"over",
 			w:1200,
-			h:1000,
+			h:500,
 			col:2,
 			row:2
 		},
@@ -56,21 +57,21 @@ var TEMPLATES = {
 		{
 			type:"over",
 			w:1200,
-			h:1000,
+			h:602,
 			col:2,
 			row:2
 		},
 		{
 			type:"std",
-			w:1800,
+			w:750,
 			h:2400,
-			col:4,
+			col:1,
 			row:8
 		},
 		{
 			type:"over",
 			w:1200,
-			h:1000,
+			h:602,
 			col:2,
 			row:2
 		},
@@ -84,6 +85,13 @@ var TEMPLATES = {
 	],
 };
 
+var PRICELIST = {
+	gavel:1555,
+	bakstycke:1120,
+	hyllplan:382,
+	oversmall:1985,
+	overbig:2580
+}
 
 var PARTS = {
 	overlay:{minw:300,maxw:2010,minh:200,maxh:1000},
@@ -92,9 +100,13 @@ var PARTS = {
 	plane:{h:22,minamount:1},
 	kol:{w:22,minw:350,maxw:750},
 	dvd:{h:190,w:18,name:"DVD",image:"dvd"},
+	dvdopen:{h:190,w:136,name:"DVD",image:"dvd-open"},
 	blueray:{h:172,w:16,name:"Blueray",image:"blueray"},
 	cd:{h:120,w:12,name:"CD-skiva",image:"cd"},
-	pocket:{h:180,w:30,name:"Pocket",image:"pocket"}
+	cdopen:{h:120,w:120,name:"CD-skiva",image:"cd-open"},
+	cdopen2:{h:120,w:120,name:"CD-skiva",image:"cd-open2"},
+	pocket:{h:180,w:30,name:"Pocket",image:"pocket"},
+	bok:{h:220,w:13,name:"Inbunden bok",image:"pocket"}
 };
 
 var STYLE_BLACK = {

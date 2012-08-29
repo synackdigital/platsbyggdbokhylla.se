@@ -18,7 +18,10 @@ var k = {
 	order:[],
 	validate:{
 		item:function(theForm,item){
+			trace("validate.item");
+			trace(item.name)
 			if(item.name=="id") return true;
+			if(item.name=="type") return true;
 			var min = k.validate[item.name].min(item.order);
 			var max = k.validate[item.name].max(item.order);
 			var valid = false;
@@ -37,10 +40,8 @@ var k = {
 				itemElement.removeClassName("error");
 			} else {
 					if(item.val>max){
-					trace("set to max");
 					var newval = max;
 				} else if(item.val < min){
-					trace("set to min");
 					var newval = min;
 				}
 				itemElement.addClassName("error");
@@ -60,28 +61,43 @@ var k = {
 			itemElement.down('.max').update(max);
 			itemElement.down('.min').update(min);
 
-			trace(input);
 			return true;
+		},
+		sockel:{
+			min:function(order) {return 0;},
+			max:function(order) {return 300;}
 		},
 		w:{
 			min:function(order) {return k.parts.side.w*2;},
-			max:function(order) {return 10000;}
+			max:function(order) {
+				if(order.type=="over"){
+					return 2000;
+				}
+				return 10000;
+			}
 		},
 		h:{
 			min:function(order) {
-				trace("h.min");
-				trace(order);
+				if(order.type=="over"){
+					return 100;
+				}
 				return 1000;
 			},
 			max:function(order) {
-				trace("h.max");
-				trace(order);
+				if(order.type=="over"){
+					return 1000;
+				}
 				return 3050;
 			}
 		},
 		col:{
 			min:function(order) {
 				var min = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.maxw+k.parts.kol.w)); 
+				trace("col min");
+				trace(min);
+				if(order.type=="over" && order.w <=1450){
+					return 1;
+				}
 				return min;
 			},
 			max:function(order) {
@@ -105,15 +121,16 @@ var k = {
 	parts:PARTS,
 	style:STYLE,
 	updateOrder:function(form){
-		trace("updateOrder");
 		var order = form.serialize(true);
 		var oneFail = false;
 		Object.keys(order).each(function(item){
+			if(item!="type"){
 			var val = parseInt(order[item]);
 			if(k.validate.item(form,{val:val,name:item,order:order})){
 				k.order[order.id][item] = val;
 			} else {
 				oneFail = true;
+			}
 			}
 		});
 		if(oneFail){
@@ -127,7 +144,6 @@ var k = {
 	nextGuideStep:function(){
 		var next = $$(".guidestep.unused").first();
 		$$(".guidestep.active").each(function(item){
-			trace("adding hide to active guidestep");
 			item.addClassName("hide");
 		});
 		if(next){
@@ -140,7 +156,6 @@ var k = {
 		}
 	},
 	setup:function(){
-		trace("setup");
 		var windowAddEvent = window.attachEvent || window.addEventListener;
 		
 		Event.observe(window,"resize", function(){
@@ -168,30 +183,61 @@ var k = {
 			k.nextGuideStep();
 			k.startUp(k.baseOrder.template);
 		});
+
+		$("fillwithform").getInputs("checkbox").each(function(box){
+			box.observe("change",function(e){
+				k.redraw();
+			});
+		});
+		
 		k.nextGuideStep();
+		
+		
 
 		
 	},
 	startUp:function(template){
 		k.order = this.templates[template];
 		var orderCount = k.order.length;
+		var sectionCount = 1;
+		var overCount = 1;
 		k.order.each(function(order,index){
-			k.addForm(index,order);
+			if(order.type=="over"){
+				count = overCount++;
+			} else {
+				count = sectionCount++;
+			}
+			k.addForm(index,order,count);
 		});
 		$$("#controls form").each(function(aForm){
-			if(aForm.identify()!="orderForm"){
+			if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform"){
 				k.updateOrder(aForm);
 			}
 		});
 		this.resizePaper();
 	},
-	addForm:function(id,data){
-		trace("addForm")
+	addForm:function(id,data,counter){
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
 		newForm.writeAttribute("type",data.type);
 		newForm.down('input[name=id]').value=id;
-		newForm.down('strong').update("Sektion "+(id+1));
+		newForm.down('input[name=type]').value=data.type;
+		newForm.down('strong').update("Sektion "+(counter));
+
+		if(counter>1 && data.type=="std"){
+			newForm.select(".item.slave").each(function(slave){
+				slave.hide();
+			});
+		}
+		if(data.type=="over"){
+			newForm.select(".item.slave.sockel").each(function(slave){
+				slave.hide();
+			});
+		}
+
+		if(data.type=="over"){
+			newForm.down('strong').update("Överbyggnad "+(counter));
+		}
 		var sliders = newForm.getInputs();
 		var exactVals = newForm.select("span[contenteditable=true]");
 		var all = sliders.concat(exactVals);
@@ -209,7 +255,6 @@ var k = {
 					this.down(".control").show();
 				});
 				item.observe("keypress",function(e){
-					trace("keyyo");
 					if(e.keyCode == Event.KEY_RETURN) {
 						this.blur();
 						k.updateOrder(this.up('form'));				
@@ -221,7 +266,6 @@ var k = {
 					k.updateInterval = clearInterval(k.updateInterval);
 					k.updateInterval = setInterval(function(){
 						k.updateInterval = clearInterval(k.updateInterval);
-						trace("update now!");
 						k.updateOrder(this.up('form'));				
 					}.bind(this),200);
 				});
@@ -247,14 +291,45 @@ var k = {
 			}
 		}
 		this.order = newOrderArr;
-		trace("remove form redraw");
 		this.redraw();
 	},
+	calculatePrice:function(){
+		var total = {
+			gavel:0,
+			bakstycke:0,
+			hyllplan:0,
+			oversmall:0,
+			overbig:0
+		};		
+		for(var i = 0; i < this.order.length; i++){
+			var hyllprice = this.order[i].hylla.price;
+			total.gavel+=hyllprice.gavel;
+			total.bakstycke+=hyllprice.bakstycke;
+			total.hyllplan+=hyllprice.hyllplan;
+			total.oversmall+=hyllprice.oversmall;
+			total.overbig+=hyllprice.overbig;
+		}
+		trace("TOTAL PRICE");
+		trace(total);
+
+		var totalprice = 0;
+		totalprice = total.gavel*PRICELIST.gavel;
+		totalprice += total.bakstycke*PRICELIST.bakstycke;
+		totalprice += total.hyllplan*PRICELIST.hyllplan;
+		totalprice += total.oversmall*PRICELIST.oversmall;
+		totalprice += total.overbig*PRICELIST.overbig;
+
+		$("pricevalue").update(totalprice+":-");
+
+		pricevalue
+
+	},
 	redraw:function(){
-		trace("redrawar");
+
 		if($("ritar").hasClassName("show")) return;
 		$("ritar").addClassName("show");
 		setTimeout(function(){
+			$("stageinner").hide();
 			var s = this.settings;
 			var o = this.order;
 			var w = 0;
@@ -268,41 +343,32 @@ var k = {
 			w += (s.margin*2);
 			h += (s.margin*2);
 
-			
-
-			trace("paper w:"+w);
-			trace("paper h:"+h);
 
 			this.paper = new ScaleRaphael("stageinner", w,h);
 			var lastX = s.margin;
+
 			for(var i = 0; i < this.order.length; i++){
 				var o = this.order[i];
 				var type = o.type;
-				trace("type:"+type);
 				var position = 3;
-				if(this.order.length>1){
-					if(this.order.length>2){
-						//en hylla med en sektion till höger eller vänster
-					} else {
-						trace("hej");
-					}
-					if(i==0){
-						position=0;
-					} else if(i>0 && i<(this.order.length-1)){
-						position=1;
-					} else {
-						position=2;
-					}
-					if((position==1) && (this.order.length==5) && (i==2)){
-						position = 3;
-					}
+				//position = 3;
+				if(o.type=="over"){
+					if(i==this.order.length-1){
+						//over is last
+						position = 2;
+ 					} else {
+ 						//over is middle
+ 						position = 1;
+ 					}
 				}
+				trace("new hylla, position:"+position+", type:"+type);
 				this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,{
 					position:position, type:type
 				});
 				lastX = lastX + (o.w);
 			}
 
+			this.calculatePrice();
 			
 			setTimeout(function(){
 				k.resizePaper();
@@ -311,6 +377,7 @@ var k = {
 				k.resizePaper();
 			},200);
 			setTimeout(function(){
+				$("stageinner").show();
 				$("ritar").removeClassName("show");
 			},300);
 		}.bind(this),300);
@@ -418,7 +485,15 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 			}
 		}
 	};
-	this.redraw = function(){		
+	this.redraw = function(){
+
+		var price = {
+				gavel:0,
+				bakstycke:0,
+				hyllplan:0,
+				oversmall:0,
+				overbig:0
+			};		
 		//basics
 		var borderSize = 1;
 
@@ -439,29 +514,29 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		var innerHeight = this._h;
 		var innerWidth = (this._w + this._x) - (p.side.w);
 		var kolBottom = this._y;
-		trace("type:"+this._type);
-		trace("position:"+options.position);
 		if(options.position==1){
 			//middle section
 			innerWidth = (this._w + this._x);
 			//right position
 		} else if (options.position==2){
 			//right
-
 			this.drawBox(p.side.w , innerHeight , innerWidth, kolBottom,{
 				fillcolor:k.style.sidefill
 			});
+			price.gavel++;
 			
 		} else {			
 			//single hylla or left or right side			
 			this.drawBox(p.side.w , innerHeight ,this._x, kolBottom,{
 				fillcolor:k.style.sidefill
 			});
+			price.gavel++;
 			
 			//right
 			this.drawBox(p.side.w , innerHeight , innerWidth, kolBottom,{
 				fillcolor:k.style.sidefill
 			});
+			price.gavel++;
 		}
 
 
@@ -480,7 +555,13 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 		}
 
 		var whatFits = function(w,h){
-			var stuff = ["dvd","blueray","cd","pocket"];
+			var stuff = ["dvd","dvdopen","blueray","cd","pocket","cdopen","cdopen2"];
+
+			var stuff = [];
+			$("fillwithform").getInputs("checkbox").each(function(box){if(box.checked){stuff.push(box.getValue());}});
+
+			//$("#fillwith");
+
 			var fits = [];
 			for(var i = 0; i < stuff.length; i++){
 				var thing = stuff[i];
@@ -505,6 +586,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 					this.drawBox(p.kol.w,innerHeight,(colX-p.kol.w) ,kolBottom,{
 						fillcolor:k.style.kolfill
 					})
+					price.gavel++;
 				}
 				for(var u = 1; u < this._plan; u++){
 					var planY = kolBottom - (u * perPlan);
@@ -512,6 +594,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 					this.drawBox(perKol,p.plane.h,(colX),planY,{
 						fillcolor:k.style.planefill
 					});
+					price.hyllplan++;
 
 					//fill the plane up
 					var fits = whatFits(perKol,perPlan);
@@ -542,6 +625,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 				this.drawBox(perKol,p.plane.h,(colX),(kolBottom-p.bottom.b),{
 					fillcolor:k.style.planefill
 				});
+				price.hyllplan++;
 				//sockelbackgrund
 				var planY = kolBottom - (u * perPlan);
 				planY  = planY - ((u-1) * p.plane.h);
@@ -549,6 +633,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 					fillcolor:k.style.sockelfill
 				});
 				//fill the bottom plane up
+				var fits = whatFits(perKol,(perPlan-(p.bottom.b+p.plane.h)));
 				var thing = fits[Math.round(Math.random()*(fits.length-1))];
 				this.fillWith(thing,colX,(kolBottom-p.bottom.b),perKol);
 			} else {
@@ -566,6 +651,14 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 
 
 		if(this._type=="over"){
+
+			price.gavel = 0;
+			if(this._w<=1450){
+				price.oversmall = 1;
+			} else {
+				price.overbig = 1;
+			}
+
 			//over hyllor
 			var planWidth = (this._w - (sideWidth * 2));
 			var startX = this._x + p.side.w;
@@ -573,22 +666,30 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 				startX = this._x;
 				planWidth = (this._w - sideWidth);
 			}
+			if(options.position	== 1){
+				startX = this._x;
+				planWidth = (this._w);
+			}
 			for(var u = 0; u < this._plan; u++){
 				var planY = kolBottom - (u * perPlan);
 				planY  = planY - ((u-1) * p.plane.h);
 				
 				for(var i = 0; i < this._kol; i++){
-					var colX = this._x + sideWidth + (i * perKol);
+					var colX = startX + (i * perKol);
 					if(options.position==2){
 						colX = this._x + (i * perKol);
 					}
 					colX  = colX + (i * p.kol.w);
 					if(i>0){
-						trace("U");
-						trace(u);
 						this.drawBox(p.kol.w,(perPlan-p.plane.h),(colX-p.kol.w) ,(planY-(p.plane.h*(2-u))),{
 							fillcolor:k.style.kolfill
 						})
+
+					}
+					var fits = whatFits(perKol,perPlan);
+					if(fits.length>0){
+						var thing = fits[Math.round(Math.random()*(fits.length-1))];
+						this.fillWith(thing,colX,(planY-(p.plane.h*(2-u)))+p.plane.h,perKol);
 					}
 					
 				}
@@ -629,7 +730,12 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 			//var thing = fits[Math.round(Math.random()*(fits.length-1))];
 			//this.fillWith(thing,startX,(kolBottom),planWidth);
 		}
-		return;
+
+		price.bakstycke = (price.gavel>0) ? (price.gavel - 1) : 0;
+
+		this.price = price;
+		trace(price);
+		return price;
 
 
 		/**
@@ -674,7 +780,6 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 
 
 	}
-	trace("call redraw 1");
 	this.redraw();
 }
 
