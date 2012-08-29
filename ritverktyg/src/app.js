@@ -362,7 +362,7 @@ var k = {
  					}
 				}
 				trace("new hylla, position:"+position+", type:"+type);
-				this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,{
+				this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,o.sockel,{
 					position:position, type:type
 				});
 				lastX = lastX + (o.w);
@@ -432,7 +432,7 @@ var k = {
 
 }
 
-var hylla = function(p, x, y, w, h, kol, plan,options){
+var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	if(!options) options = {position:3, type:"std"};
 	this._type=options.type;
 	this._p = p;
@@ -442,6 +442,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 	this._h = h;
 	this._kol = kol;
 	this._plan = plan;
+	this._sockel = sockel;
 	this.lines = [];
 
 	this.drawBox = function(w,h,x,y,options){
@@ -481,7 +482,7 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 			var p = k.parts;
 			var thingY  = (theY-p.plane.h)-thing.h;
 			for(var x = 0; x < Math.floor(width/thing.w); x++){
-				this._p.image("/images/"+thing.image+".png",theX+(x*thing.w),thingY,thing.w,thing.h);
+				this._p.image("../images/"+thing.image+".png",theX+(x*thing.w),thingY,thing.w,thing.h);
 			}
 		}
 	};
@@ -622,20 +623,20 @@ var hylla = function(p, x, y, w, h, kol, plan,options){
 				//sockelplan
 				var planY = kolBottom - (u * perPlan);
 				planY  = planY - ((u-1) * p.plane.h);
-				this.drawBox(perKol,p.plane.h,(colX),(kolBottom-p.bottom.b),{
+				this.drawBox(perKol,p.plane.h,(colX),(kolBottom-this._sockel),{
 					fillcolor:k.style.planefill
 				});
 				price.hyllplan++;
 				//sockelbackgrund
 				var planY = kolBottom - (u * perPlan);
 				planY  = planY - ((u-1) * p.plane.h);
-				this.drawBox(perKol,p.bottom.b,(colX),(kolBottom),{
+				this.drawBox(perKol,this._sockel,(colX),(kolBottom),{
 					fillcolor:k.style.sockelfill
 				});
 				//fill the bottom plane up
-				var fits = whatFits(perKol,(perPlan-(p.bottom.b+p.plane.h)));
+				var fits = whatFits(perKol,(perPlan-(this._sockel+p.plane.h)));
 				var thing = fits[Math.round(Math.random()*(fits.length-1))];
-				this.fillWith(thing,colX,(kolBottom-p.bottom.b),perKol);
+				this.fillWith(thing,colX,(kolBottom-this._sockel),perKol);
 			} else {
 				
 

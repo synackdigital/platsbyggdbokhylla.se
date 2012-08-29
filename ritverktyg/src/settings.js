@@ -13,14 +13,16 @@ var TEMPLATES = {
 			w:1800,
 			h:2400,
 			col:4,
-			row:4
+			row:4,
+			sockel:60
 		},
 		{
 			type:"over",
 			w:1500,
 			h:500,
 			col:2,
-			row:2
+			row:2,
+			sockel:0
 		}
 	],
 	onewinmiddle:[
@@ -29,21 +31,24 @@ var TEMPLATES = {
 			w:1800,
 			h:2400,
 			col:4,
-			row:4
+			row:4,
+			sockel:60
 		},
 		{
 			type:"over",
 			w:1200,
 			h:500,
 			col:2,
-			row:2
+			row:2,
+			sockel:0
 		},
 		{
 			type:"std",
 			w:1800,
 			h:2400,
 			col:4,
-			row:4
+			row:4,
+			sockel:60
 		}
 	],
 	threewin:[
@@ -52,35 +57,40 @@ var TEMPLATES = {
 			w:1800,
 			h:2400,
 			col:4,
-			row:8
+			row:8,
+			sockel:60
 		},
 		{
 			type:"over",
 			w:1200,
 			h:602,
 			col:2,
-			row:2
+			row:2,
+			sockel:0
 		},
 		{
 			type:"std",
 			w:750,
 			h:2400,
 			col:1,
-			row:8
+			row:8,
+			sockel:60
 		},
 		{
 			type:"over",
 			w:1200,
 			h:602,
 			col:2,
-			row:2
+			row:2,
+			sockel:0
 		},
 		{
 			type:"std",
 			w:1800,
 			h:2400,
 			col:4,
-			row:8
+			row:8,
+			sockel:60
 		}
 	],
 };
