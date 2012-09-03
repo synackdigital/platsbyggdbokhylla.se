@@ -75,12 +75,12 @@ a {
     max-height: 80%;
     overflow: scroll;
     position: absolute;
-    top: .5 * $base-vmargin;
-    right: .5 * $base-hmargin;
-    width: 35%;
-    /*html.rgba & {
+    top: $base-vmargin;
+    right: $base-hmargin;
+    width: 25%;
+    html.rgba & {
       background: rgba(white, .9);
-    }*/
+    }
   }
 }
 
@@ -89,7 +89,7 @@ a {
  * Background graphics
  */
 #main {
-  background: none no-repeat center center fixed;
+  background: none no-repeat top center fixed;
   @include background-size(cover);
   body.start & {
     background-image: image-url('photos/l/jerker_mg_1956.jpg');
