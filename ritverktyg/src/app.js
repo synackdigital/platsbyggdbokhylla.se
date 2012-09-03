@@ -126,12 +126,16 @@ var k = {
 	style:STYLE,
 	updateOrder:function(form){
 		var order = form.serialize(true);
+		trace(order);
 		var oneFail = false;
 		Object.keys(order).each(function(item){
 			trace("order key:"+item);
 			if(item!="type"){
 				if(item=="modell"){
 					trace("key:modell");
+					trace(item);
+					trace(order[item]);
+					trace(k.order[order.id]);
 					k.order[order.id][item]=order[item];
 					trace(k.order[order.id]);
 				} else {
@@ -202,6 +206,20 @@ var k = {
 		});
 		
 		k.nextGuideStep();
+
+		setTimeout(function(){
+			k.nextGuideStep();
+			setTimeout(function(){
+				k.nextGuideStep();
+				setTimeout(function(){
+					k.nextGuideStep();
+					k.startUp("davidhall","standard");					
+				},100);
+			},100);
+
+		},100);
+		
+		
 		
 		
 
@@ -212,6 +230,12 @@ var k = {
 		var orderCount = k.order.length;
 		var sectionCount = 1;
 		var overCount = 1;
+
+		if(modell=="davidhall"){
+			k.parts.side = k.parts.side_davidhall;
+			k.parts.kol = k.parts.kol_davidhall;
+		}
+
 		k.order.each(function(order,index){
 			if(order.type=="over"){
 				count = overCount++;
@@ -220,20 +244,31 @@ var k = {
 			}
 			k.addForm(index,order,count,modell);
 		});
-		$$("#controls form").each(function(aForm){
-			if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform"){
-				k.updateOrder(aForm);
-			}
-		});
-		this.resizePaper();
+		setTimeout(function(){
+			$$("#controls form").each(function(aForm){
+				if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform"){
+					k.updateOrder(aForm);
+				}
+			});
+			this.resizePaper();
+		}.bind(this),100);
 	},
 	addForm:function(id,data,counter,modell){
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
 		newForm.writeAttribute("type",data.type);
-		newForm.down('input[name=modell]').value=modell;
+		trace("addForm");
+		trace(modell);
+		trace(arguments);
+
+		newForm.down('input[name=modell]').value = modell;
 		newForm.down('input[name=id]').value=id;
 		newForm.down('input[name=type]').value=data.type;
+		
+		trace(newForm.down('input[name=modell]').value);
+		trace(newForm.down('input[name=id]').value);
+		trace(newForm.down('input[name=type]').value);
+
 		newForm.down('strong').update("Sektion "+(counter));
 
 		if(counter>1 && data.type=="std"){
@@ -254,7 +289,8 @@ var k = {
 		var exactVals = newForm.select("span[contenteditable=true]");
 		var all = sliders.concat(exactVals);
 		all.each(function(item){
-			if(item.name!="id"){
+			trace(item);
+			if(item.name!="id" && item.name != "modell"){
 				item.value = data[item.name];
 			}
 			var eventName = "change";
@@ -471,6 +507,10 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	this._modell = options.modell;
 	this.lines = [];
 
+	if(this._modell=="davidhall"){
+		this._h = this._h - (k.parts.skap.h + k.parts.skap.skiva)
+	}
+
 	this.drawBox = function(w,h,x,y,options){
 		if(!options) options = {};
 
@@ -528,14 +568,6 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		var maxY = this._y -this._h;
 
 		
-		this.drawBox(this._w,this._h,this._x,this._y,{
-			linecolor:"rgba(255,0,0,0.3)",
-			fillcolor:k.style.bg,
-			id:"bg"
-		});
-		
-		
-
 		var p = k.parts;
 				
 		var innerHeight = this._h;
@@ -545,6 +577,14 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		if(this._modell=="davidhall"){
 			kolBottom = this._y - (p.skap.h+p.skap.skiva);
 		}
+
+
+		//bakstycke
+		this.drawBox(this._w,this._h,this._x,kolBottom,{
+			linecolor:"rgba(255,0,0,0.3)",
+			fillcolor:k.style.bg,
+			id:"bg"
+		});
 
 		if(options.position==1){
 			//middle section
@@ -620,6 +660,17 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 					})
 					price.gavel++;
 				}
+				if(this._modell=="davidhall" && i>0){
+					//render gavlar for undeskap
+					this.drawBox(p.skap.gavel,p.skap.h,(colX-p.kol.w) ,this._y,{
+						fillcolor:k.style.kolfill
+					})
+					this.drawBox(p.skap.gavel,p.skap.h,(colX-p.kol.w)+p.skap.gavel ,this._y,{
+						fillcolor:k.style.kolfill
+					})
+
+					
+				}
 				for(var u = 1; u < this._plan; u++){
 					var planY = kolBottom - (u * perPlan);
 					planY  = planY - ((u-1) * p.plane.h);
@@ -643,8 +694,8 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 			//differs from over and std hyllor,  no sockel on over hyllor, creating more 
 			
 
-			//sockel
-			if(this._type=="std"){
+			//sockel & top
+			if(this._type=="std" && this._modell=="ribersborg"){
 				//top
 				var planY = kolBottom - (u * perPlan);
 				planY  = planY - ((u-1) * p.plane.h);
@@ -668,6 +719,13 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 				var fits = whatFits(perKol,(perPlan-(this._sockel+p.plane.h)));
 				var thing = fits[Math.round(Math.random()*(fits.length-1))];
 				this.fillWith(thing,colX,(kolBottom-this._sockel),perKol);
+			} else if(this._type=="std" && this._modell=="davidhall"){
+				//top
+				var planY = kolBottom - (u * perPlan);
+				planY  = planY - ((u-1) * p.plane.h);
+				this.drawBox(perKol,p.plane.h,(colX),((kolBottom-this._h)+p.plane.h),{
+					fillcolor:k.style.planefill
+				});
 			} else {
 				
 
@@ -731,36 +789,42 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 					fillcolor:k.style.planefill
 				});
 				}
-
-				//fill the plane up
-				/**
-				var fits = whatFits(perKol,perPlan);
-				if(fits.length>0){
-					var thing = fits[Math.round(Math.random()*(fits.length-1))];
-					this.fillWith(thing,startX,planY,planWidth);
-				}
-				**/
 			}
-			
-			/**
-			
-			**/
 			//top
-			
-			
-			
 			this.drawBox(planWidth,p.plane.h,startX,((kolBottom-this._h)+p.plane.h),{
 				fillcolor:k.style.planefill
 				
 			});
-			//sockelplan
+			//bottom
 			planY  = planY - ((u-1) * p.plane.h);
 			this.drawBox(planWidth,p.plane.h,startX,(kolBottom),{
 				fillcolor:k.style.planefill
 			});
-			//fill the bottom plane up
-			//var thing = fits[Math.round(Math.random()*(fits.length-1))];
-			//this.fillWith(thing,startX,(kolBottom),planWidth);
+		}
+
+		if(this._type=="std" && this._modell=="davidhall"){
+			//draw the skap
+
+			//skiva
+			this.drawBox(this._w, p.skap.skiva ,this._x, (this._y-p.skap.h),{
+				fillcolor:k.style.sidefill
+			});
+
+			//tacksida left
+			this.drawBox(p.skap.gavel, p.skap.h ,this._x, this._y,{
+				fillcolor:k.style.sidefill
+			});
+			this.drawBox(p.skap.gavel, p.skap.h ,this._x+p.skap.gavel, this._y,{
+				fillcolor:k.style.sidefill
+			});
+			//tacksida right
+			this.drawBox(p.skap.gavel, p.skap.h ,this._x+(this._w-p.skap.gavel), this._y,{
+				fillcolor:k.style.sidefill
+			});
+			this.drawBox(p.skap.gavel, p.skap.h ,this._x+(this._w-(p.skap.gavel*2)), this._y,{
+				fillcolor:k.style.sidefill
+			});			
+
 		}
 
 		price.bakstycke = (price.gavel>0) ? (price.gavel - 1) : 0;

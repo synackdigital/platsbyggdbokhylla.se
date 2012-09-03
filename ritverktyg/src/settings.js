@@ -126,13 +126,16 @@ var PRICELIST = {
 var PARTS = {
 	skap:{
 		h:750,
-		skiva:32
+		skiva:32,
+		gavel:16
 	},
 	overlay:{minw:300,maxw:2010,minh:200,maxh:1000},
 	bottom:{h:22,b:60},
 	side:{w:22},
+	side_davidhall:{w:32},
 	plane:{h:22,minamount:1},
 	kol:{w:22,minw:350,maxw:750},
+	kol_davidhall:{w:32,minw:350,maxw:750},
 	dvd:{h:190,w:18,name:"DVD",image:"dvd"},
 	dvdopen:{h:190,w:136,name:"DVD",image:"dvd-open"},
 	blueray:{h:172,w:16,name:"Blueray",image:"blueray"},
