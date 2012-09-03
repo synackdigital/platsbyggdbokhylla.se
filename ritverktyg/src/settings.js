@@ -125,10 +125,13 @@ var PRICELIST = {
 
 var PARTS = {
 	skap:{
-		h:750,
+		dorrh:725,
+		h:735,
 		skiva:32,
-		gavel:16
+		gavel:16,
+
 	},
+	sockel_davidshall:10,
 	overlay:{minw:300,maxw:2010,minh:200,maxh:1000},
 	bottom:{h:22,b:60},
 	side:{w:22},
@@ -148,6 +151,7 @@ var PARTS = {
 
 var STYLE_BLACK = {
 	bg:"135-#fff-#eee",
+	bgskap:"#aaa",
 	linecolor:"rgba(255,255,255,1)",
 	planefill:"0-#333-#666",
 	kolfill:"0-#333-#666",
@@ -183,5 +187,7 @@ var STYLE = {
 	sidefill:"0-#F5F5F5-#fff",
 	topfill:"90-#F5F5F5-#fff",
 	bottomfill:"90-#F5F5F5-#fff",
-	sockelfill:"90#F5F5F5-#fff"
+	sockelfill:"90#F5F5F5-#fff",
+	doorfill:"110-#eee-#fff",
+	skapskiva:"90-#e9e9e9-#f0f0f0"
 };

@@ -5,6 +5,8 @@ Event.observe(window,"load",function(){
 var k = {
 	updateInterval:null,
 	paper:null,
+	doors_closed:{},
+	doors_open:{},
 	settings:{
 		margin:100
 	},
@@ -169,6 +171,11 @@ var k = {
 				next.addClassName("active");
 			},100);
 		}
+		setTimeout(function(){
+			$$(".guidestep.hide").each(function(item){
+				item.hide();
+			});
+		},500);
 	},
 	setup:function(){
 		var windowAddEvent = window.attachEvent || window.addEventListener;
@@ -190,6 +197,7 @@ var k = {
 		$$("#rita_start .choice").each(function(choice){
 			choice.observe("click",function(){
 				k.baseOrder.template = this.readAttribute("template");
+				k.startUp(k.baseOrder.modell,k.baseOrder.template);
 				k.nextGuideStep();
 			})
 		});
@@ -207,6 +215,7 @@ var k = {
 		
 		k.nextGuideStep();
 
+		/**
 		setTimeout(function(){
 			k.nextGuideStep();
 			setTimeout(function(){
@@ -218,7 +227,7 @@ var k = {
 			},100);
 
 		},100);
-		
+		**/
 		
 		
 		
@@ -385,6 +394,7 @@ var k = {
 	redraw:function(){
 
 		if($("ritar").hasClassName("show")) return;
+		$("ritar").show();
 		$("ritar").addClassName("show");
 		setTimeout(function(){
 			$("stageinner").hide();
@@ -438,6 +448,9 @@ var k = {
 			setTimeout(function(){
 				$("stageinner").show();
 				$("ritar").removeClassName("show");
+				setTimeout(function(){
+					$("ritar").hide();
+				},500);
 			},300);
 		}.bind(this),300);
 		
@@ -494,7 +507,7 @@ var k = {
 var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	trace("new hylla");
 	trace(options);
-	if(!options) options = {position:3, type:"std", modell:"ribersborg"};
+	if(!options) options = {position:3, type:"std", modell:"ribersborg",singledoor:false};
 	this._type=options.type;
 	this._p = p;
 	this._x = x;
@@ -505,9 +518,12 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	this._plan = plan;
 	this._sockel = sockel;
 	this._modell = options.modell;
+	this._singledoor = options.singledoor;
+	trace("######single door??");
+	trace(this._singledoor);
 	this.lines = [];
 
-	if(this._modell=="davidhall"){
+	if(this._modell=="davidhall" && this._type=="std"){
 		this._h = this._h - (k.parts.skap.h + k.parts.skap.skiva)
 	}
 
@@ -520,11 +536,36 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 			(x+w)+","+(y-h),
 			x+","+(y-h),
 			x+","+y
-		];
+		];	
 
 		var pathstr = "M" + boxArr.join(",L") + ",Z"
 		
 		var line = this._p.path(pathstr);
+
+		if(options.open){
+			var openboxArr = [
+				x+","+y,
+				((x+w)-80)+","+(y+50),
+				((x+w)-80)+","+((y-h)+50),
+				x+","+(y-h),
+				x+","+y
+			];
+			if(options.side=="right"){
+				openboxArr = [
+				(x+80)+","+(y+50),
+				(x+w)+","+y,
+				(x+w)+","+(y-h),
+				(x+80)+","+((y-h)+50),
+				(x+80)+","+(y+50)
+			];
+			}
+			line.attr("cursor","pointer");
+			k.doors_closed[line.id] = pathstr;
+			k.doors_open[line.id] = "M" + openboxArr.join(",L") + ",Z"
+		}
+
+		
+
 		if(options.id){
 			line.id = options.id;
 		}
@@ -540,9 +581,38 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 			line.attr("fill", options.fillimage);
 		}
 
-		line.attr("stroke-width", "1");		
+		line.attr("stroke-width", "1");
+
+		return line;		
 		
 	};
+	this.drawDoor = function(w,h,x,y,single,side){
+		var el = this.drawBox(w,h,x,y,{
+			fillcolor:k.style.doorfill,
+			open:true,
+			side:side
+		});
+		trace(el);
+		trace(el.id);
+		el.mouseover(function(e){
+			var openDoor = k.doors_open[e.srcElement.raphaelid];
+			if(openDoor){
+				var el = k.paper.getById(e.srcElement.raphaelid);
+				el.animate({"path":openDoor},300,"ease-out",function(){
+					trace("door open done");
+				});
+			}
+		});
+		el.mouseout(function(e){
+			var closedDoor = k.doors_closed[e.srcElement.raphaelid];
+			if(closedDoor){
+				var el = k.paper.getById(e.srcElement.raphaelid);
+				el.animate({"path":closedDoor},300,"ease-out",function(){
+					trace("door open done");
+				});
+			}
+		});
+	}
 	this.fillWith = function(thing,theX,theY,width){
 		if(thing){
 			var p = k.parts;
@@ -559,7 +629,8 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 				bakstycke:0,
 				hyllplan:0,
 				oversmall:0,
-				overbig:0
+				overbig:0,
+				skap:0
 			};		
 		//basics
 		var borderSize = 1;
@@ -574,7 +645,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		var innerWidth = (this._w + this._x) - (p.side.w);
 		var kolBottom = this._y;
 
-		if(this._modell=="davidhall"){
+		if(this._modell=="davidhall" && this._type=="std"){
 			kolBottom = this._y - (p.skap.h+p.skap.skiva);
 		}
 
@@ -586,13 +657,23 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 			id:"bg"
 		});
 
+		if(this._modell=="davidhall" && this._type=="std"){
+			this.drawBox(this._w,(p.skap.h-10),this._x,this._y-10,{
+				linecolor:"rgba(255,0,0,0.3)",
+				fillcolor:"90-#efefef-#ddd",
+				id:"bgskap"
+			});
+		
+		}
+
+
 		if(options.position==1){
 			//middle section
 			innerWidth = (this._w + this._x);
 			//right position
 		} else if (options.position==2){
 			//right
-			this.drawBox(p.side.w , innerHeight , innerWidth, kolBottom,{
+			this.drawBox(p.side.w , this._h , innerWidth, kolBottom,{
 				fillcolor:k.style.sidefill
 			});
 			price.gavel++;
@@ -661,15 +742,24 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 					price.gavel++;
 				}
 				if(this._modell=="davidhall" && i>0){
-					//render gavlar for undeskap
+					//render gavlar for underskap
 					this.drawBox(p.skap.gavel,p.skap.h,(colX-p.kol.w) ,this._y,{
 						fillcolor:k.style.kolfill
 					})
 					this.drawBox(p.skap.gavel,p.skap.h,(colX-p.kol.w)+p.skap.gavel ,this._y,{
 						fillcolor:k.style.kolfill
 					})
-
 					
+				}
+				if(this._modell=="davidhall"){
+					//render mitten hylla underskap
+					this.drawBox(perKol,p.plane.h,colX,(this._y-(p.skap.h/2)),{
+						fillcolor:k.style.planefill
+					});
+					//render botten hylla underskap
+					this.drawBox(perKol,p.plane.h,colX,(this._y-p.sockel_davidshall),{
+						fillcolor:k.style.planefill
+					});
 				}
 				for(var u = 1; u < this._plan; u++){
 					var planY = kolBottom - (u * perPlan);
@@ -726,6 +816,10 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 				this.drawBox(perKol,p.plane.h,(colX),((kolBottom-this._h)+p.plane.h),{
 					fillcolor:k.style.planefill
 				});
+				//fill the bottom plane up
+				var fits = whatFits(perKol,(perPlan-(this._sockel+p.plane.h)));
+				var thing = fits[Math.round(Math.random()*(fits.length-1))];
+				this.fillWith(thing,colX,(kolBottom+p.plane.h),perKol);
 			} else {
 				
 
@@ -736,8 +830,6 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 			//sockel
 
 		}
-
-		//
 
 
 		if(this._type=="over"){
@@ -760,34 +852,31 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 				startX = this._x;
 				planWidth = (this._w);
 			}
-			for(var u = 0; u < this._plan; u++){
-				var planY = kolBottom - (u * perPlan);
-				planY  = planY - ((u-1) * p.plane.h);
-				
-				for(var i = 0; i < this._kol; i++){
-					var colX = startX + (i * perKol);
-					if(options.position==2){
-						colX = this._x + (i * perKol);
-					}
-					colX  = colX + (i * p.kol.w);
-					if(i>0){
-						this.drawBox(p.kol.w,(perPlan-p.plane.h),(colX-p.kol.w) ,(planY-(p.plane.h*(2-u))),{
-							fillcolor:k.style.kolfill
-						})
 
+			for(var i = 0; i < this._kol; i++){
+				var colX = startX + (i * perKol);
+				if(options.position==2){
+					colX = this._x + (i * perKol);
+				}
+				colX  = colX + (i * p.kol.w);
+				if(i>0){
+					this.drawBox(p.kol.w,(this._h-(p.plane.h*2)),(colX-p.kol.w) ,(kolBottom-p.plane.h),{
+						fillcolor:k.style.kolfill
+					})
+				}
+				for(var u = 0; u < this._plan; u++){
+					var planY = kolBottom - (u * perPlan);
+					planY  = planY - ((u-1) * p.plane.h);
+					if(u>0){
+						this.drawBox(perKol,p.plane.h,colX,planY,{
+							fillcolor:k.style.planefill
+						});
 					}
 					var fits = whatFits(perKol,perPlan);
 					if(fits.length>0){
 						var thing = fits[Math.round(Math.random()*(fits.length-1))];
 						this.fillWith(thing,colX,(planY-(p.plane.h*(2-u)))+p.plane.h,perKol);
 					}
-					
-				}
-
-				if(u>0){
-				this.drawBox(planWidth,p.plane.h,startX,planY,{
-					fillcolor:k.style.planefill
-				});
 				}
 			}
 			//top
@@ -807,7 +896,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 			//skiva
 			this.drawBox(this._w, p.skap.skiva ,this._x, (this._y-p.skap.h),{
-				fillcolor:k.style.sidefill
+				fillcolor:k.style.skapskiva
 			});
 
 			//tacksida left
@@ -827,11 +916,33 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 		}
 
+		//doors for davidhall
+		var doorY = this._y - (p.skap.h-p.skap.dorrh);
+		for(var i = 0; i < this._kol; i++){
+			var colX = this._x + sideWidth + (i * perKol);
+			colX  = colX + (i * p.kol.w);
+			if(this._type=="std"){
+				if(this._modell=="davidhall"){
+					//render dörrar
+					var doorW = perKol + (p.skap.gavel*2);
+					if(this._singledoor){
+					//if(true){
+						this.drawDoor(doorW,p.skap.dorrh,(colX-p.kol.w)+p.skap.gavel ,doorY,true);
+					} else {
+						doorW = doorW / 2;
+						this.drawDoor(doorW,p.skap.dorrh,(colX-p.kol.w)+p.skap.gavel ,doorY,false,"left");
+						this.drawDoor(doorW,p.skap.dorrh,((colX-p.kol.w)+p.skap.gavel)+doorW ,doorY,false,"right");
+
+					}
+				}
+			}
+		}
+
 		price.bakstycke = (price.gavel>0) ? (price.gavel - 1) : 0;
 		price.skap = (price.gavel>0) ? (price.gavel - 1) : 0;
 
 		this.price = price;
-		trace(price);
+
 		return price;
 
 
