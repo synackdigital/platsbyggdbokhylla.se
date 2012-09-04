@@ -52,21 +52,14 @@ var k = {
 				}
 				itemElement.addClassName("error");
 				setTimeout(function(){
-					//this.removeClassName("error")
-					this.value=newval;
-					//k.updateOrder(this.up('form'));
-					
+					this.value=newval;					
 				}.bind(itemElement),1000);
 			}
 			
 			var input = itemElement.down('input');
-			input.writeAttribute("max",max);
-			input.writeAttribute("min",min);
-
-			itemElement.down('.value').update(item.val);
-			itemElement.down('.max').update(max);
-			itemElement.down('.min').update(min);
-
+			trace("itemElement");
+			trace(itemElement);
+			input.value = item.val;
 			return true;
 		},
 		sockel:{
@@ -197,7 +190,6 @@ var k = {
 		$$("#rita_start .choice").each(function(choice){
 			choice.observe("click",function(){
 				k.baseOrder.template = this.readAttribute("template");
-				k.startUp(k.baseOrder.modell,k.baseOrder.template);
 				k.nextGuideStep();
 			})
 		});
@@ -295,39 +287,20 @@ var k = {
 			newForm.down('strong').update("Överbyggnad "+(counter));
 		}
 		var sliders = newForm.getInputs();
-		var exactVals = newForm.select("span[contenteditable=true]");
-		var all = sliders.concat(exactVals);
-		all.each(function(item){
+		sliders.each(function(item){
 			trace(item);
 			if(item.name!="id" && item.name != "modell"){
 				item.value = data[item.name];
 			}
 			var eventName = "change";
-			if(item.readAttribute("contenteditable")){
-				item.observe("blur",function(e){
-					this.up().down("input").value=parseInt(this.innerHTML);
-					k.updateOrder(this.up('form'));
-				});
-				item.observe("click",function(){
-					this.down(".control").show();
-				});
-				item.observe("keypress",function(e){
-					if(e.keyCode == Event.KEY_RETURN) {
-						this.blur();
-						k.updateOrder(this.up('form'));				
-					}
-				});
-			} else {
-				item.observe("change",function(e){
-					this.up().down(".value").update(this.value);
+			item.observe("change",function(e){
+				this.up().down(".value").update(this.value);
+				k.updateInterval = clearInterval(k.updateInterval);
+				k.updateInterval = setInterval(function(){
 					k.updateInterval = clearInterval(k.updateInterval);
-					k.updateInterval = setInterval(function(){
-						k.updateInterval = clearInterval(k.updateInterval);
-						k.updateOrder(this.up('form'));				
-					}.bind(this),200);
-				});
-			}
-			
+					k.updateOrder(this.up('form'));				
+				}.bind(this),200);
+			});			
 		});
 		newForm.show();
 		newForm.observe("submit",function(e){
@@ -917,6 +890,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		}
 
 		//doors for davidhall
+		
 		var doorY = this._y - (p.skap.h-p.skap.dorrh);
 		for(var i = 0; i < this._kol; i++){
 			var colX = this._x + sideWidth + (i * perKol);
@@ -937,7 +911,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 				}
 			}
 		}
-
+		
 		price.bakstycke = (price.gavel>0) ? (price.gavel - 1) : 0;
 		price.skap = (price.gavel>0) ? (price.gavel - 1) : 0;
 

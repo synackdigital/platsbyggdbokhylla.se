@@ -4,12 +4,12 @@
  * Roughly a 3:5 Fibonacci scale: 12, 14, 24, 36 (see http://lamb.cc/typograph/)
  */
 $base-font-family:        unquote('PT Sans, sans-serif');
-$base-font-size:          14px;
-$base-line-height:        1.2857;   // ~18px
+$base-font-size:          13px;
+$base-line-height:        1.2;
 
-$small-font-size:         0.8571em; // ~12px
-$large-font-size:         1.7143em; // ~22px
-$xlarge-font-size:        2.5714em; // ~36px
+$small-font-size:         11px;
+$large-font-size:         20px;
+$xlarge-font-size:        30;
 
 
 /*

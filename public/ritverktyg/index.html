@@ -130,7 +130,7 @@
 
       </div>
 
-      <div id="rita_base" class="guidestep  hide">
+      <div id="rita_base" class="guidestep unused hide">
         <h1>
           Mata in yttermått för din hylla
         </h1>
@@ -284,6 +284,7 @@
     </div>
 
     <div id="controls">
+
       <div id="fillwith">
         <label>Fyll hyllan med: </label>
           <form id="fillwithform">
@@ -303,55 +304,38 @@
         </div>
         <a href="#" id="intresseAnmalan">Skicka offertförfrågan</a>
       </div>
-      <form id="orderForm" style="display:none;">
+      <ul id="sektionlist">
+        <li>
+          Allmänt
+        </li>
+        <li class="active">
+          Sektion 1
+        </li>
+      </ul>
+      <form id="orderForm" style="display:none;" class="sektionForm">
         <input type="hidden" name="id" value="0">
         <input type="hidden" name="type" value="">
         <input type="hidden" name="modell" value="test">
         <strong>Sektion 1</strong>
         <div class="item sections" item="col">
           <label>Moduler</label>
-          <span class="value" contenteditable="true">0</span>
-          <div class="control">
-            <span class="min">0</span>
-            <input type="range" name="col" value="7" max="10000" min="0">
-            <span class="max">0</span>
-          </div>
+          <input class="value" type="text" name="col" value="7" max="10000" min="0">
         </div>
         <div class="item shelves" item="row">
           <label>Hyllplan</label>
-          <span class="value" contenteditable="true">0</span>
-          <div class="control">
-            <span class="min">0</span>
-            <input type="range" name="row" value="7" max="100000" min="0">
-            <span class="max">0</span>
-          </div>
+          <input class="value" type="text" name="row" value="7" max="100000" min="0">
         </div>
         <div class="item width" item="w">
           <label>Bredd</label>
-          <span class="value" contenteditable="true">0 <span class="unit">mm</span></span>
-          <div class="control">
-            <span class="min">0</span>
-            <input type="range" name="w" value="5400" max="100000" min="0">
-            <span class="max">0</span>
-          </div>
+          <input class="value" type="input" name="w" value="5400" max="100000" min="0">
         </div>
         <div class="item height slave" item="h">
           <label>Höjd</label>
-          <span class="value" contenteditable="true">0 <span class="unit">mm</span></span>
-          <div class="control">
-            <span class="min">0</span>
-            <input type="range" name="h" value="2400" max="100000" min="0">
-            <span class="max">0</span>
-          </div>
+          <input class="value" type="text" name="h" value="2400" max="100000" min="0">
         </div>
         <div class="item sockel slave" item="sockel">
           <label>Sockelhöjd</label>
-          <span class="value" contenteditable="true">0 <span class="unit">mm</span></span>
-          <div class="control">
-            <span class="min">0</span>
-            <input type="range" name="sockel" value="2400" max="100000" min="0">
-            <span class="max">0</span>
-          </div>
+          <input class="value" type="text" name="sockel" value="2400" max="100000" min="0">
         </div>
       </form>
     </div>
