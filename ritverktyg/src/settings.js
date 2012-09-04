@@ -25,6 +25,24 @@ var TEMPLATES = {
 			sockel:0
 		}
 	],
+	onewinleft:[		
+		{
+			type:"over",
+			w:1500,
+			h:500,
+			col:2,
+			row:2,
+			sockel:0
+		},
+		{
+			type:"std",
+			w:1800,
+			h:2400,
+			col:4,
+			row:4,
+			sockel:60
+		}
+	],
 	onewinmiddle:[
 		{
 			type:"std",
@@ -139,12 +157,18 @@ var PARTS = {
 	plane:{h:22,minamount:1},
 	kol:{w:22,minw:350,maxw:750},
 	kol_davidhall:{w:32,minw:350,maxw:750},
-	dvd:{h:190,w:18,name:"DVD",image:"dvd"},
-	dvdopen:{h:190,w:136,name:"DVD",image:"dvd-open"},
+	dvd:{
+		h:190,w:18,name:"DVD",image:"dvd",
+		open:[{h:190,w:136,name:"DVD",image:"dvd-open"}]
+	},
 	blueray:{h:172,w:16,name:"Blueray",image:"blueray"},
-	cd:{h:120,w:12,name:"CD-skiva",image:"cd"},
-	cdopen:{h:120,w:120,name:"CD-skiva",image:"cd-open"},
-	cdopen2:{h:120,w:120,name:"CD-skiva",image:"cd-open2"},
+	cd:{
+		h:120,w:12,name:"CD-skiva",image:"cd",
+		open:[
+			{h:120,w:120,name:"CD-skiva",image:"cd-open"},
+			{h:120,w:120,name:"CD-skiva",image:"cd-open2"}
+		]
+	},
 	pocket:{h:180,w:30,name:"Pocket",image:"pocket"},
 	bok:{h:220,w:13,name:"Inbunden bok",image:"pocket"}
 };

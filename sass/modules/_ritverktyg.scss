@@ -95,6 +95,9 @@
   left: 0;
   right: 0;
   bottom: 0;
+  #sektionlist {
+    float:left;
+  }
   form {
     float: left;
     margin-right: 3 * $base-hmargin;
@@ -105,11 +108,27 @@
       position: relative;
       label {
         @include inline-block;
-        line-height: 17px;
+        line-height: 18px;
         font-weight: bold;
         font-variant: small-caps;
         text-transform: lowercase;
-        width: 5em;
+        width: 10em;
+        position:relative;
+          .minmax {
+            display:block;
+            position:absolute;
+            top:-12px;
+            left:0px;
+            font-size:11px;
+            opacity:0;
+            width:10em;
+            -webkit-transition:opacity 0.3s ease-in-out;
+          }
+        &:hover {
+          .minmax {
+            opacity:1;
+          }
+        }
       }
       .value {
         @include inline-block;
@@ -186,6 +205,7 @@
         width:33%;
         label {
           display:block;
+          
         }
         input {
           display:block;

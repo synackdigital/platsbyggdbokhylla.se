@@ -25,6 +25,24 @@ var TEMPLATES = {
 			sockel:0
 		}
 	],
+	onewinleft:[
+		{
+			type:"over",
+			w:1500,
+			h:500,
+			col:2,
+			row:2,
+			sockel:0
+		},
+		{
+			type:"std",
+			w:1800,
+			h:2400,
+			col:4,
+			row:4,
+			sockel:60
+		}
+	],
 	onewinmiddle:[
 		{
 			type:"std",
@@ -139,12 +157,18 @@ var PARTS = {
 	plane:{h:22,minamount:1},
 	kol:{w:22,minw:350,maxw:750},
 	kol_davidhall:{w:32,minw:350,maxw:750},
-	dvd:{h:190,w:18,name:"DVD",image:"dvd"},
-	dvdopen:{h:190,w:136,name:"DVD",image:"dvd-open"},
+	dvd:{
+		h:190,w:18,name:"DVD",image:"dvd",
+		open:[{h:190,w:136,name:"DVD",image:"dvd-open"}]
+	},
 	blueray:{h:172,w:16,name:"Blueray",image:"blueray"},
-	cd:{h:120,w:12,name:"CD-skiva",image:"cd"},
-	cdopen:{h:120,w:120,name:"CD-skiva",image:"cd-open"},
-	cdopen2:{h:120,w:120,name:"CD-skiva",image:"cd-open2"},
+	cd:{
+		h:120,w:12,name:"CD-skiva",image:"cd",
+		open:[
+			{h:120,w:120,name:"CD-skiva",image:"cd-open"},
+			{h:120,w:120,name:"CD-skiva",image:"cd-open2"}
+		]
+	},
 	pocket:{h:180,w:30,name:"Pocket",image:"pocket"},
 	bok:{h:220,w:13,name:"Inbunden bok",image:"pocket"}
 };
@@ -216,8 +240,6 @@ var k = {
 	},
 	validate:{
 		item:function(theForm,item){
-			trace("validate.item");
-			trace(item.name)
 			if(item.name=="id") return true;
 			if(item.name=="type") return true;
 			if(item.name=="modell") return true;
@@ -235,6 +257,8 @@ var k = {
 
 
 			var itemElement = theForm.down('.item[item='+item.name+']');
+			itemElement.down(".minmax").update("Min: "+min+", Max:"+max);
+
 			if(valid) {
 				itemElement.removeClassName("error");
 			} else {
@@ -287,8 +311,6 @@ var k = {
 		col:{
 			min:function(order) {
 				var min = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.maxw+k.parts.kol.w));
-				trace("col min");
-				trace(min);
 				if(order.type=="over" && order.w <=1450){
 					return 1;
 				}
@@ -314,36 +336,34 @@ var k = {
 	},
 	parts:PARTS,
 	style:STYLE,
-	updateOrder:function(form){
-		var order = form.serialize(true);
-		trace(order);
-		var oneFail = false;
-		Object.keys(order).each(function(item){
-			trace("order key:"+item);
-			if(item!="type"){
-				if(item=="modell"){
-					trace("key:modell");
-					trace(item);
-					trace(order[item]);
-					trace(k.order[order.id]);
-					k.order[order.id][item]=order[item];
-					trace(k.order[order.id]);
-				} else {
-					var val = parseInt(order[item]);
-					if(k.validate.item(form,{val:val,name:item,order:order})){
-						k.order[order.id][item] = val;
-					} else {
-						oneFail = true;
+	updateOrder:function(){
+		$$("#controls form").each(function(aForm){
+			if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform"){
+				var order = aForm.serialize(true);
+				var oneFail = false;
+				Object.keys(order).each(function(item){
+					if(item!="type"){
+						if(item=="modell"){
+							k.order[order.id][item]=order[item];
+						} else {
+							var val = parseInt(order[item]);
+							if(k.validate.item(aForm,{val:val,name:item,order:order})){
+								k.order[order.id][item] = val;
+							} else {
+								oneFail = true;
+							}
+						}
 					}
+				});
+				if(oneFail){
+					trace("one item failed");
+				} else {
+					trace("redraw in update order");
+					k.redraw();
 				}
 			}
 		});
-		if(oneFail){
-			trace("one item failed");
-		} else {
-			trace("redraw in update order");
-			this.redraw();
-		}
+
 
 	},
 	nextGuideStep:function(){
@@ -403,6 +423,19 @@ var k = {
 		k.nextGuideStep();
 
 
+		setTimeout(function(){
+			k.nextGuideStep();
+			setTimeout(function(){
+				k.nextGuideStep();
+				setTimeout(function(){
+					k.nextGuideStep();
+					k.startUp("davidhall","onewinmiddle");
+				},100);
+			},100);
+
+		},100);
+
+
 
 
 
@@ -428,11 +461,7 @@ var k = {
 			k.addForm(index,order,count,modell);
 		});
 		setTimeout(function(){
-			$$("#controls form").each(function(aForm){
-				if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform"){
-					k.updateOrder(aForm);
-				}
-			});
+			k.updateOrder();
 			this.resizePaper();
 		}.bind(this),100);
 	},
@@ -440,27 +469,22 @@ var k = {
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
 		newForm.writeAttribute("type",data.type);
-		trace("addForm");
-		trace(modell);
-		trace(arguments);
 
 		newForm.down('input[name=modell]').value = modell;
 		newForm.down('input[name=id]').value=id;
 		newForm.down('input[name=type]').value=data.type;
 
-		trace(newForm.down('input[name=modell]').value);
-		trace(newForm.down('input[name=id]').value);
-		trace(newForm.down('input[name=type]').value);
-
 		newForm.down('strong').update("Sektion "+(counter));
-
-		if(counter>1 && data.type=="std"){
-			newForm.select(".item.slave").each(function(slave){
-				slave.hide();
-			});
-		}
 		if(data.type=="over"){
 			newForm.select(".item.slave.sockel").each(function(slave){
+				slave.hide();
+			});
+			newForm.select(".item.slave").each(function(slave){
+				slave.removeClassName("slave");
+			});
+		}
+		if(counter>1 && data.type=="std"){
+			newForm.select(".item.slave").each(function(slave){
 				slave.hide();
 			});
 		}
@@ -470,17 +494,22 @@ var k = {
 		}
 		var sliders = newForm.getInputs();
 		sliders.each(function(item){
-			trace(item);
 			if(item.name!="id" && item.name != "modell"){
 				item.value = data[item.name];
 			}
 			var eventName = "change";
 			item.observe("change",function(e){
-				this.up().down(".value").update(this.value);
+				if(this.up().hasClassName("slave")){
+					trace("got slaves");
+					var val = this.value;
+					$$("form .item.slave[item="+this.readAttribute("name")+"]").each(function(slaveItem){
+						slaveItem.down("input").value = val;
+					});
+				}
 				k.updateInterval = clearInterval(k.updateInterval);
 				k.updateInterval = setInterval(function(){
 					k.updateInterval = clearInterval(k.updateInterval);
-					k.updateOrder(this.up('form'));
+					k.updateOrder();
 				}.bind(this),300);
 			});
 			item.observe("mechanical:change",function(e){
@@ -490,7 +519,7 @@ var k = {
 		newForm.show();
 		newForm.observe("submit",function(e){
 			e.stop();
-			k.updateOrder(this);
+			k.updateOrder();
 		});
 		$("controls").insert(newForm);
 	},
@@ -581,6 +610,8 @@ var k = {
 				if(o.type=="over"){
 					if(i==this.order.length-1){
 						position = 2;
+ 					} else if(i==0){
+ 						position = 4;
  					} else {
  						position = 1;
  					}
@@ -646,9 +677,11 @@ var k = {
 
 }
 
+
+var trace = function(str){
+	console.log(str);
+}
 var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
-	trace("new hylla");
-	trace(options);
 	if(!options) options = {position:3, type:"std", modell:"ribersborg",singledoor:false};
 	this._type=options.type;
 	this._p = p;
@@ -661,8 +694,6 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	this._sockel = sockel;
 	this._modell = options.modell;
 	this._singledoor = options.singledoor;
-	trace("######single door??");
-	trace(this._singledoor);
 	this.lines = [];
 
 	if(this._modell=="davidhall" && this._type=="std"){
@@ -680,11 +711,10 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 			x+","+y
 		];
 
-		var pathstr = "M" + boxArr.join(",L") + ",Z"
-
+		var pathstr = "M" + boxArr.join(",L") + ",Z";
 		var line = this._p.path(pathstr);
 
-		if(options.open){
+		if(options.door){
 			var openboxArr = [
 				x+","+y,
 				((x+w)-80)+","+(y+50),
@@ -731,11 +761,9 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	this.drawDoor = function(w,h,x,y,single,side){
 		var el = this.drawBox(w,h,x,y,{
 			fillcolor:k.style.doorfill,
-			open:true,
+			door:true,
 			side:side
 		});
-		trace(el);
-		trace(el.id);
 		el.mouseover(function(e){
 			var openDoor = k.doors_open[e.srcElement.raphaelid];
 			if(openDoor){
@@ -761,6 +789,9 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 			var thingY  = (theY-p.plane.h)-thing.h;
 			for(var x = 0; x < Math.floor(width/thing.w); x++){
 				this._p.image("../images/"+thing.image+".png",theX+(x*thing.w),thingY,thing.w,thing.h);
+			}
+			if(thing.open){
+
 			}
 		}
 	};
@@ -806,6 +837,8 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 		}
 
+		trace("options.position");
+		trace(options.position);
 
 		if(options.position==1){
 			innerWidth = (this._w + this._x);
@@ -814,7 +847,11 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 				fillcolor:k.style.sidefill
 			});
 			price.gavel++;
-
+		} else if (options.position==4){
+			this.drawBox(p.side.w , this._h , this._x, kolBottom,{
+				fillcolor:k.style.sidefill
+			});
+			price.gavel++;
 		} else {
 			this.drawBox(p.side.w , innerHeight ,this._x, kolBottom,{
 				fillcolor:k.style.sidefill
@@ -832,7 +869,8 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		var perKol = (this._w - ((p.kol.w * (this._kol-1)) + (sideWidth * 2))) / this._kol;
 		var perPlan = (this._h - ((p.plane.h * (this._plan-1)))) / this._plan;
 
-		if(options.position==2){
+		if(options.position==2 || options.position==4){
+			trace("perKol change");
 			perKol = (this._w - ((p.kol.w * (this._kol-1)) + sideWidth)) / this._kol;
 		}
 		if(options.position==1){
@@ -859,10 +897,10 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 		for(var i = 0; i < this._kol; i++){
 			var colX = this._x + sideWidth + (i * perKol);
-			if(options.position==2){
+			if(options.position==2 && options.position==4){
 				colX = this._x + (i * perKol);
+				trace("colX fix ");
 			}
-
 			colX  = colX + (i * p.kol.w);
 			if(this._type=="std"){
 				if(i>0){
@@ -959,7 +997,8 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 			var planWidth = (this._w - (sideWidth * 2));
 			var startX = this._x + p.side.w;
-			if(options.position==2){
+			if(options.position==2 && options.position==4){
+				trace("startX and planWidth");
 				startX = this._x;
 				planWidth = (this._w - sideWidth);
 			}
@@ -970,7 +1009,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 			for(var i = 0; i < this._kol; i++){
 				var colX = startX + (i * perKol);
-				if(options.position==2){
+				if(options.position==2 && options.position==4){
 					colX = this._x + (i * perKol);
 				}
 				colX  = colX + (i * p.kol.w);
@@ -994,12 +1033,12 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 					}
 				}
 			}
-			this.drawBox(planWidth,p.plane.h,startX,((kolBottom-this._h)+p.plane.h),{
+			var theWidth = (options.position==2) ? planWidth : planWidth+p.plane.h;
+			this.drawBox(theWidth,p.plane.h,startX,((kolBottom-this._h)+p.plane.h),{
 				fillcolor:k.style.planefill
 
 			});
-			planY  = planY - ((u-1) * p.plane.h);
-			this.drawBox(planWidth,p.plane.h,startX,(kolBottom),{
+			this.drawBox(theWidth,p.plane.h,startX,(kolBottom),{
 				fillcolor:k.style.planefill
 			});
 		}
@@ -1052,17 +1091,6 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 		return price;
 
-
-
-
-
-
-
-
 	}
 	this.redraw();
-}
-
-var trace = function(str){
-	console.log(str);
 }
