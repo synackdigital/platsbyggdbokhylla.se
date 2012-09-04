@@ -45,21 +45,23 @@ var k = {
 			if(valid) {
 				itemElement.removeClassName("error");
 			} else {
-					if(item.val>max){
+				var toHigh = true;
+				if(item.val>max){
 					var newval = max;
 				} else if(item.val < min){
+					toHigh = false;
 					var newval = min;
 				}
 				itemElement.addClassName("error");
+				var msg = (toHigh) ? "Du har valt ett för högt värde" : "Du har valt ett för lågt värde";
+				itemElement.writeAttribute("title",msg);
 				setTimeout(function(){
-					this.value=newval;					
-				}.bind(itemElement),1000);
+					this.value=newval;	
+					this.fire("mechanical:change");
+				}.bind(itemElement.down("input")),1000);
+				return false;
 			}
 			
-			var input = itemElement.down('input');
-			trace("itemElement");
-			trace(itemElement);
-			input.value = item.val;
 			return true;
 		},
 		sockel:{
@@ -299,8 +301,11 @@ var k = {
 				k.updateInterval = setInterval(function(){
 					k.updateInterval = clearInterval(k.updateInterval);
 					k.updateOrder(this.up('form'));				
-				}.bind(this),200);
+				}.bind(this),300);
 			});			
+			item.observe("mechanical:change",function(e){
+				k.updateOrder(this.up('form'));				
+			});
 		});
 		newForm.show();
 		newForm.observe("submit",function(e){
