@@ -128,7 +128,7 @@ var PRICELIST = {
 var PARTS = {
 	skap:{
 		dorrh:725,
-		h:735,
+		h:750,
 		skiva:32,
 		gavel:16,
 
@@ -142,19 +142,50 @@ var PARTS = {
 	kol:{w:22,minw:350,maxw:750},
 	kol_davidhall:{w:32,minw:350,maxw:750},
 	dvd:{
-		h:190,w:18,name:"DVD",image:"dvd",
-		open:[{h:190,w:136,name:"DVD",image:"dvd-open"}]
-	},
-	blueray:{h:172,w:16,name:"Blueray",image:"blueray"},
-	cd:{
-		h:120,w:12,name:"CD-skiva",image:"cd",
+		id:"dvd", h:190,w:18,name:"DVD",image:"dvd",
 		open:[
-			{h:120,w:120,name:"CD-skiva",image:"cd-open"},
-			{h:120,w:120,name:"CD-skiva",image:"cd-open2"}
+			{h:190,w:136,name:"DVD",image:"dvd-open"},
+			{h:190,w:136,name:"DVD",image:"dvd-open2"},
+			{h:190,w:136,name:"DVD",image:"dvd-open3"}
 		]
 	},
-	pocket:{h:180,w:30,name:"Pocket",image:"pocket"},
-	bok:{h:220,w:13,name:"Inbunden bok",image:"bok"}
+	blueray:{
+		id:"blueray", h:172,w:16,name:"Blueray",image:"blueray",
+		open:[
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open"},
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open2"},
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open3"},
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open4"},
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open5"},
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open6"}
+		]
+	},
+	cd:{
+		id:"cd", h:120,w:12,name:"CD-skiva",image:"cd",
+		open:[
+			{h:120,w:120,name:"CD-skiva",image:"cd-open"},
+			{h:120,w:120,name:"CD-skiva",image:"cd-open2"},
+			{h:120,w:120,name:"CD-skiva",image:"cd-open3"},
+			{h:120,w:120,name:"CD-skiva",image:"cd-open4"}
+		]
+	},
+	pocket:{
+		id:"pocket", h:180,w:30,name:"Pocket",image:"pocket",
+		open:[
+				{h:180,w:111,name:"CD-skiva",image:"pocket-open"},
+				{h:180,w:137,name:"CD-skiva",image:"pocket-open2"},
+				{h:180,w:117,name:"CD-skiva",image:"pocket-open3"},
+				{h:180,w:117,name:"CD-skiva",image:"pocket-open4"}
+		]
+	},
+	bok:{
+		id:"bok", h:220,w:25,name:"Inbunden bok",image:"bok",
+		open:[
+			{h:220,w:146,name:"CD-skiva",image:"bok-open"},
+			{h:220,w:148,name:"CD-skiva",image:"bok-open3"},
+			{h:220,w:136,name:"CD-skiva",image:"bok-open2"}
+		]
+	}
 };
 
 var STYLE_BLACK = {
@@ -221,6 +252,10 @@ var k = {
 	order:[],
 	orderDetails:{
 		price:0,
+	},
+	fillCount:{
+
+
 	},
 	validate:{
 		item:function(theForm,item){
@@ -604,6 +639,11 @@ var k = {
 		if($("ritar").hasClassName("show")) return;
 		$("ritar").show();
 		$("ritar").addClassName("show");
+
+		Object.keys(this.fillCount).each(function(key){
+			k.fillCount[key]=0;
+		});
+
 		setTimeout(function(){
 			$("stageinner").hide();
 			var s = this.settings;
@@ -645,6 +685,13 @@ var k = {
 			}
 
 			this.calculatePrice();
+
+			Object.keys(this.fillCount).each(function(key){
+				var label = $$("#fillwith label[for="+key+"] .max").first();
+				if(label){
+					label.update(k.fillCount[key]);
+				}
+			});
 
 			setTimeout(function(){
 				k.resizePaper();
@@ -717,6 +764,9 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	this._singledoor = true;
 	this.lines = [];
 
+	if(this._modell=="davidhall"){
+		this._plan++;
+	}
 	if(this._modell=="davidhall" && this._type=="std"){
 		this._h = this._h - (k.parts.skap.h + k.parts.skap.skiva)
 	}
@@ -858,10 +908,15 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	}
 	this.fillWith = function(thing,theX,theY,width){
 		if(thing){
+			if(!k.fillCount[thing.id]) {
+				k.fillCount[thing.id] = 0;
+			}
+
 			var p = k.parts;
 			var thingY  = (theY-p.plane.h)-thing.h;
 			for(var x = 0; x < Math.floor(width/thing.w); x++){
 				this._p.image("../images/"+thing.image+".png",theX+(x*thing.w),thingY,thing.w,thing.h);
+				k.fillCount[thing.id]++;
 			}
 			if(thing.open){
 				var openThing = thing.open[Math.round(Math.random()*(thing.open.length-1))];
@@ -952,6 +1007,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 		var sideWidth = p.side.w;
 		var perKol = (this._w - ((p.kol.w * (this._kol-1)) + (sideWidth * 2))) / this._kol;
+
 		var perPlan = (this._h - ((p.plane.h * (this._plan-1)))) / this._plan;
 
 		if(options.position==2 || options.position==4){
@@ -963,7 +1019,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		}
 
 		var whatFits = function(w,h){
-			var stuff = ["dvd","dvdopen","blueray","cd","pocket","cdopen","cdopen2"];
+			var stuff = ["dvd","blueray","cd","pocket"];
 
 			var stuff = [];
 			$("fillwithform").getInputs("checkbox").each(function(box){if(box.checked){stuff.push(box.getValue());}});
@@ -1057,7 +1113,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 				this.drawBox(perKol,p.plane.h,(colX),((kolBottom-this._h)+p.plane.h),{
 					fillcolor:k.style.planefill
 				});
-				var fits = whatFits(perKol,(perPlan-(this._sockel+p.plane.h)));
+				var fits = whatFits(perKol,(perPlan-(p.plane.h)));
 				var thing = fits[Math.round(Math.random()*(fits.length-1))];
 				this.fillWith(thing,colX,(kolBottom+p.plane.h),perKol);
 			} else {

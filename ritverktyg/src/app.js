@@ -21,6 +21,10 @@ var k = {
 	orderDetails:{
 		price:0,
 	},
+	fillCount:{
+
+
+	},
 	validate:{
 		item:function(theForm,item){
 			if(item.name=="id") return true;
@@ -403,6 +407,11 @@ var k = {
 		if($("ritar").hasClassName("show")) return;
 		$("ritar").show();
 		$("ritar").addClassName("show");
+
+		Object.keys(this.fillCount).each(function(key){
+			k.fillCount[key]=0;
+		});
+
 		setTimeout(function(){
 			$("stageinner").hide();
 			var s = this.settings;
@@ -447,6 +456,13 @@ var k = {
 			}
 
 			this.calculatePrice();
+
+			Object.keys(this.fillCount).each(function(key){
+				var label = $$("#fillwith label[for="+key+"] .max").first();
+				if(label){
+					label.update(k.fillCount[key]);
+				}
+			});
 			
 			setTimeout(function(){
 				k.resizePaper();

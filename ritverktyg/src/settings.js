@@ -128,7 +128,7 @@ var PRICELIST = {
 var PARTS = {
 	skap:{
 		dorrh:725,
-		h:735,
+		h:750,
 		skiva:32,
 		gavel:16,
 
@@ -142,19 +142,50 @@ var PARTS = {
 	kol:{w:22,minw:350,maxw:750},
 	kol_davidhall:{w:32,minw:350,maxw:750},
 	dvd:{
-		h:190,w:18,name:"DVD",image:"dvd",
-		open:[{h:190,w:136,name:"DVD",image:"dvd-open"}]
-	},
-	blueray:{h:172,w:16,name:"Blueray",image:"blueray"},
-	cd:{
-		h:120,w:12,name:"CD-skiva",image:"cd",
+		id:"dvd", h:190,w:18,name:"DVD",image:"dvd",
 		open:[
-			{h:120,w:120,name:"CD-skiva",image:"cd-open"},
-			{h:120,w:120,name:"CD-skiva",image:"cd-open2"}
+			{h:190,w:136,name:"DVD",image:"dvd-open"},
+			{h:190,w:136,name:"DVD",image:"dvd-open2"},
+			{h:190,w:136,name:"DVD",image:"dvd-open3"}
 		]
 	},
-	pocket:{h:180,w:30,name:"Pocket",image:"pocket"},
-	bok:{h:220,w:13,name:"Inbunden bok",image:"bok"}
+	blueray:{
+		id:"blueray", h:172,w:16,name:"Blueray",image:"blueray",
+		open:[
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open"},
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open2"},
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open3"},
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open4"},
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open5"},
+			{h:172,w:133,name:"CD-skiva",image:"blueray-open6"}
+		]
+	},
+	cd:{
+		id:"cd", h:120,w:12,name:"CD-skiva",image:"cd",
+		open:[
+			{h:120,w:120,name:"CD-skiva",image:"cd-open"},
+			{h:120,w:120,name:"CD-skiva",image:"cd-open2"},
+			{h:120,w:120,name:"CD-skiva",image:"cd-open3"},
+			{h:120,w:120,name:"CD-skiva",image:"cd-open4"}
+		]
+	},
+	pocket:{
+		id:"pocket", h:180,w:30,name:"Pocket",image:"pocket",
+		open:[
+				{h:180,w:111,name:"CD-skiva",image:"pocket-open"},
+				{h:180,w:137,name:"CD-skiva",image:"pocket-open2"},
+				{h:180,w:117,name:"CD-skiva",image:"pocket-open3"},
+				{h:180,w:117,name:"CD-skiva",image:"pocket-open4"}
+		]
+	},
+	bok:{
+		id:"bok", h:220,w:25,name:"Inbunden bok",image:"bok",
+		open:[
+			{h:220,w:146,name:"CD-skiva",image:"bok-open"},
+			{h:220,w:148,name:"CD-skiva",image:"bok-open3"},
+			{h:220,w:136,name:"CD-skiva",image:"bok-open2"}
+		]
+	}
 };
 
 var STYLE_BLACK = {

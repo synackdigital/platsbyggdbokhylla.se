@@ -13,6 +13,9 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	this._singledoor = true;
 	this.lines = [];
 
+	if(this._modell=="davidhall"){
+		this._plan++; 
+	}
 	if(this._modell=="davidhall" && this._type=="std"){
 		this._h = this._h - (k.parts.skap.h + k.parts.skap.skiva)
 	}
@@ -154,10 +157,15 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	}
 	this.fillWith = function(thing,theX,theY,width){
 		if(thing){
+			if(!k.fillCount[thing.id]) {
+				k.fillCount[thing.id] = 0;
+			}
+
 			var p = k.parts;
 			var thingY  = (theY-p.plane.h)-thing.h;
 			for(var x = 0; x < Math.floor(width/thing.w); x++){
 				this._p.image("../images/"+thing.image+".png",theX+(x*thing.w),thingY,thing.w,thing.h);
+				k.fillCount[thing.id]++;
 			}
 			if(thing.open){
 				var openThing = thing.open[Math.round(Math.random()*(thing.open.length-1))];
@@ -257,6 +265,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		//kols)
 		var sideWidth = p.side.w;
 		var perKol = (this._w - ((p.kol.w * (this._kol-1)) + (sideWidth * 2))) / this._kol;
+
 		var perPlan = (this._h - ((p.plane.h * (this._plan-1)))) / this._plan;
 
 		if(options.position==2 || options.position==4){
@@ -270,7 +279,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		}
 
 		var whatFits = function(w,h){
-			var stuff = ["dvd","dvdopen","blueray","cd","pocket","cdopen","cdopen2"];
+			var stuff = ["dvd","blueray","cd","pocket"];
 
 			var stuff = [];
 			$("fillwithform").getInputs("checkbox").each(function(box){if(box.checked){stuff.push(box.getValue());}});
@@ -379,7 +388,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 					fillcolor:k.style.planefill
 				});
 				//fill the bottom plane up
-				var fits = whatFits(perKol,(perPlan-(this._sockel+p.plane.h)));
+				var fits = whatFits(perKol,(perPlan-(p.plane.h)));
 				var thing = fits[Math.round(Math.random()*(fits.length-1))];
 				this.fillWith(thing,colX,(kolBottom+p.plane.h),perKol);
 			} else {
