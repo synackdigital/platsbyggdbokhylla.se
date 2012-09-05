@@ -204,7 +204,7 @@ var k = {
 		});
 		
 		k.nextGuideStep();
-
+		return;
 		
 		setTimeout(function(){
 			k.nextGuideStep();

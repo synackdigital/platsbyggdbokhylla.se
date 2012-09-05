@@ -421,7 +421,7 @@ var k = {
 		});
 
 		k.nextGuideStep();
-
+		return;
 
 		setTimeout(function(){
 			k.nextGuideStep();
@@ -791,7 +791,19 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 				this._p.image("../images/"+thing.image+".png",theX+(x*thing.w),thingY,thing.w,thing.h);
 			}
 			if(thing.open){
-
+				var openThing = thing.open[Math.round(Math.random()*(thing.open.length-1))];
+				if(width>=openThing.w){
+					trace("open thing");
+					var theX = theX;
+					trace("thex:"+theX);
+					var widthLeft = width - openThing.w;
+					trace("widthLeft:"+widthLeft);
+					var stepsLeft = Math.floor(widthLeft/thing.w);
+					trace("stepsLeft:"+stepsLeft);
+					var theX = theX + thing.w*Math.round(Math.random()*stepsLeft);
+					trace("theX:"+theX);
+					this._p.image("../images/"+openThing.image+".png",theX,thingY,openThing.w,openThing.h);
+				}
 			}
 		}
 	};
