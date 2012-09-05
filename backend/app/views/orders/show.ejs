@@ -1,0 +1,29 @@
+<div class="page-header">
+    <h1>Details of order</h1>
+</div>
+
+
+<table class="table table-bordered">
+    <tbody>
+        <tr><th>new</th><td><%= order.new %></td></tr>
+        <tr><th>createDate</th><td><%= order.createDate %></td></tr>
+        <tr><th>updateDate</th><td><%= order.updateDate %></td></tr>
+        <tr><th>name</th><td><%= order.name %></td></tr>
+        <tr><th>email</th><td><%= order.email %></td></tr>
+        <tr><th>phone</th><td><%= order.phone %></td></tr>
+        <tr><th>adress</th><td><%= order.adress %></td></tr>
+        <tr><th>zip</th><td><%= order.zip %></td></tr>
+        <tr><th>city</th><td><%= order.city %></td></tr>
+        <tr><th>wantsfunding</th><td><%= order.wantsfunding %></td></tr>
+        <tr><th>drawing</th><td><%= order.drawing %></td></tr>
+        <tr><th>status</th><td><%= order.status %></td></tr>
+        <tr><th>comment</th><td><%= order.comment %></td></tr>    
+    </tbody>
+</table>
+
+<div class="well">
+    <%- link_to('<i class="icon-edit icon-white"></i> Edit', path_to.edit_order(order), {class: 'btn btn-primary'}) %>
+    <%- link_to('<i class="icon-remove icon-white"></i> Delete', path_to.order(order), {class: 'btn btn-danger', method: 'delete', remote: true, jsonp: '(function (u) { location.href = u; })'}) %>
+    or
+    <%- link_to('Back to index', path_to.orders()) %>
+</div>

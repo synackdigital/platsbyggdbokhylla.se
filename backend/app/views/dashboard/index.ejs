@@ -1,0 +1,19 @@
+<div class="hero-unit">
+	<h1>Welcome to the backend for platsbyggd bokhylla.se!</h1>
+	<p>This system contains tools for viewing, and working with incoming orders as well as plain drawings.</p>
+	<p><a class="btn btn-primary btn-large" href="http://www.platsbyggdbokhylla.se">Visit platsbyggdbokhylla.se &raquo;</a></p>
+</div>
+<div class="row">
+	<div class="span6">
+	  <h2>Orders (0)</h2>
+	  <p>Review and edit incoming orders. Get kapnota and Offert.</p>
+	  <p><%- link_to('View orders &raquo;', path_to.orders(), {class: 'btn'}) %></p>
+	</div>
+	<div class="span6">
+	  <h2>Drawings</h2>
+	  <p>See a list of all saved drawings, some are connected to orders and some are work in progress. </p>
+	  <p><%- link_to('View drawings &raquo;', path_to.drawings(), {class: 'btn'}) %></p>
+	</div>
+</div>
+
+<hr>

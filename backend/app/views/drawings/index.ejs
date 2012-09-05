@@ -1,0 +1,46 @@
+<div class="page-header">
+    <h1>Index of drawing</h1>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <!--<p><%- link_to('<i class="icon-plus icon-white"></i> New drawing', path_to.new_drawing(), {class: 'btn btn-primary'}) %></>-->
+        <p><%- link_to('<i class="icon-plus icon-white"></i> New drawing', 'http://local.platsbyggdbokhylla.se/ritverktyg', {class: 'btn btn-primary'}) %></>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <% if (drawings.length > 0) { %>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Created</th>
+                        <th>Updated</th>
+                        <th>ID</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% drawings.forEach(function (drawing) { %>
+                        <tr>
+                            <td><strong><%- date_format(drawing.createDate) %></strong></td>
+                            <td><strong><%- date_format(drawing.updateDate) %></strong></td>
+                            <td><strong><%- link_to('drawing #' + drawing.id, path_to.drawing(drawing)) %></strong></td>
+                            <td>
+                                
+                            <%- link_to('<i class="icon-arrow-right"></i> Open', 'http://local.platsbyggdbokhylla.se/ritverktyg/#'+drawing.id, {class: 'btn btn-mini'}) %>
+                                <%- link_to('<i class="icon-edit"></i> Edit', path_to.edit_drawing(drawing), {class: 'btn btn-mini'}) %>
+                                <%- link_to('<i class="icon-remove icon-white"></i> Delete', path_to.drawing(drawing), {class: 'btn btn-mini btn-danger', method: 'delete', remote: true, jsonp: '(function (u) {location.href = u;})'}) %>        
+                            </td>
+                        </tr>
+                    <% }); %>        
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="alert alert-block alert-info">
+                <strong>No drawings were found.</strong> 
+            </p>
+        <% } %>
+    </div>
+</div>

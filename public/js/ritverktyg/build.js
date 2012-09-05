@@ -246,8 +246,6 @@ var k = {
 	baseOrder:{
 		modell:null,
 		template:null,
-		height:0,
-		width:0
 	},
 	order:[],
 	orderDetails:{
@@ -450,6 +448,38 @@ var k = {
 			});
 		});
 
+		$("save").observe("click",function(e){
+			trace("save!");
+			e.stop();
+			k.saveOrder();
+		});
+
+		if(document.location.hash){
+			var id = document.location.hash.substring(1);
+			new Ajax.Request("/data/drawings/"+id,{
+				method:"get",
+				onSuccess:function(transport){
+					try{
+						$$(".guidestep").invoke("hide");
+						var drawing = transport.responseJSON;
+						k.startUp(drawing.data.modell,null,drawing.data.order);
+					} catch(e){
+						k.nextGuideStep();
+					}
+				},
+				onException:function(e,d){
+					trace(e);
+					trace(d);
+					k.nextGuideStep();
+				},
+				onError:function(){
+					trace("ERROR");
+					k.nextGuideStep();
+				}
+			});
+			return;
+		}
+
 		k.nextGuideStep();
 		return;
 
@@ -471,8 +501,49 @@ var k = {
 
 
 	},
-	startUp:function(modell, template){
-		k.order = this.templates[template];
+	saveOrder:function(){
+		var data = {
+			modell:k.baseOrder.modell,
+			order:[]
+		};
+		for(var i = 0; i < this.order.length; i++){
+			var dirtyObj = this.order[i];
+			var cleanObj = {};
+			Object.keys(dirtyObj).each(function(key){
+				if(key != "hylla" && key != "id"){
+					cleanObj[key] = dirtyObj[key];
+				}
+			});
+			data.order.push(cleanObj);
+		}
+		new Ajax.Request("/data/drawings",{
+			method:"POST",
+			parameters:{
+				"Drawing[data]":Object.toJSON(data)
+			},
+			onSuccess:function(transport){
+				try{
+					var drawing = transport.responseJSON;
+					if(drawing.id){
+						document.location.hash = drawing.id;
+					}
+				} catch(e){
+					trace("something went wrong saving");
+				}
+			},
+			onException:function(e,d){
+				trace(e);
+				trace(d);
+			},
+			onError:function(){
+				trace("ERROR saving");
+			}
+		});
+		trace(data);
+		trace(Object.toJSON(data));
+	},
+	startUp:function(modell, template,order){
+		k.order = order ? order : this.templates[template];
 		var orderCount = k.order.length;
 		var sectionCount = 1;
 		var overCount = 1;
@@ -884,13 +955,9 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		});
 		elHover.mouseout(function(e){
 			var masterID = e.srcElement.raphaelid;
-			trace("masterID:"+masterID);
 			for (var i = 0; i < k.doors_closed.length; i++){
 				var openDoor = 	k.doors_closed[i];
-				trace("oppenDoor");
-				trace(openDoor);
 				if(openDoor.parent==masterID){
-					trace("got the parent");
 					var el = k.paper.getById(openDoor.id);
 					if(openDoor.parent == openDoor.id){
 						if(masterID != openDoor.id){

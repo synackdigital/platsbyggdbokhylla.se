@@ -133,13 +133,9 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		});
 		elHover.mouseout(function(e){
 			var masterID = e.srcElement.raphaelid;
-			trace("masterID:"+masterID);
 			for (var i = 0; i < k.doors_closed.length; i++){
 				var openDoor = 	k.doors_closed[i];
-				trace("oppenDoor");
-				trace(openDoor);
 				if(openDoor.parent==masterID){
-					trace("got the parent");
 					var el = k.paper.getById(openDoor.id);
 					if(openDoor.parent == openDoor.id){
 						if(masterID != openDoor.id){
