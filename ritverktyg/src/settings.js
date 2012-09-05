@@ -170,7 +170,7 @@ var PARTS = {
 		]
 	},
 	pocket:{h:180,w:30,name:"Pocket",image:"pocket"},
-	bok:{h:220,w:13,name:"Inbunden bok",image:"pocket"}
+	bok:{h:220,w:13,name:"Inbunden bok",image:"bok"}
 };
 
 var STYLE_BLACK = {
