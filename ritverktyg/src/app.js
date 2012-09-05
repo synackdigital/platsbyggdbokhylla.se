@@ -181,6 +181,7 @@ var k = {
 		
 		$$("#rita_modell .choice").each(function(choice){
 			choice.observe("click",function(){
+				$("logo").addClassName("small");
 				k.baseOrder.modell = this.readAttribute("template");
 				k.nextGuideStep();
 			})
@@ -188,6 +189,16 @@ var k = {
 		$$("#rita_start .choice").each(function(choice){
 			choice.observe("click",function(){
 				k.baseOrder.template = this.readAttribute("template");
+				trace(".guideform ."+k.baseOrder.template);
+				var guideF = $$(".guideform."+k.baseOrder.template).first();
+				trace(guideF);
+				if(guideF){
+					if(k.baseOrder.modell=="davidhall"){
+						guideF.down(".ribersborg").hide();
+					}
+					guideF.addClassName("show");
+
+				}
 				k.nextGuideStep();
 			})
 		});
@@ -250,6 +261,9 @@ var k = {
 		setTimeout(function(){
 			k.updateOrder();
 			this.resizePaper();
+			$("controls").addClassName("show");
+			$("stage").addClassName("show");
+
 		}.bind(this),100);
 	},
 	addForm:function(id,data,counter,modell){

@@ -4,7 +4,7 @@ var TEMPLATES = {
 		w:1800,
 		h:2400,
 		col:4,
-		row:4,
+		row:5,
 		sockel:60
 	}],
 	onewin:[
@@ -13,7 +13,7 @@ var TEMPLATES = {
 			w:1800,
 			h:2400,
 			col:4,
-			row:4,
+			row:5,
 			sockel:60
 		},
 		{
@@ -39,7 +39,7 @@ var TEMPLATES = {
 			w:1800,
 			h:2400,
 			col:4,
-			row:4,
+			row:5,
 			sockel:60
 		}
 	],
@@ -49,7 +49,7 @@ var TEMPLATES = {
 			w:1800,
 			h:2400,
 			col:4,
-			row:4,
+			row:5,
 			sockel:60
 		},
 		{
@@ -65,7 +65,7 @@ var TEMPLATES = {
 			w:1800,
 			h:2400,
 			col:4,
-			row:4,
+			row:5,
 			sockel:60
 		}
 	],
@@ -75,7 +75,7 @@ var TEMPLATES = {
 			w:1800,
 			h:2400,
 			col:4,
-			row:8,
+			row:5,
 			sockel:60
 		},
 		{
@@ -91,7 +91,7 @@ var TEMPLATES = {
 			w:750,
 			h:2400,
 			col:1,
-			row:8,
+			row:5,
 			sockel:60
 		},
 		{
@@ -107,26 +107,10 @@ var TEMPLATES = {
 			w:1800,
 			h:2400,
 			col:4,
-			row:8,
-			sockel:60
-		},
-		{
-			type:"over",
-			w:1200,
-			h:602,
-			col:2,
-			row:2,
-			sockel:0
-		},
-		{
-			type:"std",
-			w:1800,
-			h:2400,
-			col:4,
-			row:8,
+			row:5,
 			sockel:60
 		}
-	],
+	]
 };
 
 var PRICELIST = {
@@ -398,6 +382,7 @@ var k = {
 
 		$$("#rita_modell .choice").each(function(choice){
 			choice.observe("click",function(){
+				$("logo").addClassName("small");
 				k.baseOrder.modell = this.readAttribute("template");
 				k.nextGuideStep();
 			})
@@ -405,6 +390,16 @@ var k = {
 		$$("#rita_start .choice").each(function(choice){
 			choice.observe("click",function(){
 				k.baseOrder.template = this.readAttribute("template");
+				trace(".guideform ."+k.baseOrder.template);
+				var guideF = $$(".guideform."+k.baseOrder.template).first();
+				trace(guideF);
+				if(guideF){
+					if(k.baseOrder.modell=="davidhall"){
+						guideF.down(".ribersborg").hide();
+					}
+					guideF.addClassName("show");
+
+				}
 				k.nextGuideStep();
 			})
 		});
@@ -467,6 +462,9 @@ var k = {
 		setTimeout(function(){
 			k.updateOrder();
 			this.resizePaper();
+			$("controls").addClassName("show");
+			$("stage").addClassName("show");
+
 		}.bind(this),100);
 	},
 	addForm:function(id,data,counter,modell){

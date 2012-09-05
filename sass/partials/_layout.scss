@@ -35,7 +35,9 @@ a {
     padding-top: .5 * $base-vmargin;
   }
   .nav {
+    @include inline-block;
     float: right;
+    margin-top: 3px;
     .nav-items {
       @include nav-list;
       .nav-item {
@@ -119,7 +121,14 @@ a {
   padding: .5 * $base-vmargin .5 * $base-hmargin; 
   z-index: 50;
   img {
+    -webkit-transition:all 0.6s ease-in-out;
     width: .5 * image-width('jiof-logo.png');
     height: .5 * image-height('jiof-logo.png');
+  }
+  &.small {
+    img {
+      width: .1 * image-width('jiof-logo.png');
+      height: .1 * image-height('jiof-logo.png');
+    } 
   }
 }

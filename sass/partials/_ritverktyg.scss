@@ -4,7 +4,10 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 170px;
+  bottom:0px;
+  &.show {
+    bottom: 170px;
+  }
   background: #fafafa image-url('wallpaper.jpg') no-repeat bottom center;
   @include background-size(cover);
   overflow:hidden;
@@ -44,6 +47,7 @@
     display:block;
   }
 }
+
 .guidestep {
   text-align: center;
   z-index: 300;
@@ -99,6 +103,11 @@
       max-width: 100%;
     }
   }
+  .button {
+    @include button;
+    text-transform: uppercase;
+    line-height: 1;
+  }
 }
 #rita_start.guidestep {
   .choice {
@@ -107,8 +116,36 @@
     }
   }
 }
+#rita_base.guidestep {
+  .choice {
+    width: 50%;
+    .item {
+      margin-bottom: .5 * $base-vmargin;
+      label {
+        @include inline-block;
+        text-align: right;
+        margin-right: .5em;
+        width: 40%;
+      }
+      input {
+        @include inline-block;
+        background: darken($text-color, 15%);
+        border: 1px solid lighten($text-color, 15%);
+        color: $bg-color;
+        text-align: right;
+        margin-left: .5em;
+        padding: .5em;
+        width: 15%;
+      }
+    }
+  }
+}
 
 #controls {
+  display:none;
+  &.show {
+    display:block;
+  }
   background: white;
   padding: $base-vmargin $base-hmargin;
   padding-left: image-width('jiof-logo.png');
