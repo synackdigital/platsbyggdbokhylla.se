@@ -42,9 +42,9 @@ a {
         a {
           @include button( inverted );
           margin-left: .5 * $base-hmargin;
-          padding-top: 16px;
-          margin-top: -3px; // center text
+          padding-top: 9px;
           text-transform: uppercase;
+          line-height: 1;
         }
         &.nav-item-selected {
           a {

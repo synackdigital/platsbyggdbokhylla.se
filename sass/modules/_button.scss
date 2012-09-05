@@ -3,6 +3,7 @@
   $_bg-color: $bg-color;
   $_text-color: $text-color;
   
+  @include border-radius;
   @include transition;
   @include unstyled-link;
 
