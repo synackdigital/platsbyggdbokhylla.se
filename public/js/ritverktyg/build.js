@@ -149,7 +149,7 @@ var PARTS = {
 		gavel:16,
 
 	},
-	sockel_davidshall:10,
+	sockel_davidshall:20,
 	overlay:{minw:300,maxw:2010,minh:200,maxh:1000},
 	bottom:{h:22,b:60},
 	side:{w:22},
@@ -170,7 +170,7 @@ var PARTS = {
 		]
 	},
 	pocket:{h:180,w:30,name:"Pocket",image:"pocket"},
-	bok:{h:220,w:13,name:"Inbunden bok",image:"pocket"}
+	bok:{h:220,w:13,name:"Inbunden bok",image:"bok"}
 };
 
 var STYLE_BLACK = {
@@ -222,8 +222,8 @@ Event.observe(window,"load",function(){
 var k = {
 	updateInterval:null,
 	paper:null,
-	doors_closed:{},
-	doors_open:{},
+	doors_closed:[],
+	doors_open:[],
 	settings:{
 		margin:100
 	},
@@ -460,6 +460,10 @@ var k = {
 			}
 			k.addForm(index,order,count,modell);
 		});
+		$$("#controls form.activated").each(function(aForm){
+			aForm.hide();
+		});
+
 		setTimeout(function(){
 			k.updateOrder();
 			this.resizePaper();
@@ -469,12 +473,33 @@ var k = {
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
 		newForm.writeAttribute("type",data.type);
+		newForm.addClassName("activated");
+
 
 		newForm.down('input[name=modell]').value = modell;
 		newForm.down('input[name=id]').value=id;
 		newForm.down('input[name=type]').value=data.type;
 
-		newForm.down('strong').update("Sektion "+(counter));
+		var name = "Sektion "+(counter);
+		if(data.type=="over"){
+			name = "Överbyggnad "+(counter);
+		}
+		newForm.down('strong').update(name);
+		trace("hide the FOOOOORM");
+
+		var sektionLink = new Element("li",{"target":"form_"+id}).update(name);
+		sektionLink.observe("click",function(){
+			this.siblings().each(function(sib){
+				sib.removeClassName("active");
+			});
+			this.addClassName("active");
+			$$("#controls form.activated").each(function(aForm){
+				aForm.hide();
+			});
+			$(this.readAttribute("target")).show();
+		});
+		$("sektionlist").insert(sektionLink);
+
 		if(data.type=="over"){
 			newForm.select(".item.slave.sockel").each(function(slave){
 				slave.hide();
@@ -489,9 +514,7 @@ var k = {
 			});
 		}
 
-		if(data.type=="over"){
-			newForm.down('strong').update("Överbyggnad "+(counter));
-		}
+
 		var sliders = newForm.getInputs();
 		sliders.each(function(item){
 			if(item.name!="id" && item.name != "modell"){
@@ -682,7 +705,7 @@ var trace = function(str){
 	console.log(str);
 }
 var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
-	if(!options) options = {position:3, type:"std", modell:"ribersborg",singledoor:false};
+	if(!options) options = {position:3, type:"std", modell:"ribersborg",singledoor:true};
 	this._type=options.type;
 	this._p = p;
 	this._x = x;
@@ -693,7 +716,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	this._plan = plan;
 	this._sockel = sockel;
 	this._modell = options.modell;
-	this._singledoor = options.singledoor;
+	this._singledoor = true;
 	this.lines = [];
 
 	if(this._modell=="davidhall" && this._type=="std"){
@@ -715,25 +738,32 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		var line = this._p.path(pathstr);
 
 		if(options.door){
+			var move = {x:80,y:50,ix:0,iy:0}
+
+			if(options.inner){
+				move = {x:60,y:43,ix:-30,iy:15}
+			}
+
 			var openboxArr = [
-				x+","+y,
-				((x+w)-80)+","+(y+50),
-				((x+w)-80)+","+((y-h)+50),
-				x+","+(y-h),
-				x+","+y
+				(x+move.ix)+","+(y+move.iy),
+				((x+w)-move.x)+","+(y+move.y),
+				((x+w)-move.x)+","+((y-h)+move.y),
+				(x+move.ix)+","+((y-h)+move.iy),
+				(x+move.ix)+","+(y+move.iy)
 			];
 			if(options.side=="right"){
 				openboxArr = [
-				(x+80)+","+(y+50),
-				(x+w)+","+y,
-				(x+w)+","+(y-h),
-				(x+80)+","+((y-h)+50),
-				(x+80)+","+(y+50)
+				(x+move.x)+","+(y+move.y),
+				((x+w)-move.ix)+","+(y+move.iy),
+				((x+w)-move.ix)+","+((y-h)+move.iy),
+				(x+move.x)+","+((y-h)+move.y),
+				(x+move.x)+","+(y+move.y)
 			];
 			}
 			line.attr("cursor","pointer");
-			k.doors_closed[line.id] = pathstr;
-			k.doors_open[line.id] = "M" + openboxArr.join(",L") + ",Z"
+			var masterID = options.parentPath ? options.parentPath : line.id;
+			k.doors_closed.push({id:line.id, parent:masterID,path:pathstr});
+			k.doors_open.push({id:line.id, parent:masterID,path:"M" + openboxArr.join(",L") + ",Z"});
 		}
 
 
@@ -759,27 +789,72 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 	};
 	this.drawDoor = function(w,h,x,y,single,side){
+		var elHover = this.drawBox(w,h,x,y,{
+			fillcolor:"rgba(255,0,0,0)",
+			linecolor:"rgba(255,255,0,0)",
+			door:true,
+			side:side,
+		});
 		var el = this.drawBox(w,h,x,y,{
 			fillcolor:k.style.doorfill,
 			door:true,
-			side:side
+			side:side,
+			parentPath:elHover.id
 		});
-		el.mouseover(function(e){
-			var openDoor = k.doors_open[e.srcElement.raphaelid];
-			if(openDoor){
-				var el = k.paper.getById(e.srcElement.raphaelid);
-				el.animate({"path":openDoor},300,"ease-out",function(){
-					trace("door open done");
-				});
+		var elInner = this.drawBox(w-120,(h-120),x+60,y-60,{
+			fillcolor:k.style.doorfill,
+			door:true,
+			side:side,
+			parentPath:elHover.id,
+			inner:true
+		});
+		elHover.toFront();
+
+		elHover.mouseover(function(e){
+			trace("mouseover");
+			var masterID = e.srcElement.raphaelid;
+			trace("masterID:"+masterID);
+			for (var i = 0; i < k.doors_open.length; i++){
+				var openDoor = 	k.doors_open[i];
+				trace("oppenDoor");
+				trace(openDoor);
+				if(openDoor.parent==masterID){
+					trace("got the parent");
+					var el = k.paper.getById(openDoor.id);
+
+					if(openDoor.parent == openDoor.id){
+						if(masterID != openDoor.id){
+							el.hide();
+						}
+					} else {
+						el.animate({"path":openDoor.path},300,"ease-out",function(){
+							trace("door open done");
+						});
+					}
+				}
 			}
 		});
-		el.mouseout(function(e){
-			var closedDoor = k.doors_closed[e.srcElement.raphaelid];
-			if(closedDoor){
-				var el = k.paper.getById(e.srcElement.raphaelid);
-				el.animate({"path":closedDoor},300,"ease-out",function(){
-					trace("door open done");
-				});
+		elHover.mouseout(function(e){
+			var masterID = e.srcElement.raphaelid;
+			trace("masterID:"+masterID);
+			for (var i = 0; i < k.doors_closed.length; i++){
+				var openDoor = 	k.doors_closed[i];
+				trace("oppenDoor");
+				trace(openDoor);
+				if(openDoor.parent==masterID){
+					trace("got the parent");
+					var el = k.paper.getById(openDoor.id);
+					if(openDoor.parent == openDoor.id){
+						if(masterID != openDoor.id){
+							el.show();
+						}
+					} else {
+						el.animate({"path":openDoor.path},300,"ease-out",function(){
+							trace("door open done");
+						});
+					}
+
+				}
 			}
 		});
 	}

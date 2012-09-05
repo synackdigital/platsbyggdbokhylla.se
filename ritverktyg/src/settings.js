@@ -149,7 +149,7 @@ var PARTS = {
 		gavel:16,
 
 	},
-	sockel_davidshall:10,
+	sockel_davidshall:20,
 	overlay:{minw:300,maxw:2010,minh:200,maxh:1000},
 	bottom:{h:22,b:60},
 	side:{w:22},

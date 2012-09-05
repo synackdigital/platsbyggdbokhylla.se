@@ -5,8 +5,8 @@ Event.observe(window,"load",function(){
 var k = {
 	updateInterval:null,
 	paper:null,
-	doors_closed:{},
-	doors_open:{},
+	doors_closed:[],
+	doors_open:[],
 	settings:{
 		margin:100
 	},
@@ -243,6 +243,10 @@ var k = {
 			}
 			k.addForm(index,order,count,modell);
 		});
+		$$("#controls form.activated").each(function(aForm){
+			aForm.hide();
+		});
+
 		setTimeout(function(){
 			k.updateOrder();
 			this.resizePaper();
@@ -252,12 +256,33 @@ var k = {
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
 		newForm.writeAttribute("type",data.type);
+		newForm.addClassName("activated");
+
 
 		newForm.down('input[name=modell]').value = modell;
 		newForm.down('input[name=id]').value=id;
 		newForm.down('input[name=type]').value=data.type;
 		
-		newForm.down('strong').update("Sektion "+(counter));
+		var name = "Sektion "+(counter);
+		if(data.type=="over"){
+			name = "Överbyggnad "+(counter);
+		}
+		newForm.down('strong').update(name);
+		trace("hide the FOOOOORM");
+
+		var sektionLink = new Element("li",{"target":"form_"+id}).update(name);
+		sektionLink.observe("click",function(){
+			this.siblings().each(function(sib){
+				sib.removeClassName("active");
+			});
+			this.addClassName("active");
+			$$("#controls form.activated").each(function(aForm){
+				aForm.hide();
+			});
+			$(this.readAttribute("target")).show();
+		});
+		$("sektionlist").insert(sektionLink);
+
 		if(data.type=="over"){
 			newForm.select(".item.slave.sockel").each(function(slave){
 				slave.hide();
@@ -272,9 +297,7 @@ var k = {
 			});			
 		}
 
-		if(data.type=="over"){
-			newForm.down('strong').update("Överbyggnad "+(counter));
-		}
+		
 		var sliders = newForm.getInputs();
 		sliders.each(function(item){
 			if(item.name!="id" && item.name != "modell"){

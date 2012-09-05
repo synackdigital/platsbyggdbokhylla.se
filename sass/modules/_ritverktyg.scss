@@ -114,10 +114,24 @@
   bottom: 0;
   #sektionlist {
     float:left;
+    list-style:none;
+    padding:0px;
+    margin:0px;
+    width:200px;
+    height:100%;
+    overflow:scroll;
+    li {
+      line-height:20px;
+      cursor:pointer;
+      &.active {
+        background-color:#eee;
+      }
+    }
   }
   form {
     float: left;
     margin-right: 3 * $base-hmargin;
+    background-color:#eee;
     .item {
       border-top: 1px dotted #ccc;
       margin-bottom: .25 * $base-vmargin;
