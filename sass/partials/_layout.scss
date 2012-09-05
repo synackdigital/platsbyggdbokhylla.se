@@ -35,7 +35,9 @@ a {
     padding-top: .5 * $base-vmargin;
   }
   .nav {
+    @include inline-block;
     float: right;
+    margin-top: 3px;
     .nav-items {
       @include nav-list;
       .nav-item {
