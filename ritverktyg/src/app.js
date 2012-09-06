@@ -42,7 +42,7 @@ var k = {
 			
 
 			var itemElement = theForm.down('.item[item='+item.name+']');
-			itemElement.down(".minmax").update("Min: "+min+", Max:"+max);
+			itemElement.down(".minmax").update('<span class="minval">'+min+'</span><span class="maxval">'+max+'</span>');
 
 			if(valid) {
 				itemElement.removeClassName("error");
