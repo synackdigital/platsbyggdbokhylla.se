@@ -218,7 +218,7 @@
   border-right: 1px solid darken( $text-color, 5% );
 
   padding: .5 * $base-vmargin 2 * $base-hmargin;
-  width: 24em;
+  width: 21em;
   form {
     input {
       @include inline-block;
