@@ -337,6 +337,7 @@ var k = {
 			k.updateOrder();
 			this.resizePaper();
 			$("stage").addClassName("show");
+			$("controls").addClassName("show");
 
 		}.bind(this),100);
 	},
