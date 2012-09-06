@@ -1,9 +1,5 @@
-{ "development":
-  { "driver":   "mongoose",
-  "url":      "mongodb://localhost/jerkerdesign"
-  }
-, "test":
-  { "driver":   "mongoose",
-  "url":      "mongodb://localhost/jerkerdesign"
-  }
+{
+	"development": { "driver":   "mongoose", "url":      "mongodb://localhost/jerkerdesign" }, 
+	"test": { "driver":   "mongoose", "url": "mongodb://localhost/jerkerdesign"},
+	"production": { "driver":   "mongoose", "url": "mongodb://localhost/jerkerdesign"}
 }

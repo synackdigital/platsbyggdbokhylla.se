@@ -122,7 +122,7 @@ var k = {
 	parts:PARTS,
 	style:STYLE,
 	updateOrder:function(){
-		$$("#controls form").each(function(aForm){
+		$$("#sektionform form").each(function(aForm){
 			if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform"){
 				var order = aForm.serialize(true);
 				var oneFail = false;
@@ -329,14 +329,13 @@ var k = {
 			}
 			k.addForm(index,order,count,modell);
 		});
-		$$("#controls form.activated").each(function(aForm){
+		$$("#sektionform form.activated").each(function(aForm){
 			aForm.hide();
 		});
 
 		setTimeout(function(){
 			k.updateOrder();
 			this.resizePaper();
-			$("controls").addClassName("show");
 			$("stage").addClassName("show");
 
 		}.bind(this),100);
@@ -365,7 +364,7 @@ var k = {
 				sib.removeClassName("active");
 			});
 			this.addClassName("active");
-			$$("#controls form.activated").each(function(aForm){
+			$$("#sektionform form.activated").each(function(aForm){
 				aForm.hide();
 			});
 			$(this.readAttribute("target")).show();
@@ -416,7 +415,7 @@ var k = {
 			e.stop();
 			k.updateOrder();
 		});
-		$("controls").insert(newForm);
+		$("sektionform").insert(newForm);
 	},
 	removeForm:function(form){
 		var order = form.serialize(true);
