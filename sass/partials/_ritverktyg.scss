@@ -13,7 +13,7 @@
   }
   background: #fafafa image-url('wallpaper.jpg') no-repeat bottom center;
   @include background-size(cover);
-  overflow:hidden;
+  overflow: hidden;
 }
 
 #stageinner {
@@ -189,7 +189,7 @@
     padding: 0;
     margin: 0;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 
     &.dark {
       background-color: $text-color;
@@ -218,7 +218,7 @@
   border-right: 1px solid darken( $text-color, 5% );
 
   padding: .5 * $base-vmargin 2 * $base-hmargin;
-  width: 21em;
+  width: 22em;
   form {
     input {
       @include inline-block;
@@ -261,7 +261,7 @@
  */
 #fillwith.sektion {
   padding: .5 * $base-vmargin 2 * $base-hmargin;
-  width: 13em;
+  width: 14em;
 
   form {
     margin-top: $base-vmargin;
