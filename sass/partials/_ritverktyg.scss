@@ -217,16 +217,43 @@
   border-left: 1px solid lighten( $text-color, 5% );
   border-right: 1px solid darken( $text-color, 5% );
 
+  padding: .5 * $base-vmargin 2 * $base-hmargin;
   width: 24em;
   form {
-    border: 1px solid blue;
     input {
-      width: 30%
+      @include inline-block;
+      background: darken($text-color, 15%);
+      border: 1px solid lighten($text-color, 15%);
+      color: $bg-color;
+      margin-left: .5em;
+      padding: .5em;
+      width: 4em;
     }
     label {
-      width: 30%;
+      @include inline-block;
+      font-weight: bold;
+      width: 10em;
+
+      .minmax {
+        color: darken( $bg-color, 30% );
+        font-weight: normal;
+
+        &:before {
+          content: ' ('
+        }
+        &:after {
+          content: ')'
+        }
+
+        .minval {
+          &:after {
+            content: '–';
+          }
+        }
+      }
     }
   }
+
 }
 
 /**
@@ -234,7 +261,7 @@
  */
 #fillwith.sektion {
   padding: .5 * $base-vmargin 2 * $base-hmargin;
-  width: 18em;
+  width: 13em;
 
   form {
     margin-top: $base-vmargin;
