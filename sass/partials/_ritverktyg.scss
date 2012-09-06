@@ -1,4 +1,7 @@
 
+/**
+ * LAYOUT
+ */
 #stage {
   position: absolute;
   top: 0;
@@ -41,6 +44,21 @@
   }
 }
 
+#floor {
+  background: image-url('woodfloor.jpg') no-repeat top center;
+  @include background-size(cover);
+  border-top: 1px solid #f6e1cb;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 100px;
+  z-index: 20;
+}
+
+/**
+ * GUIDE STEPS
+ */
 .guideform {
   display:none;
   &.show {
@@ -141,133 +159,80 @@
   }
 }
 
+/**
+ * CONTROLS
+ */
 #controls {
+  background: $bg-color;
+
+  position: absolute;
+  z-index: 400;
+  height: 170px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
   display:none;
   &.show {
     display:block;
   }
-  background: white;
-  padding: $base-vmargin $base-hmargin;
-  padding-left: image-width('jiof-logo.png');
-  position: absolute;
-  z-index:400;
-  height:130px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  #sektionlist {
-    float:left;
-    list-style:none;
-    padding:0px;
-    margin:0px;
-    width:200px;
-    height:100%;
-    overflow:scroll;
-    li {
-      line-height:20px;
-      cursor:pointer;
-      &.active {
-        background-color:#eee;
-      }
-    }
-  }
-  form {
+
+  .sektion {
+    @include box-sizing(border-box);
     float: left;
-    margin-right: 3 * $base-hmargin;
-    background-color:#eee;
-    .item {
-      border-top: 1px dotted #ccc;
-      margin-bottom: .25 * $base-vmargin;
-      padding-top: .25 * $base-vmargin;
-      position: relative;
-      label {
-        @include inline-block;
-        line-height: 18px;
-        font-weight: bold;
-        font-variant: small-caps;
-        text-transform: lowercase;
-        width: 10em;
-        position:relative;
-          .minmax {
-            display:block;
-            position:absolute;
-            top:-12px;
-            left:0px;
-            font-size:11px;
-            opacity:0;
-            width:10em;
-            -webkit-transition:opacity 0.3s ease-in-out;
-          }
-        &:hover {
-          .minmax {
-            opacity:1;
-          }
-        }
-      }
-      .value {
-        @include inline-block;
-        line-height: 12px;
-        font-size: 12px;
-        width: 5em;
-        cursor: pointer;
-      }
-      .control {
-        display: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    overflow: scroll;
 
-        @include single-box-shadow;
-        @include border-radius;
-        background: $text-color;
-        color: $bg-color;
-        position: absolute;
-        width: 18em;
-        right: -16em;
-        top: 50%;
-        margin-top: -1.5em;
-        height: 3em;
-        z-index: 100;
-        input {
-          @include inline-block;
-          margin-top: 1em;
-          width: 8em;
-        }
-        .min {
-          @include inline-block;
-          margin-top: 1em;
-          width: 4em;
-          text-align: right;
-        }
-        .max {
-          @include inline-block;
-          margin-top: 1em;
-          width: 4em;
-        }
-      }
-      &.sections {
-        margin-top: .5 * $base-vmargin;
-        line-height: 17px;
-      }
-      &.error {
-        label {
-          color:red;
-        }
-      }
+    &.dark {
+      background-color: $text-color;
+      color: $bg-color;
     }
   }
-  
+}
+#sektionlist {
+  border-right: 1px solid darken( $text-color, 5% );
+  list-style: none;
+
+  li {
+    cursor: pointer;
+    font-weight: bold;
+
+    padding: .5 * $base-vmargin 2 * $base-hmargin;
+    &.active,
+    &:hover {
+      background-color: darken( $text-color, 15% );
+      color: white;
+    }
+  }
+}
+#sektionform {
+  border-left: 1px solid lighten( $text-color, 5% );
+  border-right: 1px solid darken( $text-color, 5% );
+
+  width: 24em;
+  form {
+    border: 1px solid blue;
+    input {
+      width: 30%
+    }
+    label {
+      width: 30%;
+    }
+  }
 }
 
-#floor {
-  background: image-url('woodfloor.jpg') no-repeat top center;
-  @include background-size(cover);
-  border-top: 1px solid #f6e1cb;
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  height: 100px;
-  z-index: 20;
+/**
+ * LEGEND
+ */
+#fillwith.sektion {
+  padding: .5 * $base-vmargin 2 * $base-hmargin;
 }
 
+/**
+ * ORDER INFO
+ */
 #price {
   font-size:20px;
   position:absolute;
@@ -278,17 +243,5 @@
   bottom:10px;
   .obs {
     font-size:10px;
-  }
-}
-
-#fillwith {
-  right:15px;
-  top:15px;
-  position:absolute;
-  label {
-    font-weight:bold;
-  }
-  input {
-    margin-left:5px;
   }
 }

@@ -296,7 +296,72 @@
 
     <div id="controls">
 
-      <div id="fillwith">
+      <!-- Section list -->
+      <ul id="sektionlist" class="sektion dark"></ul>
+
+      <!-- Forms -->
+      <div id="sektionform" class="sektion dark">
+
+        <!-- Master form -->
+        <form id="masterForm" style="display:none;">
+          <input type="hidden" name="id" value="0">
+          <input type="hidden" name="type" value="">
+          <input type="hidden" name="modell" value="test">
+          <strong class="hidden">Sektion 1</strong>
+          <div class="item sections" item="col">
+            <label>Moduler<span class="minmax"></span></label>
+            <input class="value" type="text" name="col" value="7" max="10000" min="0">
+          </div>
+          <div class="item shelves" item="row">
+            <label>Hyllplan<span class="minmax"></span></label>
+            <input class="value" type="text" name="row" value="7" max="100000" min="0">
+          </div>
+          <div class="item width" item="w">
+            <label>Bredd<span class="minmax"></span></label>
+            <input class="value" type="input" name="w" value="5400" max="100000" min="0">
+          </div>
+          <div class="item height slave" item="h">
+            <label>Höjd<span class="minmax"></span></label>
+            <input class="value" type="text" name="h" value="2400" max="100000" min="0">
+          </div>
+          <div class="item sockel slave" item="sockel">
+            <label>Sockelhöjd<span class="minmax"></span></label>
+            <input class="value" type="text" name="sockel" value="2400" max="100000" min="0">
+          </div>
+        </form>
+
+        <!-- Order form -->
+        <form id="orderForm" style="display:none;">
+          <input type="hidden" name="id" value="0">
+          <input type="hidden" name="type" value="">
+          <input type="hidden" name="modell" value="test">
+          <strong class="hidden">Sektion 1</strong>
+          <div class="item sections" item="col">
+            <label>Moduler<span class="minmax"></span></label>
+            <input class="value" type="text" name="col" value="7" max="10000" min="0">
+          </div>
+          <div class="item shelves" item="row">
+            <label>Hyllplan<span class="minmax"></span></label>
+            <input class="value" type="text" name="row" value="7" max="100000" min="0">
+          </div>
+          <div class="item width" item="w">
+            <label>Bredd<span class="minmax"></span></label>
+            <input class="value" type="input" name="w" value="5400" max="100000" min="0">
+          </div>
+          <div class="item height slave" item="h">
+            <label>Höjd<span class="minmax"></span></label>
+            <input class="value" type="text" name="h" value="2400" max="100000" min="0">
+          </div>
+          <div class="item sockel slave" item="sockel">
+            <label>Sockelhöjd<span class="minmax"></span></label>
+            <input class="value" type="text" name="sockel" value="2400" max="100000" min="0">
+          </div>
+        </form>
+
+      </div>
+
+      <!-- Legend -->
+      <div id="fillwith" class="sektion">
         <label>Fyll hyllan med: </label>
           <form id="fillwithform">
           <input name="stuff" value="dvd"  type="checkbox">
@@ -311,6 +376,8 @@
           <label for="bok">Inbunden bok(<span class="max">0</span>).</label>
         </form>
       </div>
+
+      <!-- Info -->
       <div id="price">
         <div >
           Prisindikation: <span class="" id="pricevalue">0:-</span>
@@ -321,61 +388,7 @@
         <a href="#" id="save">Spara</a>
         <a href="#" id="intresseAnmalan">Skicka offertförfrågan</a>
       </div>
-      <ul id="sektionlist">
-        
-      </ul>
-      <form id="masterForm" style="display:none;" class="sektionForm">
-        <input type="hidden" name="id" value="0">
-        <input type="hidden" name="type" value="">
-        <input type="hidden" name="modell" value="test">
-        <strong>Sektion 1</strong>
-        <div class="item sections" item="col">
-          <label>Moduler<span class="minmax"></span></label>
-          <input class="value" type="text" name="col" value="7" max="10000" min="0">
-        </div>
-        <div class="item shelves" item="row">
-          <label>Hyllplan<span class="minmax"></span></label>
-          <input class="value" type="text" name="row" value="7" max="100000" min="0">
-        </div>
-        <div class="item width" item="w">
-          <label>Bredd<span class="minmax"></span></label>
-          <input class="value" type="input" name="w" value="5400" max="100000" min="0">
-        </div>
-        <div class="item height slave" item="h">
-          <label>Höjd<span class="minmax"></span></label>
-          <input class="value" type="text" name="h" value="2400" max="100000" min="0">
-        </div>
-        <div class="item sockel slave" item="sockel">
-          <label>Sockelhöjd<span class="minmax"></span></label>
-          <input class="value" type="text" name="sockel" value="2400" max="100000" min="0">
-        </div>
-      </form>
-      <form id="orderForm" style="display:none;" class="sektionForm">
-        <input type="hidden" name="id" value="0">
-        <input type="hidden" name="type" value="">
-        <input type="hidden" name="modell" value="test">
-        <strong>Sektion 1</strong>
-        <div class="item sections" item="col">
-          <label>Moduler<span class="minmax"></span></label>
-          <input class="value" type="text" name="col" value="7" max="10000" min="0">
-        </div>
-        <div class="item shelves" item="row">
-          <label>Hyllplan<span class="minmax"></span></label>
-          <input class="value" type="text" name="row" value="7" max="100000" min="0">
-        </div>
-        <div class="item width" item="w">
-          <label>Bredd<span class="minmax"></span></label>
-          <input class="value" type="input" name="w" value="5400" max="100000" min="0">
-        </div>
-        <div class="item height slave" item="h">
-          <label>Höjd<span class="minmax"></span></label>
-          <input class="value" type="text" name="h" value="2400" max="100000" min="0">
-        </div>
-        <div class="item sockel slave" item="sockel">
-          <label>Sockelhöjd<span class="minmax"></span></label>
-          <input class="value" type="text" name="sockel" value="2400" max="100000" min="0">
-        </div>
-      </form>
+
     </div>
   </div>
 

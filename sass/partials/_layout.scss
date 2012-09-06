@@ -13,6 +13,10 @@ a {
   @include hover-link;
 }
 
+.hidden {
+  display: none;
+}
+
 /*
  * Main layout
  */
@@ -126,9 +130,6 @@ a {
     height: .5 * image-height('jiof-logo.png');
   }
   &.small {
-    img {
-      width: .1 * image-width('jiof-logo.png');
-      height: .1 * image-height('jiof-logo.png');
-    } 
+    display: none;
   }
 }
