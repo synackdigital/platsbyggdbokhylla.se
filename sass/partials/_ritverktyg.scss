@@ -191,7 +191,7 @@
     }
   }
 }
-#sektionlist {
+#sektionlist.sektion {
   border-right: 1px solid darken( $text-color, 5% );
   list-style: none;
 
@@ -207,7 +207,7 @@
     }
   }
 }
-#sektionform {
+#sektionform.sektion {
   border-left: 1px solid lighten( $text-color, 5% );
   border-right: 1px solid darken( $text-color, 5% );
 
