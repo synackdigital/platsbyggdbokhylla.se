@@ -121,11 +121,6 @@
       max-width: 100%;
     }
   }
-  .button {
-    @include button;
-    text-transform: uppercase;
-    line-height: 1;
-  }
 }
 #rita_start.guidestep {
   .choice {
@@ -228,20 +223,63 @@
  */
 #fillwith.sektion {
   padding: .5 * $base-vmargin 2 * $base-hmargin;
+  width: 18em;
+
+  form {
+    margin-top: $base-vmargin;
+    .inputgroup {
+      display: block;
+      font-weight: bold;
+      margin-bottom: .5 * $base-vmargin;
+    }
+    .max {
+      color: lighten( $text-color, 30% );
+      font-weight: normal;
+      &:before {
+        content: ' (';
+      }
+      &:after {
+        content: ')';
+      }
+    }
+  }
 }
 
 /**
  * ORDER INFO
  */
 #price {
-  font-size:20px;
-  position:absolute;
-  right:15px;
-  text-align:right;
-  width:200px;
-  height:70px;
-  bottom:10px;
-  .obs {
-    font-size:10px;
+  float: right;
+  padding: .5 * $base-vmargin 2 * $base-hmargin;
+
+  .price {
+    display: block;
+    padding: .5em 0;
+  }
+
+  text-align: right;
+  .label,
+  .note {
+    display: block;
+    font-size: $small-font-size;
+  }
+  .value {
+    display: block;
+    font-size: $large-font-size;
+    font-weight: bold;
+  }
+  .note {
+    color: lighten( $text-color, 30% );
+  }
+
+  .button {
+    background-color: darken( $bg-color, 15% );
+    color: $text-color;
+    margin: .5em auto;
+    &:hover,
+    &:focus {
+      background-color: $decor-bg-color;
+      color: $decor-text-color;
+    }
   }
 }

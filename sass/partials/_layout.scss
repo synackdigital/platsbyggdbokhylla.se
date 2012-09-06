@@ -17,6 +17,18 @@ a {
   display: none;
 }
 
+.button {
+  @include button;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
 /*
  * Main layout
  */
