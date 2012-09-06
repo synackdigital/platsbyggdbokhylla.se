@@ -44,6 +44,17 @@
   }
 }
 
+#rita_offert {
+  position:absolute;
+  z-index:700;
+  top:0px;
+  bottom:0px;
+  left:0px;
+  right:0px;
+  background-color:#eee;
+}
+
+
 #floor {
   background: image-url('woodfloor.jpg') no-repeat top center;
   @include background-size(cover);

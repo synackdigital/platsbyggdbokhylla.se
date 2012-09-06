@@ -454,6 +454,26 @@ var k = {
 			k.saveOrder();
 		});
 
+		$("intresseAnmalan").observe("click",function(e){
+			trace("offert!");
+			e.stop();
+			$("rita_offert").show();
+		});
+
+		$("closeIntresseAnmalan").observe("click",function(e){
+			trace("closeOffert!");
+			e.stop();
+			$("rita_offert").hide();
+		});
+		$("sendIntresseAnmalan").observe("click",function(e){
+			trace("sendIntresseAnmalan!");
+			e.stop();
+
+		});
+
+
+
+
 		if(document.location.hash){
 			var id = document.location.hash.substring(1);
 			new Ajax.Request("/data/drawings/"+id,{
