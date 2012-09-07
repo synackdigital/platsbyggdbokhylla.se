@@ -129,7 +129,7 @@ a {
 /*
  * Footer section
  */
-#logo {
+#brochure {
   @include border-radius(2px);
   background: $bg-color;
   position: absolute;
@@ -138,8 +138,8 @@ a {
   z-index: 50;
   img {
     -webkit-transition:all 0.6s ease-in-out;
-    width: .5 * image-width('jiof-logo.png');
-    height: .5 * image-height('jiof-logo.png');
+    width: .4 * image-width('brochure.png');
+    height: .4 * image-height('brochure.png');
   }
   &.small {
     display: none;
