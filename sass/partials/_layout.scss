@@ -90,11 +90,11 @@ a {
     background: $bg-color;
     padding-left: $base-hmargin;
     padding-right: $base-hmargin;
-    max-height: 80%;
+    max-height: 90%;
     overflow: auto;
     position: absolute;
-    top: $base-vmargin;
-    right: $base-hmargin;
+    top: 5%;
+    right: 2%;
     width: 30%;
     html.rgba & {
       background: rgba(white, .9);
