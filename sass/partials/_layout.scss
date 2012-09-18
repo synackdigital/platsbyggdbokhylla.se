@@ -9,24 +9,16 @@ body {
 }
 
 a {
-  @include link-colors($link-color, $link-hover-color, $link-active-color, $link-visited-color, $link-focus-color);
-  @include hover-link;
+  color: $link-color;
+  &:focus,
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: underline;
+  }
 }
 
 .hidden {
   display: none;
-}
-
-.button {
-  @include button;
-  text-transform: uppercase;
-  text-align: center;
-  text-decoration: none;
-  line-height: 1;
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
 }
 
 /*
@@ -61,13 +53,11 @@ a {
           @include button( inverted );
           margin-left: .5 * $base-hmargin;
           padding-top: 9px;
-          text-transform: uppercase;
-          line-height: 1;
         }
         &.nav-item-selected {
           a {
-            background: $decor-bg-color;
-            color: $decor-text-color;
+            @include button( decor );
+            padding-top: 9px; // needs to be redeclared
           }
         }
       }

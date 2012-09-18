@@ -311,13 +311,7 @@
   }
 
   .button {
-    background-color: darken( $bg-color, 15% );
-    color: $text-color;
+    @include button(soft);
     margin: .5em auto;
-    &:hover,
-    &:focus {
-      background-color: $decor-bg-color;
-      color: $decor-text-color;
-    }
   }
 }
