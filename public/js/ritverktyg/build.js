@@ -605,6 +605,7 @@ var k = {
 		$$("#sektionform form.activated").each(function(aForm){
 			aForm.hide();
 		});
+		$("sektionlist").down("li").fire("machine:click");
 
 		setTimeout(function(){
 			k.updateOrder();
@@ -633,7 +634,7 @@ var k = {
 		trace("hide the FOOOOORM");
 
 		var sektionLink = new Element("li",{"target":"form_"+id}).update(name);
-		sektionLink.observe("click",function(){
+		var handleSectionActivated = function(){
 			this.siblings().each(function(sib){
 				sib.removeClassName("active");
 			});
@@ -642,7 +643,9 @@ var k = {
 				aForm.hide();
 			});
 			$(this.readAttribute("target")).show();
-		});
+		};
+		sektionLink.observe("click",handleSectionActivated);
+		sektionLink.observe("machine:click",handleSectionActivated);
 		$("sektionlist").insert(sektionLink);
 
 		if(data.type=="over"){
