@@ -548,6 +548,7 @@ var k = {
 					try{
 						$$(".guidestep").invoke("hide");
 						var drawing = transport.responseJSON;
+						k.baseOrder.modell = drawing.data.modell;
 						k.startUp({
 							modell:drawing.data.modell,
 							order:drawing.data.order
@@ -601,7 +602,7 @@ var k = {
 						callback(drawing.id);
 						$$(".drawingID").each(function(item){
 							if(item.readAttribute("type")=="text"){
-								item.value = drawing.id;
+								item.value = "http://www.platsbyggdbokhylla.se/ritverktyg/#" + drawing.id;
 							} else {
 								item.update(drawing.id);
 							}
