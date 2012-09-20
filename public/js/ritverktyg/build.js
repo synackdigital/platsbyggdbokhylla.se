@@ -413,7 +413,6 @@ var k = {
 
 		$$("#rita_modell .choice").each(function(choice){
 			choice.observe("click",function(){
-				$("logo").addClassName("small");
 				k.baseOrder.modell = this.readAttribute("template");
 				k.nextGuideStep();
 			})

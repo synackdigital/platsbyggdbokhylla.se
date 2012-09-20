@@ -9,24 +9,16 @@ body {
 }
 
 a {
-  @include link-colors($link-color, $link-hover-color, $link-active-color, $link-visited-color, $link-focus-color);
-  @include hover-link;
+  color: $link-color;
+  &:focus,
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: underline;
+  }
 }
 
 .hidden {
   display: none;
-}
-
-.button {
-  @include button;
-  text-transform: uppercase;
-  text-align: center;
-  text-decoration: none;
-  line-height: 1;
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
 }
 
 /*
@@ -61,13 +53,11 @@ a {
           @include button( inverted );
           margin-left: .5 * $base-hmargin;
           padding-top: 9px;
-          text-transform: uppercase;
-          line-height: 1;
         }
         &.nav-item-selected {
           a {
-            background: $decor-bg-color;
-            color: $decor-text-color;
+            @include button( decor );
+            padding-top: 9px; // needs to be redeclared
           }
         }
       }
@@ -90,11 +80,11 @@ a {
     background: $bg-color;
     padding-left: $base-hmargin;
     padding-right: $base-hmargin;
-    max-height: 80%;
-    overflow: scroll;
+    max-height: 90%;
+    overflow: auto;
     position: absolute;
-    top: $base-vmargin;
-    right: $base-hmargin;
+    top: 5%;
+    right: 2%;
     width: 30%;
     html.rgba & {
       background: rgba(white, .9);
@@ -129,7 +119,7 @@ a {
 /*
  * Footer section
  */
-#logo {
+#brochure {
   @include border-radius(2px);
   background: $bg-color;
   position: absolute;
@@ -138,8 +128,8 @@ a {
   z-index: 50;
   img {
     -webkit-transition:all 0.6s ease-in-out;
-    width: .5 * image-width('jiof-logo.png');
-    height: .5 * image-height('jiof-logo.png');
+    width: .4 * image-width('brochure.png');
+    height: .4 * image-height('brochure.png');
   }
   &.small {
     display: none;

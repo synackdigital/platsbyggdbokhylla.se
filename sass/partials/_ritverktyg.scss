@@ -13,7 +13,7 @@
   }
   background: #fafafa image-url('wallpaper.jpg') no-repeat bottom center;
   @include background-size(cover);
-  overflow:hidden;
+  overflow: hidden;
 }
 
 #stageinner {
@@ -189,7 +189,7 @@
     padding: 0;
     margin: 0;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 
     &.dark {
       background-color: $text-color;
@@ -217,16 +217,43 @@
   border-left: 1px solid lighten( $text-color, 5% );
   border-right: 1px solid darken( $text-color, 5% );
 
-  width: 24em;
+  padding: .5 * $base-vmargin 2 * $base-hmargin;
+  width: 22em;
   form {
-    border: 1px solid blue;
     input {
-      width: 30%
+      @include inline-block;
+      background: darken($text-color, 15%);
+      border: 1px solid lighten($text-color, 15%);
+      color: $bg-color;
+      margin-left: .5em;
+      padding: .5em;
+      width: 4em;
     }
     label {
-      width: 30%;
+      @include inline-block;
+      font-weight: bold;
+      width: 10em;
+
+      .minmax {
+        color: darken( $bg-color, 30% );
+        font-weight: normal;
+
+        &:before {
+          content: ' ('
+        }
+        &:after {
+          content: ')'
+        }
+
+        .minval {
+          &:after {
+            content: '–';
+          }
+        }
+      }
     }
   }
+
 }
 
 /**
@@ -234,7 +261,7 @@
  */
 #fillwith.sektion {
   padding: .5 * $base-vmargin 2 * $base-hmargin;
-  width: 18em;
+  width: 14em;
 
   form {
     margin-top: $base-vmargin;
@@ -284,13 +311,7 @@
   }
 
   .button {
-    background-color: darken( $bg-color, 15% );
-    color: $text-color;
+    @include button(soft);
     margin: .5em auto;
-    &:hover,
-    &:focus {
-      background-color: $decor-bg-color;
-      color: $decor-text-color;
-    }
   }
 }
