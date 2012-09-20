@@ -235,7 +235,9 @@ var k = {
 		$("save").observe("click",function(e){
 			trace("save!");
 			e.stop();
+			if($("rita_offert").visible()) return;
 			k.saveOrder(function(){
+
 				$("rita_saved").show();
 			});
 		});
@@ -247,6 +249,7 @@ var k = {
 		});
 
 		$$(".closeMessage").each(function(closeButton){
+			trace(closeButton);
 			closeButton.observe("click",function(e){
 				trace("closeOffert!");
 				e.stop();

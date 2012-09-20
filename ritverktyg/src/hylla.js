@@ -107,16 +107,11 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		});
 		elHover.toFront();
 		
-		elHover.mouseover(function(e){
-			trace("mouseover");
+		elHover.mouseover(function(e){			
 			var masterID = e.srcElement.raphaelid;
-			trace("masterID:"+masterID);
 			for (var i = 0; i < k.doors_open.length; i++){
 				var openDoor = 	k.doors_open[i];
-				trace("oppenDoor");
-				trace(openDoor);
 				if(openDoor.parent==masterID){
-					trace("got the parent");
 					var el = k.paper.getById(openDoor.id);
 					
 					if(openDoor.parent == openDoor.id){
@@ -125,7 +120,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 						}
 					} else {
 						el.animate({"path":openDoor.path},300,"ease-out",function(){
-							trace("door open done");
+
 						});	
 					}
 				}
@@ -143,7 +138,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 						}
 					} else {
 						el.animate({"path":openDoor.path},300,"ease-out",function(){
-							trace("door open done");
+
 						});
 					}
 					
@@ -166,15 +161,15 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 			if(thing.open){
 				var openThing = thing.open[Math.round(Math.random()*(thing.open.length-1))];
 				if(width>=openThing.w){
-					trace("open thing");
+					
 					var theX = theX;
-					trace("thex:"+theX);
+					
 					var widthLeft = width - openThing.w;
-					trace("widthLeft:"+widthLeft);
+					
 					var stepsLeft = Math.floor(widthLeft/thing.w);
-					trace("stepsLeft:"+stepsLeft);
+					
 					var theX = theX + thing.w*Math.round(Math.random()*stepsLeft);
-					trace("theX:"+theX);
+					
 					this._p.image("../images/"+openThing.image+".png",theX,thingY,openThing.w,openThing.h);		
 				}
 			}
@@ -224,8 +219,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		
 		}
 
-		trace("options.position");
-		trace(options.position);
+		
 
 		if(options.position==1){
 			//middle section
@@ -266,7 +260,6 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 		if(options.position==2 || options.position==4){
 			//for single overs on the sides
-			trace("perKol change");
 			perKol = (this._w - ((p.kol.w * (this._kol-1)) + sideWidth)) / this._kol;
 		}
 		if(options.position==1){
@@ -297,7 +290,6 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 			var colX = this._x + sideWidth + (i * perKol);
 			if(options.position==2 && options.position==4){
 				colX = this._x + (i * perKol);
-				trace("colX fix ");
 			}
 			colX  = colX + (i * p.kol.w);
 			if(this._type=="std"){
@@ -412,7 +404,6 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 			var planWidth = (this._w - (sideWidth * 2));
 			var startX = this._x + p.side.w;
 			if(options.position==2 && options.position==4){
-				trace("startX and planWidth");
 				startX = this._x;
 				planWidth = (this._w - sideWidth);
 			}

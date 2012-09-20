@@ -44,6 +44,31 @@
   }
 }
 
+.saveMessage {
+  z-index:3000;
+  
+  position:absolute;
+  top:0px;
+  bottom:0px;
+  left:0px;
+  right:0px;
+  .content {
+    margin:20px auto;
+    padding:20px;
+    width:650px;
+    background-color:#eee;
+    @include single-box-shadow();
+    input.drawingID {
+      display:block;
+      @include box-sizing(border-box);
+      width:100%;
+    }
+    .drawingID {  
+      background-color:#FFF;
+      padding:5px;
+    }
+  }
+}
 #rita_offert {
   position:absolute;
   z-index:700;
@@ -53,6 +78,8 @@
   right:0px;
   background-color:#eee;
 }
+
+
 
 
 #floor {

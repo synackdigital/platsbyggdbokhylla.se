@@ -32,73 +32,79 @@
         </div>
 
         <div id="rita_saved" class="saveMessage" style="display:none;">
-          <div class="header">
-              <h2>Din ritning är sparad</h2>
-              <h3>Bokmärk denna sidan eller spara följande unika nummer för att öppna ritningen vid ett senare tillfälle.</h3>
-              <h4>Ritningsnummer:<span class="drawingID">drawingID</<span></h4>
-              <p>
-                Du kan även dela med dig av din ritning till vänner &and; familj genom att skicka följande adress:
-                <input type="text" class="drawingID">
-              </p>
-              
-            </div>
-            <a class="button" href="#" class="closeMessage">Tillbaka till ritverktyget</a>
+          <div class="content">
+            <div class="header">
+                <h2>Din ritning är sparad</h2>
+                <h3>Bokmärk denna sidan eller spara följande unika nummer för att öppna ritningen vid ett senare tillfälle.</h3>
+                <h4>Ritningsnummer:<span class="drawingID">drawingID</<span></h4>
+                <p>
+                  Du kan även dela med dig av din ritning till vänner och familj genom att skicka följande adress:
+                  <input type="text" class="drawingID">
+                </p>
+                
+              </div>
+              <a class="button closeMessage" href="#">Tillbaka till ritverktyget</a>
+          </div>
         </div>
 
         <div id="rita_offert_saved" class="saveMessage" style="display:none;">
-          <div class="header">
-            <h2>Tack för din intresseförfrågan</h2>
-            <h3>Vi kommer att titta igenom din ritning och återkomma med en offert.</h3>
-            <h3>Bokmärk denna sidan eller spara följande unika nummer för att öppna ritningen vid ett senare tillfälle.</h3>
-              <h4>Ritningsnummer:<span class="drawingID">drawingID</<span></h4>
-              <p>
-                Du kan även dela med dig av din ritning till vänner &and; familj genom att skicka följande adress:
-                <input type="text" class="drawingID">
-              </p>
+          <div class="content">
+              <div class="header">
+              <h2>Tack för din intresseförfrågan</h2>
+              <h3>Vi kommer att titta igenom din ritning och återkomma med en offert.</h3>
+              <h3>Bokmärk denna sidan eller spara följande unika nummer för att öppna ritningen vid ett senare tillfälle.</h3>
+                <h4>Ritningsnummer:<span class="drawingID">drawingID</<span></h4>
+                <p>
+                  Du kan även dela med dig av din ritning till vänner och familj genom att skicka följande adress:
+                  <input type="text" class="drawingID">
+                </p>
+            </div>
+            <a class="button closeMessage" href="#">Tillbaka till ritverktyget</a>
           </div>
-          <a class="button" href="#" class="closeMessage">Tillbaka till ritverktyget</a>
         </div>
 
         <div id="rita_offert" class="saveMessage" style="display:none;">
-          <div class="header">
-            <h2>Skicka intresseförfrågan</h2>
-          </div>
-          <div class="choice">
-            <div class="inner">
-              <div class="offertform">
-                <form action="/data/orders" method="POST" id="order_form" class="">
-                  <input type="hidden" name="Order[drawing]" id="Order_drawing" value="">
-                  <div class="item">
-                    <label for="Order_name" class="control-label">Namn</label>
-                    <input name="Order[name]" id="Order_name">
-                  </div>
-                  <div class="item">
-                    <label for="Order_email" class="control-label">Epost</label>
-                    <input name="Order[email]" id="Order_email">
-                  </div>
-                  <div class="item">
-                    <label for="Order_phone" class="control-label">Telefon</label>
-                    <input name="Order[phone]" id="Order_phone">
-                  </div>
-                  <div class="item">
-                    <label for="Order_adress" class="control-label">Adress</label>
-                    <input name="Order[adress]" id="Order_adress">
-                  </div>
-                  <div class="item">
-                    <label for="Order_zip" class="control-label">Postnummer</label>
-                    <input name="Order[zip]" id="Order_zip">
-                  </div>
-                  <div class="item">
-                    <label for="Order_city" class="control-label">Stad</label>
-                    <input name="Order[city]" id="Order_city">
-                  </div>
-                  <div class="item">
-                    <label for="Order_wantsfunding" class="control-label">Jag är intresserad av finansiering via Resurs bank</label>
-                    <input name="Order[wantsfunding]" id="Order_wantsfunding" value="1" type="checkbox">
-                  </div>
-                </form>
-                <a class="button" href="#" id="sendIntresseAnmalan">Skicka offertförfrågan</a>
-                <a class="button" href="#" class="closeMessage">Tillbaka till ritverktyget</a>
+          <div class="content">
+            <div class="header">
+              <h2>Skicka intresseförfrågan</h2>
+            </div>
+            <div class="choice">
+              <div class="inner">
+                <div class="offertform">
+                  <form action="/data/orders" method="POST" id="order_form" class="">
+                    <input type="hidden" name="Order[drawing]" id="Order_drawing" value="">
+                    <div class="item">
+                      <label for="Order_name" class="control-label">Namn</label>
+                      <input name="Order[name]" id="Order_name">
+                    </div>
+                    <div class="item">
+                      <label for="Order_email" class="control-label">Epost</label>
+                      <input name="Order[email]" id="Order_email">
+                    </div>
+                    <div class="item">
+                      <label for="Order_phone" class="control-label">Telefon</label>
+                      <input name="Order[phone]" id="Order_phone">
+                    </div>
+                    <div class="item">
+                      <label for="Order_adress" class="control-label">Adress</label>
+                      <input name="Order[adress]" id="Order_adress">
+                    </div>
+                    <div class="item">
+                      <label for="Order_zip" class="control-label">Postnummer</label>
+                      <input name="Order[zip]" id="Order_zip">
+                    </div>
+                    <div class="item">
+                      <label for="Order_city" class="control-label">Stad</label>
+                      <input name="Order[city]" id="Order_city">
+                    </div>
+                    <div class="item">
+                      <label for="Order_wantsfunding" class="control-label">Jag är intresserad av finansiering via Resurs bank</label>
+                      <input name="Order[wantsfunding]" id="Order_wantsfunding" value="1" type="checkbox">
+                    </div>
+                  </form>
+                  <a class="button" href="#" id="sendIntresseAnmalan">Skicka offertförfrågan</a>
+                  <a class="button closeMessage" href="#">Tillbaka till ritverktyget</a>
+                </div>
               </div>
             </div>
           </div>
