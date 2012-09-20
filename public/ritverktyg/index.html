@@ -35,9 +35,47 @@
           <h1>
             Skicka offerförfrågan
           </h1>
-          <a class="button" href="#" id="sendIntresseAnmalan">Skicka offertförfrågan</a>
-          <a class="button" href="#" id="closeIntresseAnmalan">Tillbaka till ritverktyget</a>
+          <div class="choice">
+            <div class="inner">
+              <div class="offertform">
+                <form action="/data/orders" method="POST" id="order_form" class="">
+                  <input type="hidden" name="Order[drawing]" id="Order_drawing" value="">
+                  <div class="item">
+                    <label for="Order_name" class="control-label">Namn</label>
+                    <input name="Order[name]" id="Order_name">
+                  </div>
+                  <div class="item">
+                    <label for="Order_email" class="control-label">Epost</label>
+                    <input name="Order[email]" id="Order_email">
+                  </div>
+                  <div class="item">
+                    <label for="Order_phone" class="control-label">Telefon</label>
+                    <input name="Order[phone]" id="Order_phone">
+                  </div>
+                  <div class="item">
+                    <label for="Order_adress" class="control-label">Adress</label>
+                    <input name="Order[adress]" id="Order_adress">
+                  </div>
+                  <div class="item">
+                    <label for="Order_zip" class="control-label">Postnummer</label>
+                    <input name="Order[zip]" id="Order_zip">
+                  </div>
+                  <div class="item">
+                    <label for="Order_city" class="control-label">Stad</label>
+                    <input name="Order[city]" id="Order_city">
+                  </div>
+                  <div class="item">
+                    <label for="Order_wantsfunding" class="control-label">Jag är intresserad av finansiering via Resurs bank</label>
+                    <input name="Order[wantsfunding]" id="Order_wantsfunding" value="1" type="checkbox">
+                  </div>
+                </form>
+                <a class="button" href="#" id="sendIntresseAnmalan">Skicka offertförfrågan</a>
+                <a class="button" href="#" id="closeIntresseAnmalan">Tillbaka till ritverktyget</a>
+              </div>
+            </div>
+          </div>
         </div>
+
 
         <div id="rita_modell" class="guidestep unused hide">
           <div class="header">

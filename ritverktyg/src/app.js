@@ -235,7 +235,9 @@ var k = {
 		$("save").observe("click",function(e){
 			trace("save!");
 			e.stop();
-			k.saveOrder();
+			k.saveOrder(function(){
+				alert("saved");
+			});
 		});
 
 		$("intresseAnmalan").observe("click",function(e){
@@ -252,6 +254,22 @@ var k = {
 		$("sendIntresseAnmalan").observe("click",function(e){
 			trace("sendIntresseAnmalan!");
 			e.stop();
+			k.saveOrder(function(drawingID){
+				trace(drawingID);
+				if(drawingID){
+					$("Order_drawing").setValue(drawingID);
+					$("order_form").request({
+						onSuccess: function(transport){
+							var resp = transport.responseText.evalJSON();
+							trace(resp);
+							alert("intresseAnmälan skickad");
+						}
+					});
+				} else {
+					alert("couldn't save order right now");
+				}
+			});
+
 			
 		});
 
@@ -327,7 +345,7 @@ var k = {
 		return;
 		
 	},
-	saveOrder:function(){
+	saveOrder:function(callback){
 		var data = {
 			modell:k.baseOrder.modell,
 			order:[]
@@ -352,21 +370,24 @@ var k = {
 					var drawing = transport.responseJSON;
 					if(drawing.id){
 						document.location.hash = drawing.id;
+						callback(drawing.id);
 					}
 				} catch(e){
 					trace("something went wrong saving");
+					callback();
 				}
+
 			},
 			onException:function(e,d){
 				trace(e);
 				trace(d);
+				callback();
 			},
 			onError:function(){
 				trace("ERROR saving");
+				callback();
 			}
 		});
-		trace(data);
-		trace(Object.toJSON(data));
 	},
 	startUp:function(options){
 		k.order = options.order ? options.order : this.templates[options.template];

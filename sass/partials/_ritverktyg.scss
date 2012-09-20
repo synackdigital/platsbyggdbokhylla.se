@@ -103,7 +103,7 @@
     left: 0;
     right: 0;
   }
-  .choice {
+  .choice, .offertform {
     @include single-transition(background-color);
     @include inline-block;
     @include box-sizing( border-box );
@@ -143,24 +143,26 @@
 #rita_base.guidestep {
   .choice {
     width: 50%;
-    .item {
-      margin-bottom: .5 * $base-vmargin;
-      label {
-        @include inline-block;
-        text-align: right;
-        margin-right: .5em;
-        width: 40%;
-      }
-      input {
-        @include inline-block;
-        background: darken($text-color, 15%);
-        border: 1px solid lighten($text-color, 15%);
-        color: $bg-color;
-        text-align: right;
-        margin-left: .5em;
-        padding: .5em;
-        width: 15%;
-      }
+  }
+}
+.guidestep .choice, .offertform {
+  .item {
+    margin-bottom: .5 * $base-vmargin;
+    label {
+      @include inline-block;
+      text-align: right;
+      margin-right: .5em;
+      width: 40%;
+    }
+    input {
+      @include inline-block;
+      background: darken($text-color, 15%);
+      border: 1px solid lighten($text-color, 15%);
+      color: $bg-color;
+      text-align: right;
+      margin-left: .5em;
+      padding: .5em;
+      width: 15%;
     }
   }
 }

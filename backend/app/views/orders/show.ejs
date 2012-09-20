@@ -5,18 +5,22 @@
 
 <table class="table table-bordered">
     <tbody>
-        <tr><th>new</th><td><%= order.new %></td></tr>
-        <tr><th>createDate</th><td><%= order.createDate %></td></tr>
-        <tr><th>updateDate</th><td><%= order.updateDate %></td></tr>
+        <tr><th>New</th><td><p class="label"><%- bool_string(order.new,"Yes", "No") %></p></td></tr>
+        <tr><th>createDate</th><td><%- date_format(order.createDate) %></td></tr>
+        <tr><th>updateDate</th><td><%- date_format(order.updateDate) %></td></tr>
+        <tr><th></th><td></td></tr>
         <tr><th>name</th><td><%= order.name %></td></tr>
         <tr><th>email</th><td><%= order.email %></td></tr>
         <tr><th>phone</th><td><%= order.phone %></td></tr>
         <tr><th>adress</th><td><%= order.adress %></td></tr>
         <tr><th>zip</th><td><%= order.zip %></td></tr>
         <tr><th>city</th><td><%= order.city %></td></tr>
-        <tr><th>wantsfunding</th><td><%= order.wantsfunding %></td></tr>
-        <tr><th>drawing</th><td><%= order.drawing %></td></tr>
-        <tr><th>status</th><td><%= order.status %></td></tr>
+        <tr><th>Interested in funding</th><td><p class="label"><%- bool_string(order.wantsfunding,"Yes", "No") %></td></tr>
+        <tr><th></th><td></td></tr>
+        <tr><th><a href="<%- link_to_site('ritverktyg/#'+order.drawing) %>">Open Drawing in ritverktyg</a></th><td></td></tr>
+        <tr><th><%- link_to('Open Drawing Specs', path_to.drawing(order.drawing)) %></th><td></td></tr>
+
+        <tr><th>status</th><td><p class="label"><%- status_selector_value(order.status) %></p></td></tr>
         <tr><th>comment</th><td><%= order.comment %></td></tr>    
     </tbody>
 </table>

@@ -1,22 +1,9 @@
 <%- errorMessagesFor(order) %>
-<div class="control-group">
-   <%- form.label("new", false, {class: "control-label"}) %>
-   <div class="controls">
-       <%- form.checkbox("new") %>
-   </div>
-</div>
-<div class="control-group">
-   <%- form.label("createDate", false, {class: "control-label"}) %>
-   <div class="controls">
-       <%- form.input("createDate") %>
-   </div>
-</div>
-<div class="control-group">
-   <%- form.label("updateDate", false, {class: "control-label"}) %>
-   <div class="controls">
-       <%- form.input("updateDate") %>
-   </div>
-</div>
+
+<%- form.input("new",{type:"hidden"}) %>
+<%- form.input("createDate",{type:"hidden"}) %>
+<%- form.input("updateDate",{type:"hidden"}) %>
+
 <div class="control-group">
    <%- form.label("name", false, {class: "control-label"}) %>
    <div class="controls">
@@ -60,7 +47,7 @@
    </div>
 </div>
 <div class="control-group">
-   <%- form.label("drawing", false, {class: "control-label"}) %>
+   <%- form.label("drawing id", false, {class: "control-label"}) %>
    <div class="controls">
        <%- form.input("drawing") %>
    </div>

@@ -1,6 +1,7 @@
 load('application');
 
 before(loadOrder, {only: ['show', 'edit', 'update', 'destroy']});
+skipBeforeFilter('protect from forgery',['create']);
 
 action('new', function () {
     this.title = 'New order';
@@ -9,18 +10,33 @@ action('new', function () {
 });
 
 action(function create() {
-
-    Order.create(req.body.Order, function (err, order) {
-        if (err) {
-            flash('error', 'Order can not be created');
-            render('new', {
-                order: order,
-                title: 'New order'
+    var theOrder = req.body.Order;
+    theOrder.createDate = new Date();
+    theOrder.updateDate = new Date();
+    theOrder.new = true;
+    theOrder.status = "new";
+    Order.create(theOrder, function (err, order) {
+        respondTo(function (format) {
+            format.html(function(){
+                if (err) {
+                    flash('error', 'Order can not be created');
+                    render('new', {
+                        order: order,
+                        title: 'New order'
+                    });
+                } else {
+                    flash('info', 'Order created');
+                    redirect(path_to.orders());
+                }
             });
-        } else {
-            flash('info', 'Order created');
-            redirect(path_to.orders());
-        }
+            format.json(function () {
+                if (err) {
+                    send({status:"error"});
+                } else {
+                    send({status:"success"});    
+                }
+            }.bind(this));
+        });
     });
 });
 
