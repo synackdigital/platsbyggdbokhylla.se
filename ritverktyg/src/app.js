@@ -338,14 +338,22 @@ var k = {
 					stdCount++;
 				}
 			}
+			trace(options.partial);
 			var overW = 1000;
-			var width = Math.ceil((options.partial.width-(overCount*overW))/stdCount);
+			var width = Math.ceil((options.partial.w-(overCount*overW))/stdCount);
 			for(var i = 0; i < k.order.length; i++){
 				var orderItem = k.order[i];
+				trace(orderItem);
 				if(orderItem.type=="over"){
 					orderItem.w=overW;
 				} else {
+					trace("set the width");
+					trace(width);
 					orderItem.w=width;
+					orderItem.h=options.partial.h;
+					if(options.modell=="ribersborg"){
+						orderItem.sockel=options.partial.sockel;
+					}
 				}
 			}
 		}
