@@ -51,7 +51,13 @@ action(function index() {
 
 action(function show() {
     this.title = 'Order show';
-    render();
+    if(this.order.new){
+        this.order.updateAttributes({new:false}, function (err) {
+            render();
+        }.bind(this));
+    } else {
+        render();    
+    }    
 });
 
 action(function edit() {
@@ -60,6 +66,7 @@ action(function edit() {
 });
 
 action(function update() {
+    body.Order.updateDate = new Date();
     this.order.updateAttributes(body.Order, function (err) {
         if (!err) {
             flash('info', 'Order updated');

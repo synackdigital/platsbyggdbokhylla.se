@@ -24,7 +24,7 @@
                 <tbody>
                     <% orders.forEach(function (order) { %>
                         <tr>
-                            <td><p class="label"><%- bool_string(order.new,"Yes", "No") %></p></td>
+                            <td><p class="label <%- bool_string(order.new,"label-success", "label-info")%>"><%- bool_string(order.new,"Yes", "No") %></p></td>
                             <td><%- link_to(date_format(order.createDate),path_to.order(order)) %></td>
                             <td><strong><%- link_to(order.name, path_to.order(order)) %></strong></td>
                             <td><strong><%- link_to(order.email, path_to.order(order)) %></strong></td>
