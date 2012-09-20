@@ -38,6 +38,10 @@
   }
 }
 
+.saveMessage {
+  z-index:300;
+}
+
 .guideform {
   display:none;
   &.show {

@@ -465,7 +465,7 @@ var k = {
 			trace("save!");
 			e.stop();
 			k.saveOrder(function(){
-				alert("saved");
+				$("rita_saved").show();
 			});
 		});
 
@@ -475,10 +475,12 @@ var k = {
 			$("rita_offert").show();
 		});
 
-		$("closeIntresseAnmalan").observe("click",function(e){
-			trace("closeOffert!");
-			e.stop();
-			$("rita_offert").hide();
+		$$(".closeMessage").each(function(closeButton){
+			closeButton.observe("click",function(e){
+				trace("closeOffert!");
+				e.stop();
+				$$(".saveMessage").invoke("hide");
+			});
 		});
 		$("sendIntresseAnmalan").observe("click",function(e){
 			trace("sendIntresseAnmalan!");
@@ -491,11 +493,9 @@ var k = {
 						onSuccess: function(transport){
 							var resp = transport.responseText.evalJSON();
 							trace(resp);
-							alert("intresseAnmälan skickad");
+							$("rita_offert_saved").show();
 						}
 					});
-				} else {
-					alert("couldn't save order right now");
 				}
 			});
 
@@ -599,6 +599,13 @@ var k = {
 					if(drawing.id){
 						document.location.hash = drawing.id;
 						callback(drawing.id);
+						$$(".drawingID").each(function(item){
+							if(item.readAttribute("type")=="text"){
+								item.value = drawing.id;
+							} else {
+								item.update(drawing.id);
+							}
+						});
 					}
 				} catch(e){
 					trace("something went wrong saving");
