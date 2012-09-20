@@ -18,7 +18,7 @@ var TEMPLATES = {
 		},
 		{
 			type:"over",
-			w:1500,
+			w:1000,
 			h:500,
 			col:2,
 			row:2,
@@ -28,7 +28,7 @@ var TEMPLATES = {
 	onewinleft:[		
 		{
 			type:"over",
-			w:1500,
+			w:1000,
 			h:500,
 			col:2,
 			row:2,
@@ -54,7 +54,7 @@ var TEMPLATES = {
 		},
 		{
 			type:"over",
-			w:1200,
+			w:1000,
 			h:500,
 			col:2,
 			row:2,
@@ -80,7 +80,7 @@ var TEMPLATES = {
 		},
 		{
 			type:"over",
-			w:1200,
+			w:1000,
 			h:602,
 			col:2,
 			row:2,
@@ -96,7 +96,7 @@ var TEMPLATES = {
 		},
 		{
 			type:"over",
-			w:1200,
+			w:1000,
 			h:602,
 			col:2,
 			row:2,

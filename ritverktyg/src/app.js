@@ -58,8 +58,8 @@ var k = {
 				var msg = (toHigh) ? "Du har valt ett för högt värde" : "Du har valt ett för lågt värde";
 				itemElement.writeAttribute("title",msg);
 				setTimeout(function(){
-					this.value=newval;	
-					this.fire("mechanical:change");
+					//this.value=newval;	
+					//this.fire("mechanical:change");
 				}.bind(itemElement.down("input")),1000);
 				return false;
 			}
@@ -207,7 +207,14 @@ var k = {
 		$("startRita").observe("click",function(e){
 			e.stop();
 			k.nextGuideStep();
-			k.startUp(k.baseOrder.modell,k.baseOrder.template);
+			var guideF = $$(".guideform."+k.baseOrder.template).first();
+			var theForm = guideF.down("form");
+			var data = theForm.serialize(true)
+			k.startUp({
+				modell:k.baseOrder.modell,
+				template:k.baseOrder.template,
+				partial:data
+			});
 		});
 
 		$("fillwithform").getInputs("checkbox").each(function(box){
@@ -250,7 +257,10 @@ var k = {
 					try{
 						$$(".guidestep").invoke("hide");
 						var drawing = transport.responseJSON;
-						k.startUp(drawing.data.modell,null,drawing.data.order);
+						k.startUp({
+							modell:drawing.data.modell,
+							order:drawing.data.order
+						});
 					} catch(e){
 						k.nextGuideStep();	
 					}
@@ -270,23 +280,6 @@ var k = {
 		
 		k.nextGuideStep();
 		return;
-		
-		setTimeout(function(){
-			k.nextGuideStep();
-			setTimeout(function(){
-				k.nextGuideStep();
-				setTimeout(function(){
-					k.nextGuideStep();
-					k.startUp("davidhall","onewinmiddle");					
-				},100);
-			},100);
-
-		},100);
-		
-		
-		
-		
-
 		
 	},
 	saveOrder:function(){
@@ -330,13 +323,36 @@ var k = {
 		trace(data);
 		trace(Object.toJSON(data));
 	},
-	startUp:function(modell, template,order){
-		k.order = order ? order : this.templates[template];
+	startUp:function(options){
+		k.order = options.order ? options.order : this.templates[options.template];
 		var orderCount = k.order.length;
 		var sectionCount = 1;
 		var overCount = 1;
 
-		if(modell=="davidhall"){
+		if(options.partial){
+			var overCount = 0;
+			var stdCount = 0;
+			for(var i = 0; i < k.order.length; i++){
+				if(k.order[i].type=="over"){
+					overCount++;
+				} else {
+					stdCount++;
+				}
+			}
+			var overW = 1000;
+			var width = Math.ceil((options.partial.width-(overCount*overW))/stdCount);
+			for(var i = 0; i < k.order.length; i++){
+				var orderItem = k.order[i];
+				if(orderItem.type=="over"){
+					orderItem.w=overW;
+				} else {
+					orderItem.w=width;
+				}
+			}
+		}
+
+
+		if(options.modell=="davidhall"){
 			k.parts.side = k.parts.side_davidhall;
 			k.parts.kol = k.parts.kol_davidhall;
 		}
@@ -347,7 +363,7 @@ var k = {
 			} else {
 				count = sectionCount++;
 			}
-			k.addForm(index,order,count,modell);
+			k.addForm(index,order,count,options.modell);
 		});
 		$$("#sektionform form.activated").each(function(aForm){
 			aForm.hide();
