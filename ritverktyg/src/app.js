@@ -123,8 +123,10 @@ var k = {
 	style:STYLE,
 	updateOrder:function(){
 		$$("#sektionform form").each(function(aForm){
-			if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform"){
+			if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform" && aForm.identify()!="general"){
 				var order = aForm.serialize(true);
+				trace("an order");
+				trace(order);
 				var oneFail = false;
 				Object.keys(order).each(function(item){
 					if(item!="type"){
@@ -209,6 +211,14 @@ var k = {
 			var guideF = $$(".guideform."+k.baseOrder.template).first();
 			var theForm = guideF.down("form");
 			var data = theForm.serialize(true)
+			$$("#general input[name=general_height]").first().value=data.h;
+			$$("#general input[name=general_sockel]").first().value=data.sockel;
+			$$("#general input").each(function(generalInput){
+				trace("FIRE CHANGE!!");
+				generalInput.fire("mechanical:change");
+			});
+			
+			//mechanical:change
 			k.startUp({
 				modell:k.baseOrder.modell,
 				template:k.baseOrder.template,
@@ -244,6 +254,42 @@ var k = {
 			e.stop();
 			
 		});
+
+		$("sektionlink_general").observe("click",k.handleSectionActivated);
+		$("sektionlink_general").observe("machine:click",k.handleSectionActivated);
+
+		var handleChange = function(e){
+			trace("HANDLE CHANGE OF THE GENERAL INPUTTTT");
+			var val = this.value;
+			var name = this.readAttribute("name")
+			var firstTime = this.readAttribute("firstTime");
+			var target = (name == "general_height") ? "h" : "sockel";				
+			//use the first order for validation
+			var order = {type:"std"};
+			if(k.validate.item($("general"),{val:val,name:target,order:order})){
+				
+				$$("form .item.slave[item="+target+"]").each(function(slaveItem){
+				slaveItem.down("input").value = val;
+				});
+				if(firstTime=="firstTime"){
+					this.writeAttribute("firstTime","");
+				} else {
+					k.updateInterval = clearInterval(k.updateInterval);
+				k.updateInterval = setInterval(function(){
+					k.updateInterval = clearInterval(k.updateInterval);
+					k.updateOrder();				
+				},300);	
+				}
+				
+			}
+
+			
+		};	
+		$("general").getInputs().each(function(generalInput){
+			generalInput.observe("change",handleChange);
+			generalInput.observe("mechanical:change",handleChange);
+		});
+
 
 
 		
@@ -329,18 +375,20 @@ var k = {
 		var overCount = 1;
 
 		if(options.partial){
-			var overCount = 0;
+			var ovCoutn = 0;
 			var stdCount = 0;
 			for(var i = 0; i < k.order.length; i++){
 				if(k.order[i].type=="over"){
-					overCount++;
+					ovCoutn++;
 				} else {
 					stdCount++;
 				}
 			}
 			trace(options.partial);
 			var overW = 1000;
-			var width = Math.ceil((options.partial.w-(overCount*overW))/stdCount);
+			var width = Math.ceil((options.partial.w-(ovCoutn*overW))/stdCount);
+			var height = options.partial.h;
+			var sockel = options.partial.sockel;
 			for(var i = 0; i < k.order.length; i++){
 				var orderItem = k.order[i];
 				trace(orderItem);
@@ -350,9 +398,9 @@ var k = {
 					trace("set the width");
 					trace(width);
 					orderItem.w=width;
-					orderItem.h=options.partial.h;
+					orderItem.h=height;
 					if(options.modell=="ribersborg"){
-						orderItem.sockel=options.partial.sockel;
+						orderItem.sockel=sockel;
 					}
 				}
 			}
@@ -363,6 +411,8 @@ var k = {
 			k.parts.side = k.parts.side_davidhall;
 			k.parts.kol = k.parts.kol_davidhall;
 		}
+
+		//k.addForm(0,{h:height, w:width, sockel:60, type:"general"},options.modell);
 
 		k.order.each(function(order,index){
 			if(order.type=="over"){
@@ -385,11 +435,26 @@ var k = {
 
 		}.bind(this),100);
 	},
+	handleSectionActivated:function(){
+		this.siblings().each(function(sib){
+			sib.removeClassName("active");
+		});
+		this.addClassName("active");
+		$$("#sektionform form.activated").each(function(aForm){
+			aForm.hide();
+		});
+		$(this.readAttribute("target")).show();
+	}, 
 	addForm:function(id,data,counter,modell){
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
 		newForm.writeAttribute("type",data.type);
 		newForm.addClassName("activated");
+		newForm.addClassName("orderPart");
+
+		if(data.type=="general"){
+			newForm.writeAttribute("id","general");
+		}
 
 
 		newForm.down('input[name=modell]').value = modell;
@@ -404,18 +469,8 @@ var k = {
 		trace("hide the FOOOOORM");
 
 		var sektionLink = new Element("li",{"target":"form_"+id}).update(name);
-		var handleSectionActivated = function(){
-			this.siblings().each(function(sib){
-				sib.removeClassName("active");
-			});
-			this.addClassName("active");
-			$$("#sektionform form.activated").each(function(aForm){
-				aForm.hide();
-			});
-			$(this.readAttribute("target")).show();
-		}; 
-		sektionLink.observe("click",handleSectionActivated);
-		sektionLink.observe("machine:click",handleSectionActivated);
+		sektionLink.observe("click",k.handleSectionActivated);
+		sektionLink.observe("machine:click",k.handleSectionActivated);
 		$("sektionlist").insert(sektionLink);
 
 		if(data.type=="over"){
@@ -426,7 +481,7 @@ var k = {
 				slave.removeClassName("slave");
 			});
 		}
-		if(counter>1 && data.type=="std"){
+		if(data.type=="std"){
 			newForm.select(".item.slave").each(function(slave){
 				slave.hide();
 			});			

@@ -171,7 +171,7 @@
                 <form id="baseform" style="">
                   <div class="item width" item="w">
                     <label>[B] Breddmått</label>
-                    <input type="text" name="w" value="2000">
+                    <input type="text" name="w" value="7400">
                   </div>
 
                   <div class="item height" item="h">
@@ -253,7 +253,9 @@
     <div id="controls">
 
       <!-- Section list -->
-      <ul id="sektionlist" class="sektion dark"></ul>
+      <ul id="sektionlist" class="sektion dark">
+        <li id="sektionlink_general" target="general">Allmänt</li>
+      </ul>
 
       <!-- Forms -->
       <div id="sektionform" class="sektion dark">
@@ -311,6 +313,18 @@
           <div class="item sockel slave" item="sockel">
             <label>Sockelhöjd<span class="minmax"></span></label>
             <input class="value" type="text" name="sockel" value="2400" max="100000" min="0">
+          </div>
+        </form>
+
+        <form id="general" style="display:none;" class="activated">
+          <strong class="hidden">Allmänt</strong>
+          <div class="item height" item="h">
+            <label>Höjd<span class="minmax"></span></label>
+            <input firstTime="firstTime" class="value" type="text" name="general_height" value="2400" max="100000" min="0">
+          </div>
+          <div class="item sockel" item="sockel">
+            <label>Sockelhöjd<span class="minmax"></span></label>
+            <input firstTime="firstTime" class="value" type="text" name="general_sockel" value="60" max="100000" min="0">
           </div>
         </form>
 
