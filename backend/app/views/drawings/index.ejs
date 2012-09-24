@@ -15,8 +15,8 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Created</th>
-                        <th>Updated</th>
+                        <th class="hide">Created</th>
+                        <th class="hide">Updated</th>
                         <th>ID</th>
                         <th>Actions</th>
                     </tr>
@@ -24,8 +24,8 @@
                 <tbody>
                     <% drawings.forEach(function (drawing) { %>
                         <tr>
-                            <td><strong><%- date_format(drawing.createDate) %></strong></td>
-                            <td><strong><%- date_format(drawing.updateDate) %></strong></td>
+                            <td class="hide"><strong><%- date_format(drawing.createDate) %></strong></td>
+                            <td class="hide"><strong><%- date_format(drawing.updateDate) %></strong></td>
                             <td><strong><%- link_to('drawing #' + drawing.id, path_to.drawing(drawing)) %></strong></td>
                             <td>
                                 

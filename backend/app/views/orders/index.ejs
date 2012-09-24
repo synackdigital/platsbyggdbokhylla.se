@@ -15,8 +15,8 @@
                 <thead>
                     <tr>
                         <th>New</th>
-                        <th>Date</th>
-                        <th>Name</th>
+                        <th class="hide">Date</th>
+                        <th class="hide">Name</th>
                         <th>Email</th>                        
                         <th>Actions</th>
                     </tr>
@@ -25,8 +25,8 @@
                     <% orders.forEach(function (order) { %>
                         <tr>
                             <td><p class="label <%- bool_string(order.new,"label-success", "label-info")%>"><%- bool_string(order.new,"Yes", "No") %></p></td>
-                            <td><%- link_to(date_format(order.createDate),path_to.order(order)) %></td>
-                            <td><strong><%- link_to(order.name, path_to.order(order)) %></strong></td>
+                            <td class="hide"><%- link_to(date_format(order.createDate),path_to.order(order)) %></td>
+                            <td class="hide"><strong><%- link_to(order.name, path_to.order(order)) %></strong></td>
                             <td><strong><%- link_to(order.email, path_to.order(order)) %></strong></td>
                             <td>
                                 <%- link_to('<i class="icon-edit"></i> Edit', path_to.edit_order(order), {class: 'btn btn-mini'}) %>

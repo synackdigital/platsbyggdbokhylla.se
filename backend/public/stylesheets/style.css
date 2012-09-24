@@ -1,0 +1,13 @@
+@media (max-width: 767px) {
+	.hero-unit {
+		display: none;
+	}
+	.hide {
+
+	}
+}
+@media (max-width: 320px) {
+	.hide {
+		display: none;
+	}
+}
