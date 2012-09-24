@@ -764,5 +764,5 @@ var k = {
 
 
 var trace = function(str){
-	console.log(str);
+//	console.log(str);
 }
