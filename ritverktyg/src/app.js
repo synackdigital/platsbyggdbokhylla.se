@@ -70,6 +70,14 @@ var k = {
 			min:function(order) {return 0;},
 			max:function(order) {return 300;}
 		},
+		bakstycke:{
+			min:function(order) {return 0;},
+			max:function(order) {return 1;}
+		},
+		singledoor:{
+			min:function(order) {return 0;},
+			max:function(order) {return 1;}
+		},
 		w:{
 			min:function(order) {return k.parts.side.w*2;},
 			max:function(order) {
@@ -285,16 +293,24 @@ var k = {
 
 		var handleChange = function(e){
 			trace("HANDLE CHANGE OF THE GENERAL INPUTTTT");
-			var val = this.value;
+			
 			var name = this.readAttribute("name")
 			var firstTime = this.readAttribute("firstTime");
-			var target = (name == "general_height") ? "h" : "sockel";				
+			var target = this.readAttribute("target");				
+
+			var val = this.value;
+			if(target == "bakstycke" || target == "singledoor"){
+				val = (this.checked) ? 1 : 0;
+			}
 			//use the first order for validation
 			var order = {type:"std"};
 			if(k.validate.item($("general"),{val:val,name:target,order:order})){
 				
 				$$("form .item.slave[item="+target+"]").each(function(slaveItem){
-				slaveItem.down("input").value = val;
+					trace("update slave");
+					trace(slaveItem);
+					slaveItem.down("input").value = val;
+
 				});
 				if(firstTime=="firstTime"){
 					this.writeAttribute("firstTime","");
@@ -406,6 +422,8 @@ var k = {
 	},
 	startUp:function(options){
 		k.order = options.order ? options.order : this.templates[options.template];
+		trace("startup");
+		trace(k.order);
 		var orderCount = k.order.length;
 		var sectionCount = 1;
 		var overCount = 1;
@@ -510,11 +528,15 @@ var k = {
 		$("sektionlist").insert(sektionLink);
 
 		if(data.type=="over"){
-			newForm.select(".item.slave.sockel").each(function(slave){
+			newForm.select(".item.slave.sockel, .item.slave.bakstycke, .item.slave.singledoor").each(function(slave){
 				slave.hide();
 			});
 			newForm.select(".item.slave").each(function(slave){
-				slave.removeClassName("slave");
+				if(slave.hasClassName("bakstycke") || slave.hasClassName("singledoor")){
+					
+				} else {
+					slave.removeClassName("slave");	
+				}
 			});
 		}
 		if(data.type=="std"){
@@ -527,6 +549,9 @@ var k = {
 		var sliders = newForm.getInputs();
 		sliders.each(function(item){
 			if(item.name!="id" && item.name != "modell"){
+				trace("set the value on a form item");
+				trace(item.name);
+				trace(data[item.name]);
 				item.value = data[item.name];
 			}
 			var eventName = "change";
@@ -657,7 +682,7 @@ var k = {
  					}
 				}
 				trace("new hylla, position:"+position+", type:"+type+", modell:"+modell);
-				this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,o.sockel,{
+				this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,o.sockel,o.bakstycke,o.singledoor,{
 					position:position, type:type, modell:modell
 				});
 				lastX = lastX + (o.w);

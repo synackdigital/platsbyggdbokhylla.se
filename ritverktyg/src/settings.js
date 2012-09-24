@@ -14,7 +14,9 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"over",
@@ -22,7 +24,9 @@ var TEMPLATES = {
 			h:500,
 			col:2,
 			row:2,
-			sockel:0
+			sockel:0,
+			bakstycke:1,
+			singledoor:0
 		}
 	],
 	onewinleft:[		
@@ -32,7 +36,9 @@ var TEMPLATES = {
 			h:500,
 			col:2,
 			row:2,
-			sockel:0
+			sockel:0,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"std",
@@ -40,7 +46,9 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		}
 	],
 	onewinmiddle:[
@@ -50,7 +58,9 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"over",
@@ -58,7 +68,9 @@ var TEMPLATES = {
 			h:500,
 			col:2,
 			row:2,
-			sockel:0
+			sockel:0,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"std",
@@ -66,7 +78,9 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		}
 	],
 	threewin:[
@@ -76,7 +90,8 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			singledoor:0
 		},
 		{
 			type:"over",
@@ -84,7 +99,9 @@ var TEMPLATES = {
 			h:602,
 			col:2,
 			row:2,
-			sockel:0
+			sockel:0,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"std",
@@ -92,7 +109,9 @@ var TEMPLATES = {
 			h:2400,
 			col:1,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"over",
@@ -100,7 +119,9 @@ var TEMPLATES = {
 			h:602,
 			col:2,
 			row:2,
-			sockel:0
+			sockel:0,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"std",
@@ -108,7 +129,9 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		}
 	]
 };

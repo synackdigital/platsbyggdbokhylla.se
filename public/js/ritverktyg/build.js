@@ -14,7 +14,9 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"over",
@@ -22,7 +24,9 @@ var TEMPLATES = {
 			h:500,
 			col:2,
 			row:2,
-			sockel:0
+			sockel:0,
+			bakstycke:1,
+			singledoor:0
 		}
 	],
 	onewinleft:[
@@ -32,7 +36,9 @@ var TEMPLATES = {
 			h:500,
 			col:2,
 			row:2,
-			sockel:0
+			sockel:0,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"std",
@@ -40,7 +46,9 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		}
 	],
 	onewinmiddle:[
@@ -50,7 +58,9 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"over",
@@ -58,7 +68,9 @@ var TEMPLATES = {
 			h:500,
 			col:2,
 			row:2,
-			sockel:0
+			sockel:0,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"std",
@@ -66,7 +78,9 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		}
 	],
 	threewin:[
@@ -76,7 +90,8 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			singledoor:0
 		},
 		{
 			type:"over",
@@ -84,7 +99,9 @@ var TEMPLATES = {
 			h:602,
 			col:2,
 			row:2,
-			sockel:0
+			sockel:0,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"std",
@@ -92,7 +109,9 @@ var TEMPLATES = {
 			h:2400,
 			col:1,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"over",
@@ -100,7 +119,9 @@ var TEMPLATES = {
 			h:602,
 			col:2,
 			row:2,
-			sockel:0
+			sockel:0,
+			bakstycke:1,
+			singledoor:0
 		},
 		{
 			type:"std",
@@ -108,7 +129,9 @@ var TEMPLATES = {
 			h:2400,
 			col:4,
 			row:5,
-			sockel:60
+			sockel:60,
+			bakstycke:1,
+			singledoor:0
 		}
 	]
 };
@@ -299,6 +322,14 @@ var k = {
 		sockel:{
 			min:function(order) {return 0;},
 			max:function(order) {return 300;}
+		},
+		bakstycke:{
+			min:function(order) {return 0;},
+			max:function(order) {return 1;}
+		},
+		singledoor:{
+			min:function(order) {return 0;},
+			max:function(order) {return 1;}
 		},
 		w:{
 			min:function(order) {return k.parts.side.w*2;},
@@ -514,15 +545,23 @@ var k = {
 
 		var handleChange = function(e){
 			trace("HANDLE CHANGE OF THE GENERAL INPUTTTT");
-			var val = this.value;
+
 			var name = this.readAttribute("name")
 			var firstTime = this.readAttribute("firstTime");
-			var target = (name == "general_height") ? "h" : "sockel";
+			var target = this.readAttribute("target");
+
+			var val = this.value;
+			if(target == "bakstycke" || target == "singledoor"){
+				val = (this.checked) ? 1 : 0;
+			}
 			var order = {type:"std"};
 			if(k.validate.item($("general"),{val:val,name:target,order:order})){
 
 				$$("form .item.slave[item="+target+"]").each(function(slaveItem){
-				slaveItem.down("input").value = val;
+					trace("update slave");
+					trace(slaveItem);
+					slaveItem.down("input").value = val;
+
 				});
 				if(firstTime=="firstTime"){
 					this.writeAttribute("firstTime","");
@@ -634,6 +673,8 @@ var k = {
 	},
 	startUp:function(options){
 		k.order = options.order ? options.order : this.templates[options.template];
+		trace("startup");
+		trace(k.order);
 		var orderCount = k.order.length;
 		var sectionCount = 1;
 		var overCount = 1;
@@ -737,11 +778,15 @@ var k = {
 		$("sektionlist").insert(sektionLink);
 
 		if(data.type=="over"){
-			newForm.select(".item.slave.sockel").each(function(slave){
+			newForm.select(".item.slave.sockel, .item.slave.bakstycke, .item.slave.singledoor").each(function(slave){
 				slave.hide();
 			});
 			newForm.select(".item.slave").each(function(slave){
-				slave.removeClassName("slave");
+				if(slave.hasClassName("bakstycke") || slave.hasClassName("singledoor")){
+
+				} else {
+					slave.removeClassName("slave");
+				}
 			});
 		}
 		if(data.type=="std"){
@@ -754,6 +799,9 @@ var k = {
 		var sliders = newForm.getInputs();
 		sliders.each(function(item){
 			if(item.name!="id" && item.name != "modell"){
+				trace("set the value on a form item");
+				trace(item.name);
+				trace(data[item.name]);
 				item.value = data[item.name];
 			}
 			var eventName = "change";
@@ -881,7 +929,7 @@ var k = {
  					}
 				}
 				trace("new hylla, position:"+position+", type:"+type+", modell:"+modell);
-				this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,o.sockel,{
+				this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,o.sockel,o.bakstycke,o.singledoor,{
 					position:position, type:type, modell:modell
 				});
 				lastX = lastX + (o.w);
@@ -952,8 +1000,8 @@ var k = {
 var trace = function(str){
 	console.log(str);
 }
-var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
-	if(!options) options = {position:3, type:"std", modell:"ribersborg",singledoor:true};
+var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, options){
+	if(!options) options = {position:3, type:"std", modell:"ribersborg"};
 	this._type=options.type;
 	this._p = p;
 	this._x = x;
@@ -964,7 +1012,8 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	this._plan = plan;
 	this._sockel = sockel;
 	this._modell = options.modell;
-	this._singledoor = true;
+	this._singledoor = (singledoor == 1) ? true : false;
+	this._bakstycke = (bakstycke == 1) ? true : false;
 	this.lines = [];
 
 	if(this._modell=="davidhall"){
@@ -1156,11 +1205,13 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 		}
 
 
-		this.drawBox(this._w,this._h,this._x,kolBottom,{
-			linecolor:"rgba(255,0,0,0.3)",
-			fillcolor:k.style.bg,
-			id:"bg"
-		});
+		if(this._bakstycke){
+			this.drawBox(this._w,this._h,this._x,kolBottom,{
+				linecolor:"rgba(255,0,0,0.3)",
+				fillcolor:k.style.bg,
+				id:"bg"
+			});
+		}
 
 		if(this._modell=="davidhall" && this._type=="std"){
 			this.drawBox(this._w,(p.skap.h-10),this._x,this._y-10,{

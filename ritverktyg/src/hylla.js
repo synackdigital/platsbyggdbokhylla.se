@@ -1,5 +1,5 @@
-var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
-	if(!options) options = {position:3, type:"std", modell:"ribersborg",singledoor:true};
+var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, options){
+	if(!options) options = {position:3, type:"std", modell:"ribersborg"};
 	this._type=options.type;
 	this._p = p;
 	this._x = x;
@@ -10,7 +10,8 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 	this._plan = plan;
 	this._sockel = sockel;
 	this._modell = options.modell;
-	this._singledoor = true;
+	this._singledoor = (singledoor == 1) ? true : false;
+	this._bakstycke = (bakstycke == 1) ? true : false;
 	this.lines = [];
 
 	if(this._modell=="davidhall"){
@@ -204,11 +205,13 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, options){
 
 
 		//bakstycke
-		this.drawBox(this._w,this._h,this._x,kolBottom,{
-			linecolor:"rgba(255,0,0,0.3)",
-			fillcolor:k.style.bg,
-			id:"bg"
-		});
+		if(this._bakstycke){
+			this.drawBox(this._w,this._h,this._x,kolBottom,{
+				linecolor:"rgba(255,0,0,0.3)",
+				fillcolor:k.style.bg,
+				id:"bg"
+			});
+		}
 
 		if(this._modell=="davidhall" && this._type=="std"){
 			this.drawBox(this._w,(p.skap.h-10),this._x,this._y-10,{
