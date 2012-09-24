@@ -11,6 +11,143 @@
         <tr><th>data</th><td><%= drawing.data %></td></tr>    
     </tbody>
 </table>
+<table class="table table-bordered">
+    <tbody>
+        <tr><th>Modell</th><td><%= drawing.kapnota.modell %></td></tr>
+        <tr><th>Antal sektioner</th><td><%= drawing.kapnota.sektioner %></td></tr>
+        <tr><th>Antal överbyggnader</th><td><%= drawing.kapnota.overbyggnader %></td></tr>
+        <tr><th>Breddyttermått</th><td><%= drawing.kapnota.breddyttermatt %></td></tr>
+        <tr><th>Höjdyttermått</th><td><%= drawing.kapnota.hojdyttermatt %></td></tr>
+    </tbody>
+</table>
+
+<% drawing.kapnota.sektionlist.forEach(function (sek) { %>
+<h2>Sektion <%= sek.index %></h2>
+<h4>Hyllplan typ 1</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Djup</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.h1.antal %></td>
+                <td><%= sek.h1.bredd %></td>
+                <td><%= sek.h1.djup %></td>
+                <td><%= sek.h1.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>Hyllplan typ 2</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Djup</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.h2.antal %></td>
+                <td><%= sek.h2.bredd %></td>
+                <td><%= sek.h2.djup %></td>
+                <td><%= sek.h2.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>Gavlar typ 1</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Höjd</th>
+                <th>Djup</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.g1.antal %></td>
+                <td><%= sek.g1.hojd %></td>
+                <td><%= sek.g1.djup %></td>
+                <td><%= sek.g1.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>Bakstycke</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Höjd</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.bakstycke.antal %></td>
+                <td><%= sek.bakstycke.bredd %></td>
+                <td><%= sek.bakstycke.hojd %></td>
+                <td><%= sek.bakstycke.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>Sockel</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Höjd</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.sockel.antal %></td>
+                <td><%= sek.sockel.bredd %></td>
+                <td><%= sek.sockel.hojd %></td>
+                <td><%= sek.sockel.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>Fästbrädor</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Höjd</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.fastbrada.antal %></td>
+                <td><%= sek.fastbrada.bredd %></td>
+                <td><%= sek.fastbrada.hojd %></td>
+                <td><%= sek.fastbrada.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<% }); %>  
+<% drawing.kapnota.sektionlist.forEach(function (sek) { %>
+<h2>Överbyggnad <%= sek.index %></h2>
+Kapnota kommer
+<% }); %>  
 
 <div class="well">
     <%- link_to('<i class="icon-edit icon-white"></i> Edit', path_to.edit_drawing(drawing), {class: 'btn btn-primary'}) %>

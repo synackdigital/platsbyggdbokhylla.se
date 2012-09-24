@@ -6,10 +6,11 @@ module.exports = {
 	},
 	link_to_site: function(path) {
 		path = path ? path : "";
-		return "http://platsbyggdbokhylla.talkative.se/" + path;
+		return "http://www.platsbyggdbokhylla.se/" + path;
 	},
 	date_format: function (dateStr,format) {
 		var theDate = new Date(dateStr);
+		theDate.setHours(theDate.getHours()+2);
 		var format = format ? format : "yyyy-mm-dd HH:MM";
 		return dateFormat(theDate, format);
 	},

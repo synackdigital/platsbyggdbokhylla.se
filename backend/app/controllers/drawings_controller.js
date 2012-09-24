@@ -48,7 +48,77 @@ action(function index() {
 action(function show() {
     this.title = 'Drawing show';
     respondTo(function (format) {
-        format.html(render);
+        format.html(function(){
+            var drawing = this.drawing;
+            var data = JSON.parse(drawing.data);
+            var kapnota = {};
+            kapnota.modell = data.modell;
+            kapnota.sektioner = 0;
+            kapnota.overbyggnader = 0;
+            kapnota.breddyttermatt = 0;
+            kapnota.sektionlist = [];
+            kapnota.overbygglist = [];
+
+            for(var i = 0; i < data.order.length; i++){
+                var sek = data.order[i];
+                var sekObj = {};                
+                if(sek.type=="over"){
+                    kapnota.overbyggnader++;
+                    sekObj.index = kapnota.overbyggnader;
+                    kapnota.overbygglist.push({
+                        w:0
+                    });
+                } else {
+                    kapnota.sektioner++;
+                    sekObj.index = kapnota.sektioner;
+                    kapnota.hojdyttermatt = sek.h;
+                    var gavel = sek.col+1;
+                    sekObj.h1 = {
+                        bredd:(sek.w-(gavel*22))/sek.col,
+                        djup:300,
+                        antal:sek.col*2,
+                        tjocklek:22
+                    }
+                    sekObj.h2 = {
+                        bredd:(sek.w-(gavel*22))/sek.col,
+                        djup:284,
+                        antal:sek.col*(sek.row-1),
+                        tjocklek:22
+                    }
+                    sekObj.g1 = {
+                        hojd:sek.h-15,
+                        djup:302,
+                        antal:gavel,
+                        tjocklek:22
+                    }
+                    sekObj.bakstycke = {
+                        bredd:sekObj.h1.bredd+10,
+                        hojd:sek.h - sek.sockel + 34,
+                        antal:sek.col,
+                        tjocklek:4
+                    }
+                    sekObj.sockel = {
+                        bredd:sekObj.h1.bredd,
+                        hojd:sek.sockel,
+                        antal:sek.col,
+                        tjocklek:22
+                    }
+                    sekObj.fastbrada = {
+                        bredd:sekObj.h1.bredd,
+                        hojd:60,
+                        antal:sek.col,
+                        tjocklek:16
+                    }
+                    if(kapnota.modell=="ribersborg"){
+                        kapnota.sektionlist.push(sekObj);
+                    }
+                }
+                kapnota.breddyttermatt+=sek.w;
+            }
+
+            drawing.kapnota = kapnota;
+            render();
+        }.bind(this));
         format.json(function () {
             var drawing = this.drawing;
             drawing.data = JSON.parse(drawing.data);

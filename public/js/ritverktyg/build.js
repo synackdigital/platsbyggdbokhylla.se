@@ -487,6 +487,7 @@ var k = {
 		});
 		$("sendIntresseAnmalan").observe("click",function(e){
 			trace("sendIntresseAnmalan!");
+			$("rita_offert").hide();
 			e.stop();
 			k.saveOrder(function(drawingID){
 				trace(drawingID);
