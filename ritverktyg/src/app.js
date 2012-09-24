@@ -142,11 +142,14 @@ var k = {
 						}
 					}
 				});
+				var sektionLink = $$("#sektionlist li[target="+aForm.identify()+"]").first();
 				if(oneFail){
 					trace("one item failed");
+					sektionLink.addClassName("error");
 				} else {
 					trace("redraw in update order");
 					k.redraw();	
+					sektionLink.removeClassName("error");
 				}	
 			}
 		});

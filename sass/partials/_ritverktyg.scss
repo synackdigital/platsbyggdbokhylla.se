@@ -242,6 +242,9 @@
       background-color: darken( $text-color, 15% );
       color: white;
     }
+    &.error {
+      color:$redColor;
+    }
   }
 }
 #sektionform.sektion {
@@ -281,6 +284,11 @@
             content: '–';
           }
         }
+      }
+    }
+    .error {
+      label, input {
+        color:$redColor;
       }
     }
   }
