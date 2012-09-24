@@ -143,6 +143,12 @@
     cursor: pointer;
 
     font-size: $large-font-size;
+    @media screen and (max-width: 628px) {
+      font-size: $base-font-size;
+    }
+    @media screen and (max-width: 422px) {
+      font-size: $small-font-size;
+    }
     vertical-align: top;
 
     margin: $base-vmargin 1%;
@@ -237,6 +243,9 @@
     font-weight: bold;
 
     padding: .5 * $base-vmargin 2 * $base-hmargin;
+    @media screen and (max-width: 839px) {
+      padding: .5 * $base-vmargin 1 * $base-hmargin;
+    }
     &.active,
     &:hover {
       background-color: darken( $text-color, 15% );
@@ -252,7 +261,10 @@
   border-right: 1px solid darken( $text-color, 5% );
 
   padding: .5 * $base-vmargin 2 * $base-hmargin;
-  width: 22em;
+  @media screen and (max-width: 839px) {
+    padding: .5 * $base-vmargin 1 * $base-hmargin;
+  }
+  //width: 21em;
   form {
     input {
       @include inline-block;
@@ -300,7 +312,11 @@
  */
 #fillwith.sektion {
   padding: .5 * $base-vmargin 2 * $base-hmargin;
-  width: 14em;
+
+  //width: 14em;
+  @media screen and (max-width: 839px) {
+    padding: .5 * $base-vmargin 1 * $base-hmargin;
+  }
 
   form {
     margin-top: $base-vmargin;
@@ -353,4 +369,37 @@
     @include button(soft);
     margin: .5em auto;
   }
+}
+
+
+
+@media screen and (max-width: 760px) {
+    #sektionlist {
+      float:none;
+      width:100%;
+      height:auto !important;
+      border-bottom:solid 1px darken( $text-color, 15% );
+    }
+    .sektion {
+      float:none;
+      width:100%;
+      height:auto !important;
+      border-bottom:solid 1px darken( $text-color, 15% );
+    }
+    #fillwith {
+      background-color: $text-color;
+      color:#FFF;
+    }
+    #price {
+      .label {
+        line-height:20px;
+        margin-bottom:-5px;
+      }
+      background-color: $text-color;
+      color:#FFF;
+      float:none;
+      height:auto !important;
+      display:block;
+      padding: .5 * $base-vmargin 1 * $base-hmargin;
+    }
 }

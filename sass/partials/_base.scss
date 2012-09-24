@@ -9,6 +9,7 @@ $base-line-height:        1.2;
 
 $small-font-size:         11px;
 $large-font-size:         20px;
+
 $xlarge-font-size:        30;
 
 
@@ -44,3 +45,6 @@ $base-vmargin:            $base-hmargin;
  */
 $default-transition-duration:     .4s;
 $default-border-radius:           2px;
+
+$break-small: 			   320px;
+$break-large:  			   874px;

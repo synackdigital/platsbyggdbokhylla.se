@@ -32,6 +32,7 @@ a {
   left: 0;
   right: 0;
   z-index: 30;
+  
   a {
     @include unstyled-link;
   }
@@ -45,6 +46,7 @@ a {
   .nav {
     @include inline-block;
     float: right;
+
     margin-top: 3px;
     .nav-items {
       @include nav-list;
@@ -60,6 +62,16 @@ a {
             padding-top: 9px; // needs to be redeclared
           }
         }
+      }
+    }
+  }
+  @media screen and (max-width: 871px) {
+    display:block;
+    .nav {
+      float:left;
+      margin-left: 0 -(.5 * $base-hmargin);
+      .nav-item {
+        margin-bottom:9px;
       }
     }
   }

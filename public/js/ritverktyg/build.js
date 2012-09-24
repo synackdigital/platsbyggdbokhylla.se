@@ -998,7 +998,6 @@ var k = {
 
 
 var trace = function(str){
-	console.log(str);
 }
 var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, options){
 	if(!options) options = {position:3, type:"std", modell:"ribersborg"};
