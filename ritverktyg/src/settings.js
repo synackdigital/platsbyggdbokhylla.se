@@ -5,7 +5,9 @@ var TEMPLATES = {
 		h:2400,
 		col:4,
 		row:5,
-		sockel:60
+		sockel:60,
+		bakstycke:1,
+		singledoor:0
 	}],
 	onewin:[
 		{
