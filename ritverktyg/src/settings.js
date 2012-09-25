@@ -93,6 +93,7 @@ var TEMPLATES = {
 			col:4,
 			row:5,
 			sockel:60,
+			bakstycke:1,
 			singledoor:0
 		},
 		{
@@ -109,7 +110,7 @@ var TEMPLATES = {
 			type:"std",
 			w:750,
 			h:2400,
-			col:1,
+			col:4,
 			row:5,
 			sockel:60,
 			bakstycke:1,
