@@ -40,6 +40,7 @@ a {
     @include inline-block;
     font-size: $large-font-size;
     font-weight: normal;
+    line-height: 1;
     margin: 0;
     padding-top: .5 * $base-vmargin;
   }
@@ -145,5 +146,16 @@ a {
   }
   &.small {
     display: none;
+  }
+}
+
+
+/*
+ * Media queries
+ */
+@media screen and (min-width: $break-large) {
+  body {
+    // This adjusts all font sizes and line-heights across the site
+    font-size: $base-font-size * 1.1;
   }
 }

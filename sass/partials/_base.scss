@@ -1,15 +1,14 @@
 
 /*
  * Typography
- * Roughly a 3:5 Fibonacci scale: 12, 14, 24, 36 (see http://lamb.cc/typograph/)
  */
 $base-font-family:        unquote('PT Sans, sans-serif');
 $base-font-size:          13px;
 $base-line-height:        1.3;
 
 $small-font-size:         .85em;
-$large-font-size:         1.4em;
-$xlarge-font-size:        2em;
+$large-font-size:         1.2em;
+$xlarge-font-size:        1.8em;
 
 
 /*
@@ -36,6 +35,8 @@ $link-focus-color:        $link-active-color;
 $min-page-width:          748px;
 $max-page-width:          1218px;
 
+$break-large:             960px;
+
 $base-hmargin:            $base-font-size * $base-line-height; // ~18px
 $base-vmargin:            $base-hmargin;
 
@@ -45,5 +46,3 @@ $base-vmargin:            $base-hmargin;
  */
 $default-transition-duration:     .4s;
 $default-border-radius:           2px;
-
-$break-large:                     960px;
