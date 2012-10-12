@@ -105,7 +105,11 @@ a {
     top: 5%;
     right: 2%;
     width: 30%;
-    min-width: 420px;
+    min-width: 300px;
+    body.start &,
+    body.funkar & {
+      min-width: 640px;
+    }
     html.rgba & {
       background: rgba(white, .9);
     }
