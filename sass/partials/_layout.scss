@@ -44,7 +44,7 @@ a {
   }
   .site-title {
     @include inline-block;
-    font-size: $large-font-size;
+    font-size: $xlarge-font-size;
     font-weight: normal;
     line-height: 1;
     margin: 0;
@@ -69,16 +69,6 @@ a {
             padding-top: 9px; // needs to be redeclared
           }
         }
-      }
-    }
-  }
-  @media screen and (max-width: 871px) {
-    display:block;
-    .nav {
-      float:left;
-      margin-left: 0 -(.5 * $base-hmargin);
-      .nav-item {
-        margin-bottom:9px;
       }
     }
   }
@@ -165,8 +155,31 @@ a {
  * Media queries
  */
 @media screen and (min-width: $break-large) {
+  // Larger than $break-large
   body {
     // This adjusts all font sizes and line-heights across the site
     font-size: $base-font-size * 1.1;
   }
 }
+@media screen and (max-width: $break-large) {
+  // Smaller than $break-large
+  #header {
+    .site-title {
+      display: block;
+    }
+    .nav {
+      display: block;
+      float: none;
+      .nav-items .nav-item {
+        a {
+          margin-left: 0;
+          margin-right: .5 * $base-hmargin;
+        }
+      }
+    }
+  }
+  #main {
+    top: 5 * $base-vmargin;
+  }
+}
+
