@@ -24,6 +24,12 @@ a {
 /*
  * Main layout
  */
+#header, 
+#main {
+  // The layout is not adapted to work below 768, so offer a scrollbar instead
+  min-width: 768px;
+}
+
 #header {
   padding-left: 1.5 * $base-hmargin;
   padding-right: 1.5 * $base-hmargin;
@@ -32,7 +38,7 @@ a {
   left: 0;
   right: 0;
   z-index: 30;
-  
+
   a {
     @include unstyled-link;
   }
@@ -99,6 +105,7 @@ a {
     top: 5%;
     right: 2%;
     width: 30%;
+    min-width: 420px;
     html.rgba & {
       background: rgba(white, .9);
     }
