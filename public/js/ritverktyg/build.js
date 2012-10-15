@@ -623,6 +623,11 @@ var k = {
 			trace("FIRE CHANGE!!");
 			generalInput.fire("mechanical:change");
 		});
+		if(data.modell=="davidhall"){
+			$$("#general .bakstycke, #general .singledoor").invoke("show");
+		} else {
+			$$("#general .sockel").invoke("show");
+		}
 	},
 	saveOrder:function(callback){
 		var data = {
@@ -733,7 +738,7 @@ var k = {
 			}
 			k.addForm(index,order,count,options.modell);
 		});
-		k.setGeneral({h:h,sockel:sockel});
+		k.setGeneral({h:h,sockel:sockel,modell:options.modell});
 		$$("#sektionform form.activated").each(function(aForm){
 			aForm.hide();
 		});
