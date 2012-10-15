@@ -24,6 +24,12 @@ a {
 /*
  * Main layout
  */
+#header, 
+#main {
+  // The layout is not adapted to work below 768, so offer a scrollbar instead
+  min-width: 768px;
+}
+
 #header {
   padding-left: 1.5 * $base-hmargin;
   padding-right: 1.5 * $base-hmargin;
@@ -32,14 +38,15 @@ a {
   left: 0;
   right: 0;
   z-index: 30;
-  
+
   a {
     @include unstyled-link;
   }
   .site-title {
     @include inline-block;
-    font-size: $large-font-size;
+    font-size: $xlarge-font-size;
     font-weight: normal;
+    line-height: 1;
     margin: 0;
     padding-top: .5 * $base-vmargin;
   }
@@ -62,16 +69,6 @@ a {
             padding-top: 9px; // needs to be redeclared
           }
         }
-      }
-    }
-  }
-  @media screen and (max-width: 871px) {
-    display:block;
-    .nav {
-      float:left;
-      margin-left: 0 -(.5 * $base-hmargin);
-      .nav-item {
-        margin-bottom:9px;
       }
     }
   }
@@ -98,6 +95,11 @@ a {
     top: 5%;
     right: 2%;
     width: 30%;
+    min-width: 300px;
+    body.start &,
+    body.funkar & {
+      min-width: 640px;
+    }
     html.rgba & {
       background: rgba(white, .9);
     }
@@ -147,3 +149,37 @@ a {
     display: none;
   }
 }
+
+
+/*
+ * Media queries
+ */
+@media screen and (min-width: $break-large) {
+  // Larger than $break-large
+  body {
+    // This adjusts all font sizes and line-heights across the site
+    font-size: $base-font-size * 1.1;
+  }
+}
+@media screen and (max-width: $break-large) {
+  // Smaller than $break-large
+  #header {
+    .site-title {
+      display: block;
+    }
+    .nav {
+      display: block;
+      float: none;
+      .nav-items .nav-item {
+        a {
+          margin-left: 0;
+          margin-right: .5 * $base-hmargin;
+        }
+      }
+    }
+  }
+  #main {
+    top: 5 * $base-vmargin;
+  }
+}
+

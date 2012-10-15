@@ -143,12 +143,6 @@
     cursor: pointer;
 
     font-size: $large-font-size;
-    @media screen and (max-width: 628px) {
-      font-size: $base-font-size;
-    }
-    @media screen and (max-width: 422px) {
-      font-size: $small-font-size;
-    }
     vertical-align: top;
 
     margin: $base-vmargin 1%;
@@ -243,7 +237,7 @@
     font-weight: bold;
 
     padding: .5 * $base-vmargin 2 * $base-hmargin;
-    @media screen and (max-width: 839px) {
+    @media screen and (max-width: $break-large) {
       padding: .5 * $base-vmargin 1 * $base-hmargin;
     }
     &.active,
@@ -252,7 +246,7 @@
       color: white;
     }
     &.error {
-      color:$redColor;
+      color: $warning-text-color;
     }
   }
 }
@@ -261,7 +255,7 @@
   border-right: 1px solid darken( $text-color, 5% );
 
   padding: .5 * $base-vmargin 2 * $base-hmargin;
-  @media screen and (max-width: 839px) {
+  @media screen and (max-width: $break-large) {
     padding: .5 * $base-vmargin 1 * $base-hmargin;
   }
   //width: 21em;
@@ -299,8 +293,11 @@
       }
     }
     .error {
-      label, input {
-        color:$redColor;
+      label {
+        color: $warning-text-color;
+      }
+      input {
+        color: $warning-text-color;
       }
     }
   }
@@ -313,8 +310,7 @@
 #fillwith.sektion {
   padding: .5 * $base-vmargin 2 * $base-hmargin;
 
-  //width: 14em;
-  @media screen and (max-width: 839px) {
+  @media screen and (max-width: $break-large) {
     padding: .5 * $base-vmargin 1 * $base-hmargin;
   }
 
@@ -373,7 +369,7 @@
 
 
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: $break-large) {
     #sektionlist {
       float:none;
       width:100%;

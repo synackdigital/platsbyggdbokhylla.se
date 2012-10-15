@@ -7,6 +7,7 @@
     @include inline-block;
     a {
       display: block;
+      font-size: $small-font-size;
       padding: .5 * $base-vmargin .5 * $base-hmargin;
     }
   }
