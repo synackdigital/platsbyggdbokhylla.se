@@ -221,14 +221,7 @@ var k = {
 			k.nextGuideStep();
 			var guideF = $$(".guideform."+k.baseOrder.template).first();
 			var theForm = guideF.down("form");
-			var data = theForm.serialize(true)
-			$$("#general input[name=general_height]").first().value=data.h;
-			$$("#general input[name=general_sockel]").first().value=data.sockel;
-			$$("#general input").each(function(generalInput){
-				trace("FIRE CHANGE!!");
-				generalInput.fire("mechanical:change");
-			});
-			
+			var data = theForm.serialize(true)			
 			//mechanical:change
 			k.startUp({
 				modell:k.baseOrder.modell,
@@ -369,6 +362,14 @@ var k = {
 		return;
 		
 	},
+	setGeneral:function(data){
+		$$("#general input[name=general_height]").first().value=data.h;
+		$$("#general input[name=general_sockel]").first().value=data.sockel;
+		$$("#general input").each(function(generalInput){
+			trace("FIRE CHANGE!!");
+			generalInput.fire("mechanical:change");
+		});
+	},
 	saveOrder:function(callback){
 		var data = {
 			modell:k.baseOrder.modell,
@@ -467,15 +468,19 @@ var k = {
 		}
 
 		//k.addForm(0,{h:height, w:width, sockel:60, type:"general"},options.modell);
-
+		var h = 0;
+		var sockel = 0;
 		k.order.each(function(order,index){
 			if(order.type=="over"){
 				count = overCount++;
 			} else {
+				h = order.h;
+				sockel = order.sockel;
 				count = sectionCount++;
 			}
 			k.addForm(index,order,count,options.modell);
 		});
+		k.setGeneral({h:h,sockel:sockel});
 		$$("#sektionform form.activated").each(function(aForm){
 			aForm.hide();
 		});

@@ -5,7 +5,9 @@ var TEMPLATES = {
 		h:2400,
 		col:4,
 		row:5,
-		sockel:60
+		sockel:60,
+		bakstycke:1,
+		singledoor:0
 	}],
 	onewin:[
 		{
@@ -91,6 +93,7 @@ var TEMPLATES = {
 			col:4,
 			row:5,
 			sockel:60,
+			bakstycke:1,
 			singledoor:0
 		},
 		{
@@ -107,7 +110,7 @@ var TEMPLATES = {
 			type:"std",
 			w:750,
 			h:2400,
-			col:1,
+			col:4,
 			row:5,
 			sockel:60,
 			bakstycke:1,
@@ -475,13 +478,6 @@ var k = {
 			var guideF = $$(".guideform."+k.baseOrder.template).first();
 			var theForm = guideF.down("form");
 			var data = theForm.serialize(true)
-			$$("#general input[name=general_height]").first().value=data.h;
-			$$("#general input[name=general_sockel]").first().value=data.sockel;
-			$$("#general input").each(function(generalInput){
-				trace("FIRE CHANGE!!");
-				generalInput.fire("mechanical:change");
-			});
-
 			k.startUp({
 				modell:k.baseOrder.modell,
 				template:k.baseOrder.template,
@@ -620,6 +616,14 @@ var k = {
 		return;
 
 	},
+	setGeneral:function(data){
+		$$("#general input[name=general_height]").first().value=data.h;
+		$$("#general input[name=general_sockel]").first().value=data.sockel;
+		$$("#general input").each(function(generalInput){
+			trace("FIRE CHANGE!!");
+			generalInput.fire("mechanical:change");
+		});
+	},
 	saveOrder:function(callback){
 		var data = {
 			modell:k.baseOrder.modell,
@@ -717,15 +721,19 @@ var k = {
 			k.parts.kol = k.parts.kol_davidhall;
 		}
 
-
+		var h = 0;
+		var sockel = 0;
 		k.order.each(function(order,index){
 			if(order.type=="over"){
 				count = overCount++;
 			} else {
+				h = order.h;
+				sockel = order.sockel;
 				count = sectionCount++;
 			}
 			k.addForm(index,order,count,options.modell);
 		});
+		k.setGeneral({h:h,sockel:sockel});
 		$$("#sektionform form.activated").each(function(aForm){
 			aForm.hide();
 		});
