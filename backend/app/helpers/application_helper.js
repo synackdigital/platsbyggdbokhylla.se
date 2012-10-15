@@ -14,20 +14,31 @@ module.exports = {
 		var format = format ? format : "yyyy-mm-dd HH:MM";
 		return dateFormat(theDate, format);
 	},
-	status_selector:function(status,name){
-		var selector = '<select name="'+name+'">';
+	status_selector:function(status,name,id){
+		var selector = '<select name="'+name+'" id="'+id+'">';
 		var statusValues = this.getStatusValues();
 		for(var i = 0; i < statusValues.length; i++){
-			selector+='<option value='+statusValues[i].id+'>'+statusValues[i].name+'</option>';
+			var selected = ""
+			if(status==statusValues[i].id){
+				selected = "selected";
+			}
+			selector+='<option '+selected+' value='+statusValues[i].id+'>'+statusValues[i].name+'</option>';
 		}
 		selector+='</select>';
 		return selector;
 	},
 	getStatusValues:function(){
 		return [
-		{id:"new",name:"New"},
-		{id:"contacted",name:"Contacted"},
-		{id:"ordered",name:"Ordered"}
+		{id:"new",name:"Nyinkommen"},
+		{id:"answered",name:"Svarat"},
+		{id:"offer_sent",name:"Offert skickad"},
+		{id:"offer_confirmed",name:"Beställning bekräftad"},
+		{id:"paid",name:"Betald"},
+		{id:"underconstruction",name:"Under tillverkning"},
+		{id:"painted",name:"Sprutlackerad"},
+		{id:"postal_assembly",name:"Frakt och montering bokad"},
+		{id:"sent",name:"Skickad till kund"},
+		{id:"customer_happy",name:"Kund nöjd"}
 		];
 	},
 	status_selector_value:function(status){

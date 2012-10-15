@@ -55,7 +55,7 @@
 <div class="control-group">
    <%- form.label("status", false, {class: "control-label"}) %>
    <div class="controls">
-       <%- form.input("status") %>
+       <%- status_selector(order.status,"Order[status]","Order_status") %>
    </div>
 </div>
 <div class="control-group">
