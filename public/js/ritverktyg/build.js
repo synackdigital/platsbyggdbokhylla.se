@@ -624,7 +624,7 @@ var k = {
 			generalInput.fire("mechanical:change");
 		});
 		if(data.modell=="davidhall"){
-			$$("#general .bakstycke, #general .singledoor").invoke("show");
+			$$("#general .singledoor").invoke("show");
 		} else {
 			$$("#general .sockel").invoke("show");
 		}
