@@ -79,6 +79,16 @@
   bottom:0px;
   left:0px;
   right:0px;
+  .half{
+    width:50%;
+    float:left;
+    input{
+      width:40%;
+    }
+  }
+  .clearLeft {
+    clear:left;
+  }
 }
 
 

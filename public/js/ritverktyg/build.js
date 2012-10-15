@@ -493,6 +493,7 @@ var k = {
 
 		$("save").observe("click",function(e){
 			trace("save!");
+			$$(".saveMessage").invoke("hide");
 			e.stop();
 			if($("rita_offert").visible()) return;
 			k.saveOrder(function(){
@@ -502,6 +503,7 @@ var k = {
 		});
 
 		$("intresseAnmalan").observe("click",function(e){
+			$$(".saveMessage").invoke("hide");
 			trace("offert!");
 			e.stop();
 			$("rita_offert").show();
@@ -517,7 +519,7 @@ var k = {
 		});
 		$("sendIntresseAnmalan").observe("click",function(e){
 			trace("sendIntresseAnmalan!");
-			$("rita_offert").hide();
+			$$(".saveMessage").invoke("hide");
 			e.stop();
 			k.saveOrder(function(drawingID){
 				trace(drawingID);
