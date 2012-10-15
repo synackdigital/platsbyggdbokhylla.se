@@ -21,6 +21,7 @@
         <tr><th><%- link_to('Open Drawing Specs', path_to.drawing(order.drawing)) %></th><td></td></tr>
 
         <tr><th>status</th><td><p class="label"><%- status_selector_value(order.status) %></p></td></tr>
+        <tr><th>usercomment</th><td><%= order.usercomment %></td></tr>    
         <tr><th>comment</th><td><%= order.comment %></td></tr>    
     </tbody>
 </table>

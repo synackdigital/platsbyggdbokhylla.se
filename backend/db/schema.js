@@ -38,6 +38,7 @@ var Drawing = describe('Drawing', function () {
     property('wantsfunding', Boolean);
     property('drawing', String);
     property('status', String);
+    property('usercomment',String);
     property('comment', String);
 });var Drawing = describe('Drawing', function () {
     property('createDate', Date);
