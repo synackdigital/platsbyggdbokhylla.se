@@ -11,7 +11,7 @@ This project uses Sass and Compass. Compile CSS from the root directory with the
 ## Allmänt
 
 * Sitekarta på google sökning. Det är möjligt att direkt in i ritverktyg från sökresultaten
-> Behövs ej. Dock nya texter för olika undersidor.
+- Behövs ej. Dock nya texter för olika undersidor.
 
 ##Ritverktyget
 

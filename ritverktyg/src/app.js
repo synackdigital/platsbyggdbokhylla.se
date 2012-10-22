@@ -130,6 +130,7 @@ var k = {
 	parts:PARTS,
 	style:STYLE,
 	updateOrder:function(){
+		k.fillCache = {};
 		$$("#sektionform form").each(function(aForm){
 			if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform" && aForm.identify()!="general"){
 				var order = aForm.serialize(true);

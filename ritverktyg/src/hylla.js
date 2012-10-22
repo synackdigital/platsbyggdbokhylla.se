@@ -160,7 +160,8 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, op
 				k.fillCount[thing.id]++;
 			}
 			if(thing.open){
-				var openThing = thing.open[Math.round(Math.random()*(thing.open.length-1))];
+				if(!k.fillCache[thing.id]) k.fillCache[thing.id] = Math.round(Math.random()*(thing.open.length-1));
+				var openThing = thing.open[k.fillCache[thing.id]];
 				if(width>=openThing.w){
 					
 					var theX = theX;
