@@ -377,6 +377,41 @@ var k = {
 			$$("#general .sockel").invoke("show");
 		}
 	},
+	fbloaded:false,
+	shareDrawing:function(){
+		if(this.fbloaded){
+			var obj = {
+	          method: 'feed',
+	          link: document.location.href,
+	          picture: 'http://www.platsbyggdbokhylla.se/images/brochure.png',
+	          name: 'Platsbyggd bokhylla',
+	          caption: 'Precis som du vill ha den',
+	          description: 'Det här är min platsbyggda bokhylla. Rita din egen på www.platsbyggdbokhylla.se'
+	        };
+	        FB.ui(obj, function(){
+
+	        });
+		} else {
+			window.fbAsyncInit = function() {
+				trace("wtf");
+			    FB.init({
+			      appId      : '429742777087819', // App ID
+			      status     : true, // check login status
+			      cookie     : true, // enable cookies to allow the server to access the session
+			      xfbml      : true  // parse XFBML
+			    });
+			    k.fbloaded = true;
+		    	k.shareDrawing();
+			};
+		  	(function(d){
+			  	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+			    if (d.getElementById(id)) {return;}
+			    js = d.createElement('script'); js.id = id; js.async = true;
+			    js.src = "//connect.facebook.net/en_US/all.js";
+			    ref.parentNode.insertBefore(js, ref);
+		    }(document));
+		}
+	},
 	saveOrder:function(callback){
 		var data = {
 			modell:k.baseOrder.modell,
@@ -776,5 +811,5 @@ var k = {
 
 
 var trace = function(str){
-//	console.log(str);
+	console.log(str);
 }
