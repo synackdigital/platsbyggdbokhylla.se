@@ -6570,6 +6570,7 @@ var k = {
 		$$("#rita_modell .choice").each(function(choice){
 			choice.observe("click",function(){
 				k.baseOrder.modell = this.readAttribute("template");
+				$("")
 				k.nextGuideStep();
 			})
 		});
@@ -6660,9 +6661,10 @@ var k = {
 		$("sektionlink_general").observe("machine:click",k.handleSectionActivated);
 
 		var handleChange = function(e){
-			trace("HANDLE CHANGE OF THE GENERAL INPUTTTT");
+			
 			
 			var name = this.readAttribute("name")
+			trace("HANDLE CHANGE OF THE GENERAL INPUT:"+name);
 			var firstTime = this.readAttribute("firstTime");
 			var target = this.readAttribute("target");				
 
@@ -6673,7 +6675,7 @@ var k = {
 			//use the first order for validation
 			var order = {type:"std"};
 			if(k.validate.item($("general"),{val:val,name:target,order:order})){
-				
+				trace("update it");
 				$$("form .item.slave[item="+target+"]").each(function(slaveItem){
 					trace("update slave");
 					trace(slaveItem);
@@ -6690,11 +6692,15 @@ var k = {
 				},300);	
 				}
 				
+			} else {
+				trace("no validate :(");
 			}
 
 			
 		};	
-		$("general").getInputs().each(function(generalInput){
+		trace("------------- GENERAL getInputs");
+		$$("#general input,#general select").each(function(generalInput){
+			trace(generalInput);
 			generalInput.observe("change",handleChange);
 			generalInput.observe("mechanical:change",handleChange);
 		});
@@ -6740,7 +6746,22 @@ var k = {
 	setGeneral:function(data){
 		$$("#general input[name=general_height]").first().value=data.h;
 		$$("#general input[name=general_sockel]").first().value=data.sockel;
-		$$("#general input").each(function(generalInput){
+		//set model
+		trace("#############SET MODELL");
+		var options = $$('#general select[name=general_modell] option');
+		trace(options);
+		trace(data.modell);
+		var len = options.length;
+		for (var i = 0; i < len; i++) {
+		    if(data.modell==options[i].value){
+		    	trace("set selected");
+		    	options[i].selected=true;
+		    } else {
+		    	options[i].selected=false;
+		    }
+		}
+
+		$$("#general input, #general select").each(function(generalInput){
 			trace("FIRE CHANGE!!");
 			generalInput.fire("mechanical:change");
 		});

@@ -348,8 +348,11 @@
         <form id="orderForm" style="display:none;">
           <input type="hidden" name="id" value="0">
           <input type="hidden" name="type" value="">
-          <input type="hidden" name="modell" value="test">
           <strong class="hidden">Sektion 1</strong>
+          <div class="item modell slave" item="modell">
+            <label>Modell<span class="modell"></span></label>
+            <input class="value" type="text" name="modell" value="ribersborg">
+          </div>
           <div class="item sections" item="col">
             <label>Moduler<span class="minmax"></span></label>
             <input class="value" type="text" name="col" value="7" max="10000" min="0">
@@ -378,10 +381,18 @@
             <label>Singeldörr<span class="minmax"></span></label>
             <input class="value" type="text" name="singledoor" value="0">
           </div>
+          
         </form>
 
         <form id="general" style="display:none;" class="activated">
           <strong class="hidden">Allmänt</strong>
+          <div class="item modell" item="modell">
+            <label>Modell<span class="modell"></span></label>
+            <select firstTime="firstTime" name="general_modell" target="modell">
+              <option value="davidhall">Davidhall</option>
+              <option value="ribersborg">Ribersborg</option>
+            </select>
+          </div>
           <div class="item height" item="h">
             <label>Höjd<span class="minmax"></span></label>
             <input firstTime="firstTime" class="value" type="text" target="h" name="general_height" value="2400" max="100000" min="0">
