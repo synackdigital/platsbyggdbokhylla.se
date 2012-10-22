@@ -1,5 +1,7 @@
 exports.routes = function (map) {
     map.root('dashboard#index');
+    map.get("login","login#index")
+    map.post("login","login#post")
     map.resources('drawings');
     map.resources('drawings');
     map.resources('orders');

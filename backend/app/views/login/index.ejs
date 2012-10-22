@@ -1,0 +1,25 @@
+<div class="hero-unit">
+	<h1>Welcome to the backend for platsbyggd bokhylla.se!</h1>
+	<p>You need to login in order to continue.</p>
+	<p><%- link_to('Visit platsbyggdbokhylla.se &raquo;', link_to_site(), {class: 'btn btn-primary btn-large'}) %></p>
+</div>
+<% form_for(user, {action: "/login", method: 'POST', id: "login_form", class: 'form-horizontal'}, function (form) { %>
+    <div class="control-group">
+    	<label class="control-label">Username:</label>
+		<div class="controls">
+			<input type="text" name="username"/><br/>   
+	   	</div>
+	</div>
+	<div class="control-group">
+    	<label class="control-label">Password:</label>
+		<div class="controls">
+			<input type="password" name="password"/><br/>   
+	   	</div>
+	</div>
+    <div class="form-actions">
+        <%- form.submit('<i class="icon-ok icon-white"></i> Login', {class: 'btn btn-primary'}) %> or
+    </div>
+<% });%>
+
+
+<hr>

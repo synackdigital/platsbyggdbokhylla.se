@@ -1,0 +1,260 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'bcrypt' ]
+2 info using npm@1.1.33
+3 info using node@v0.8.1
+4 verbose config file /Users/martin/.npmrc
+5 verbose config file /usr/local/etc/npmrc
+6 verbose config file /usr/local/lib/node_modules/npm/npmrc
+7 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/package.json
+8 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/coffee-script/package.json
+9 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/dateformat/package.json
+10 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/ejs/package.json
+11 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/ejs-ext/package.json
+12 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/everyauth/package.json
+13 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/express/package.json
+14 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/jugglingdb/package.json
+15 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/mongoose/package.json
+16 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/nodeunit/package.json
+17 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/railway/package.json
+18 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/semicov/package.json
+19 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/sinon/package.json
+20 verbose from cache /Users/martin/Sites/platsbyggdbokhylla.se/backend/package.json
+21 verbose readDependencies using package.json deps
+22 verbose cache add [ 'bcrypt', null ]
+23 silly cache add name=undefined spec="bcrypt" args=["bcrypt",null]
+24 verbose parsed url { pathname: 'bcrypt', path: 'bcrypt', href: 'bcrypt' }
+25 verbose lock bcrypt /Users/martin/.npm/51684124902645217fb8fdef7f0ef389d28d5e76-bcrypt.lock
+26 verbose addNamed [ 'bcrypt', '' ]
+27 verbose addNamed [ null, '' ]
+28 verbose lock bcrypt@ /Users/martin/.npm/1351601ce4b376780d094cdc37f52ca94ef4a1db-bcrypt-.lock
+29 silly addNameRange { name: 'bcrypt', range: '', hasData: false }
+30 verbose url raw bcrypt
+31 verbose url resolving [ 'https://registry.npmjs.org/', './bcrypt' ]
+32 verbose url resolved https://registry.npmjs.org/bcrypt
+33 info retry registry request attempt 1 at 20:30:06
+34 verbose etag "7392R794EPZF79A1MTBAHBI30"
+35 http GET https://registry.npmjs.org/bcrypt
+36 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
+37 info retry registry request attempt 2 at 20:31:32
+38 verbose etag "7392R794EPZF79A1MTBAHBI30"
+39 http GET https://registry.npmjs.org/bcrypt
+40 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
+41 info retry registry request attempt 3 at 20:33:49
+42 verbose etag "7392R794EPZF79A1MTBAHBI30"
+43 http GET https://registry.npmjs.org/bcrypt
+44 silly registry.get cb [ 304, undefined ]
+45 verbose etag bcrypt from cache
+46 silly addNameRange number 2 { name: 'bcrypt', range: '', hasData: true }
+47 silly addNameRange versions [ 'bcrypt',
+47 silly addNameRange   [ '0.1.2',
+47 silly addNameRange     '0.2.0',
+47 silly addNameRange     '0.2.1',
+47 silly addNameRange     '0.1.3',
+47 silly addNameRange     '0.2.2',
+47 silly addNameRange     '0.2.3',
+47 silly addNameRange     '0.2.4',
+47 silly addNameRange     '0.3.0',
+47 silly addNameRange     '0.3.1',
+47 silly addNameRange     '0.3.2',
+47 silly addNameRange     '0.4.0',
+47 silly addNameRange     '0.4.1',
+47 silly addNameRange     '0.5.0',
+47 silly addNameRange     '0.6.0',
+47 silly addNameRange     '0.7.0',
+47 silly addNameRange     '0.7.1',
+47 silly addNameRange     '0.7.2' ] ]
+48 verbose addNamed [ 'bcrypt', '0.7.2' ]
+49 verbose addNamed [ '0.7.2', '0.7.2' ]
+50 verbose lock bcrypt@0.7.2 /Users/martin/.npm/b9391e731573ab3a33e18056949d34e23ad2a07f-bcrypt-0-7-2.lock
+51 verbose read json /Users/martin/.npm/bcrypt/0.7.2/package/package.json
+52 silly resolved [ { name: 'bcrypt',
+52 silly resolved     description: 'A bcrypt library for NodeJS.',
+52 silly resolved     keywords:
+52 silly resolved      [ 'bcrypt',
+52 silly resolved        'password',
+52 silly resolved        'auth',
+52 silly resolved        'authentication',
+52 silly resolved        'encryption',
+52 silly resolved        'crypt',
+52 silly resolved        'crypto' ],
+52 silly resolved     main: './bcrypt',
+52 silly resolved     version: '0.7.2',
+52 silly resolved     author: { name: 'Nick Campbell', url: 'http://github.com/ncb000gt' },
+52 silly resolved     engines: { node: '>= 0.6.0' },
+52 silly resolved     repository:
+52 silly resolved      { type: 'git',
+52 silly resolved        url: 'http://github.com/ncb000gt/node.bcrypt.js.git' },
+52 silly resolved     licenses: [ [Object] ],
+52 silly resolved     bugs: { url: 'http://github.com/ncb000gt/node.bcrypt.js/issues' },
+52 silly resolved     scripts:
+52 silly resolved      { test: 'node-gyp configure build && nodeunit test',
+52 silly resolved        install: 'node-gyp rebuild' },
+52 silly resolved     dependencies: { bindings: '1.0.0' },
+52 silly resolved     devDependencies: { nodeunit: '>=0.6.4' },
+52 silly resolved     contributors:
+52 silly resolved      [ [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object],
+52 silly resolved        [Object] ],
+52 silly resolved     gypfile: true,
+52 silly resolved     readme: 'node.bcrypt.js\n=============\n\n[![Build Status](https://secure.travis-ci.org/ncb000gt/node.bcrypt.js.png)](http://travis-ci.org/#!/ncb000gt/node.bcrypt.js) \n\nLib to help you hash passwords.\n[bcrypt on wikipedia][bcryptwiki]\n\nCatalyst for this module: [How To Safely Store A Password][codahale]\n\nIf You Are Submitting Bugs/Issues\n=============\n\nBecause we can\'t magically know what you are doing to expose an issue, it is best if you provide a snippet of code. This snippet need not include your secret sauce, but it must replicate the issue you are describing. The issues that get closed without resolution tend to be the ones without code examples. Thanks.\n\n\nVersion Compatability\n=============\n\n<table>\n<tr>\n<td>Node Ver</td><td>Bcrypt Version</td>\n</tr>\n<tr>\n<td>&lt;= 0.4.x</td><td>&lt;= 0.4.x</td>\n</tr>\n<tr>\n<td>&gt;= 0.6.x</td><td>&gt;= 0.5.x</td>\n</tr>\n</table>\n\nWindows users should make sure to have at least node 0.8.5 installed and version >= 0.7.1 of this module.\n\n\nSecurity Issues/Concerns\n=============\n\nAs should be the case with any security tool, this library should be scrutinized by anyone using it. If you find or suspect an issue with the code- please bring it to my attention and I\'ll spend some time trying to make sure that this tool is as secure as possible.\n\nTo make it easier for people using this tool to analyze what has been surveyed, here is a list of BCrypt related security issues/concerns as they\'ve come up.\n\n* An [issue with passwords][jtr] was found with a version of the Blowfish algorithm developed for John the Ripper. This is not present in the OpenBSD version and is thus not a problem for this module. HT [zooko][zooko].\n\nDependencies\n=============\n\n* NodeJS\n* OpenSSL (Development Libraries (header files) for compilation)\n * For Windows you\'ll need http://slproweb.com/products/Win32OpenSSL.html installed to the default location of `C:\\OpenSSL-Win32`\n  * For 64 bit use the 64 bit version and install to `C:\\OpenSSL-Win64`\n* `node-gyp`\n * Please check the dependencies for this tool at: https://github.com/TooTallNate/node-gyp/\n  * Windows users will need the options for c# and c++ installed with their visual studio instance.\n  * Python 2.x\n\nFrom NPM\n============\n\nnpm install bcrypt\n\n\nFrom Source\n============\n\nAssuming you\'ve already built node, you can compile the module with `node-gyp`:\n\n```\ngit clone git://github.com/ncb000gt/node.bcrypt.js.git\ncd node.bcrypt.js\nnode-gyp configure\nnode-gyp build\n```\n\nNote: if you do not have node-gyp installed, install it using: `npm install -g node-gyp`\n\nUsage - Sync\n============\n\nTo hash a password:  \n\n```javascript\nvar bcrypt = require(\'bcrypt\');\nvar salt = bcrypt.genSaltSync(10);\nvar hash = bcrypt.hashSync("B4c0/\\/", salt);\n// Store hash in your password DB.\n```\n\nTo check a password:  \n\n```javascript\n// Load hash from your password DB.\nbcrypt.compareSync("B4c0/\\/", hash); // true\nbcrypt.compareSync("not_bacon", hash); // false\n```\n\nAuto-gen a salt and hash:\n\n```javascript\nvar hash = bcrypt.hashSync(\'bacon\', 8);\n```\n\nUsage - Async\n============\n\nTo hash a password:  \n\n```javascript\nvar bcrypt = require(\'bcrypt\');\nbcrypt.genSalt(10, function(err, salt) {\n    bcrypt.hash("B4c0/\\/", salt, function(err, hash) {\n        // Store hash in your password DB.\n    });\n});\n```\n\nTo check a password:  \n\n```javascript\n// Load hash from your password DB.\nbcrypt.compare("B4c0/\\/", hash, function(err, res) {\n    // res == true\n});\nbcrypt.compare("not_bacon", hash, function(err, res) {\n    // res = false\n});\n```\n\nAuto-gen a salt and hash:\n\n```javascript\nbcrypt.hash(\'bacon\', 8, function(err, hash) {\n});\n```\n\nAPI\n============\n\n`BCrypt.`\n\n  * `genSaltSync(rounds, seed_length)`\n    * `rounds` - [OPTIONAL] - the number of rounds to process the data for. (default - 10)\n    * `seed_length` - [OPTIONAL] - RAND_bytes wants a length. to make that a bit flexible, you can specify a seed_length. (default - 20)\n  * `genSalt(rounds, seed_length, cb)`\n    * `rounds` - [OPTIONAL] - the number of rounds to process the data for. (default - 10)\n    * `seed_length` - [OPTIONAL] - RAND_bytes wants a length. to make that a bit flexible, you can specify a seed_length. (default - 20)\n    * `cb` - [REQUIRED] - a callback to be fired once the salt has been generated. uses eio making it asynchronous.\n      * `err` - First parameter to the callback detailing any errors.\n      * `salt` - Second parameter to the callback providing the generated salt.\n  * `hashSync(data, salt)`\n    * `data` - [REQUIRED] - the data to be encrypted.\n    * `salt` - [REQUIRED] - the salt to be used in encryption.\n  * `hash(data, salt, cb)`\n    * `data` - [REQUIRED] - the data to be encrypted.\n    * `salt` - [REQUIRED] - the salt to be used to hash the password. if specified as a number then a salt will be generated and used (see examples).\n    * `cb` - [REQUIRED] - a callback to be fired once the data has been encrypted. uses eio making it asynchronous.\n      * `err` - First parameter to the callback detailing any errors.\n      * `encrypted` - Second parameter to the callback providing the encrypted form.\n  * `compareSync(data, encrypted)`\n    * `data` - [REQUIRED] - data to compare.\n    * `encrypted` - [REQUIRED] - data to be compared to.\n  * `compare(data, encrypted, cb)`\n    * `data` - [REQUIRED] - data to compare.\n    * `encrypted` - [REQUIRED] - data to be compared to.\n    * `cb` - [REQUIRED] - a callback to be fired once the data has been compared. uses eio making it asynchronous.\n      * `err` - First parameter to the callback detailing any errors.\n      * `same` - Second parameter to the callback providing whether the data and encrypted forms match [true | false].\n  * `getRounds(encrypted)` - return the number of rounds used to encrypt a given hash\n    * `encrypted` - [REQUIRED] - hash from which the number of rounds used should be extracted.\n\n\nHash Info\n============\n\nThe characters that comprise the resultant hash are `./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$`.\n\nTesting\n============\n\nIf you create a pull request, tests better pass :)\n\n    npm install\n    npm test\n\nCredits\n============\n\nThe code for this comes from a few sources:\n\n* blowfish.cc - OpenBSD\n* bcrypt.cc - OpenBSD\n* bcrypt::gen_salt - [gen_salt inclusion to bcrypt][bcryptgs]\n* bcrypt_node.cc - me\n\nContributors\n============\n\n* [Antonio Salazar Cardozo][shadowfiend] - Early MacOS X support (when we used libbsd)\n* [Ben Glow][pixelglow] - Fixes for thread safety with async calls\n* [Van Nguyen][thegoleffect] - Found a timing attack in the comparator\n* [NewITFarmer][newitfarmer] - Initial Cygwin support\n* [David Trejo][dtrejo] - packaging fixes\n* [Alfred Westerveld][alfredwesterveld] - packaging fixes\n* [Vincent Côté-Roy][vincentr] - Testing around concurrency issues\n* [Lloyd Hilaiel][lloyd] - Documentation fixes\n* [Roman Shtylman][shtylman] - Code refactoring, general rot reduction, compile options, better memory management with delete and new, and an upgrade to libuv over eio/ev.\n* [Vadim Graboys][vadimg] - Code changes to support 0.5.5+\n* [Ben Noordhuis][bnoordhuis] - Fixed a thread safety issue in nodejs that was perfectly mappable to this module.\n* [Nate Rajlich][tootallnate] - Bindings and build process.\n* [Sean McArthur][seanmonstar] - Windows Support\n* [Fanie Oosthuysen][weareu] - Windows Support\n\nLicense\n============\n\nUnless stated elsewhere, file headers or otherwise, the license as stated in the LICENSE file.\n\n\n\n[bcryptwiki]: http://en.wikipedia.org/wiki/Crypt_(Unix)#Blowfish-based_scheme  \n[bcryptgs]: http://mail-index.netbsd.org/tech-crypto/2002/05/24/msg000204.html\n[codahale]: http://codahale.com/how-to-safely-store-a-password/\n[gh13]: https://github.com/ncb000gt/node.bcrypt.js/issues/13\n[jtr]: http://www.openwall.com/lists/oss-security/2011/06/20/2\n\n[shadowfiend]:https://github.com/Shadowfiend\n[thegoleffect]:https://github.com/thegoleffect\n[pixelglow]:https://github.com/pixelglow\n[dtrejo]:https://github.com/dtrejo\n[alfredwesterveld]:https://github.com/alfredwesterveld\n[newitfarmer]:https://github.com/newitfarmer\n[zooko]:https://twitter.com/zooko\n[vincentr]:https://twitter.com/vincentcr\n[lloyd]:https://github.com/lloyd\n[shtylman]:https://github.com/shtylman\n[vadimg]:https://github.com/vadimg\n[bnoordhuis]:https://github.com/bnoordhuis\n[tootallnate]:https://github.com/tootallnate\n[seanmonstar]:https://github.com/seanmonstar\n[weareu]:https://github.com/weareu\n',
+52 silly resolved     _id: 'bcrypt@0.7.2',
+52 silly resolved     _from: 'bcrypt' } ]
+53 info install bcrypt@0.7.2 into /Users/martin/Sites/platsbyggdbokhylla.se/backend
+54 info installOne bcrypt@0.7.2
+55 verbose from cache /Users/martin/.npm/bcrypt/0.7.2/package/package.json
+56 info /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt unbuild
+57 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/package.json
+58 verbose tar unpack /Users/martin/.npm/bcrypt/0.7.2/package.tgz
+59 silly gunzTarPerm modes [ '755', '644' ]
+60 silly gunzTarPerm extractEntry package.json
+61 silly gunzTarPerm extractEntry .npmignore
+62 silly gunzTarPerm extractEntry README.md
+63 silly gunzTarPerm extractEntry LICENSE
+64 silly gunzTarPerm extractEntry bcrypt.js
+65 silly gunzTarPerm extractEntry CHANGELOG
+66 silly gunzTarPerm extractEntry examples/async_compare.js
+67 silly gunzTarPerm extractEntry examples/forever_gen_salt.js
+68 silly gunzTarPerm extractEntry .travis.yml
+69 silly gunzTarPerm extractEntry Makefile
+70 silly gunzTarPerm extractEntry binding.gyp
+71 silly gunzTarPerm extractEntry src/bcrypt.cc
+72 silly gunzTarPerm extractEntry src/bcrypt_node.cc
+73 silly gunzTarPerm extractEntry src/blowfish.cc
+74 silly gunzTarPerm extractEntry src/node_blf.h
+75 silly gunzTarPerm extractEntry test/async.js
+76 silly gunzTarPerm extractEntry test/deprecated.js
+77 silly gunzTarPerm extractEntry test/repetitions.js
+78 silly gunzTarPerm extractEntry test/sync.js
+79 silly gunzTarPerm extractEntry wscript
+80 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/package.json
+81 info preinstall bcrypt@0.7.2
+82 verbose from cache /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/package.json
+83 verbose readDependencies using package.json deps
+84 verbose from cache /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/package.json
+85 verbose readDependencies using package.json deps
+86 verbose cache add [ 'bindings@1.0.0', null ]
+87 silly cache add name=undefined spec="bindings@1.0.0" args=["bindings@1.0.0",null]
+88 verbose parsed url { pathname: 'bindings@1.0.0',
+88 verbose parsed url   path: 'bindings@1.0.0',
+88 verbose parsed url   href: 'bindings@1.0.0' }
+89 silly cache add name="bindings" spec="1.0.0" args=["bindings","1.0.0"]
+90 verbose parsed url { pathname: '1.0.0', path: '1.0.0', href: '1.0.0' }
+91 verbose addNamed [ 'bindings', '1.0.0' ]
+92 verbose addNamed [ '1.0.0', '1.0.0' ]
+93 verbose lock bindings@1.0.0 /Users/martin/.npm/f01e54541c8eb2a241ed6dc359a7cb142cbcc572-bindings-1-0-0.lock
+94 verbose url raw bindings/1.0.0
+95 verbose url resolving [ 'https://registry.npmjs.org/', './bindings/1.0.0' ]
+96 verbose url resolved https://registry.npmjs.org/bindings/1.0.0
+97 info retry registry request attempt 1 at 20:35:04
+98 verbose etag "9OIIS4YU3XTPWRBT47K46CQMO"
+99 http GET https://registry.npmjs.org/bindings/1.0.0
+100 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
+101 info retry registry request attempt 2 at 20:36:30
+102 verbose etag "9OIIS4YU3XTPWRBT47K46CQMO"
+103 http GET https://registry.npmjs.org/bindings/1.0.0
+104 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
+105 info retry registry request attempt 3 at 20:38:48
+106 verbose etag "9OIIS4YU3XTPWRBT47K46CQMO"
+107 http GET https://registry.npmjs.org/bindings/1.0.0
+108 silly registry.get cb [ 304, undefined ]
+109 verbose etag bindings/1.0.0 from cache
+110 verbose read json /Users/martin/.npm/bindings/1.0.0/package/package.json
+111 silly resolved [ { name: 'bindings',
+111 silly resolved     description: 'Helper module for loading your native module\'s .node file',
+111 silly resolved     keywords: [ 'native', 'addon', 'bindings', 'gyp', 'waf', 'c', 'c++' ],
+111 silly resolved     version: '1.0.0',
+111 silly resolved     author:
+111 silly resolved      { name: 'Nathan Rajlich',
+111 silly resolved        email: 'nathan@tootallnate.net',
+111 silly resolved        url: 'http://tootallnate.net' },
+111 silly resolved     repository:
+111 silly resolved      { type: 'git',
+111 silly resolved        url: 'git://github.com/TooTallNate/node-bindings.git' },
+111 silly resolved     main: './bindings.js',
+111 silly resolved     readme: 'node-bindings\n=============\n### Helper module for loading your native module\'s .node file\n\nThis is a helper module for authors of Node.js native addon modules.\nIt is basically the "swiss army knife" of `require()`ing your native module\'s\n`.node` file.\n\nThroughout the course of Node\'s native addon history, addons have ended up being\ncompiled in a variety of different places, depending on which build tool and which\nversion of node was used. To make matters worse, now the _gyp_ build tool can\nproduce either a _Release_ or _Debug_ build, each being built into different\nlocations.\n\nThis module checks _all_ the possible locations that a native addon would be built\nat, and returns the first one that loads successfully.\n\n\nInstallation\n------------\n\nInstall with `npm`:\n\n``` bash\n$ npm install bindings\n```\n\nOr add it to the `"dependencies"` section of your _package.json_ file.\n\n\nExample\n-------\n\n`require()`ing the proper bindings file for the current node version, platform\nand architecture is as simple as:\n\n``` js\nvar bindings = require(\'bindings\')(\'binding.node\')\n\n// Use your bindings defined in your C files\nbindings.your_c_function()\n```\n\n\nNice Error Output\n-----------------\n\nWhen the `.node` file could not be loaded, `node-bindings` throws an Error with\na nice error message telling you exactly what was tried. You can also check the\n`err.tries` Array property.\n\n```\nError: Could not load the bindings file. Tried:\n → /Users/nrajlich/ref/build/binding.node\n → /Users/nrajlich/ref/build/Debug/binding.node\n → /Users/nrajlich/ref/build/Release/binding.node\n → /Users/nrajlich/ref/out/Debug/binding.node\n → /Users/nrajlich/ref/Debug/binding.node\n → /Users/nrajlich/ref/out/Release/binding.node\n → /Users/nrajlich/ref/Release/binding.node\n → /Users/nrajlich/ref/build/default/binding.node\n → /Users/nrajlich/ref/compiled/0.8.2/darwin/x64/binding.node\n    at bindings (/Users/nrajlich/ref/node_modules/bindings/bindings.js:84:13)\n    at Object.<anonymous> (/Users/nrajlich/ref/lib/ref.js:5:47)\n    at Module._compile (module.js:449:26)\n    at Object.Module._extensions..js (module.js:467:10)\n    at Module.load (module.js:356:32)\n    at Function.Module._load (module.js:312:12)\n    ...\n```\n\n\nLicense\n-------\n\n(The MIT License)\n\nCopyright (c) 2012 Nathan Rajlich &lt;nathan@tootallnate.net&gt;\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\'Software\'), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \'AS IS\', WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n',
+111 silly resolved     _id: 'bindings@1.0.0',
+111 silly resolved     _from: 'bindings@1.0.0' } ]
+112 info install bindings@1.0.0 into /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt
+113 info installOne bindings@1.0.0
+114 verbose from cache /Users/martin/.npm/bindings/1.0.0/package/package.json
+115 info /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/node_modules/bindings unbuild
+116 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/node_modules/bindings/package.json
+117 verbose tar unpack /Users/martin/.npm/bindings/1.0.0/package.tgz
+118 silly gunzTarPerm modes [ '755', '644' ]
+119 silly gunzTarPerm extractEntry package.json
+120 silly gunzTarPerm extractEntry README.md
+121 silly gunzTarPerm extractEntry bindings.js
+122 verbose read json /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/node_modules/bindings/package.json
+123 info preinstall bindings@1.0.0
+124 verbose from cache /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/node_modules/bindings/package.json
+125 verbose readDependencies using package.json deps
+126 verbose from cache /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/node_modules/bindings/package.json
+127 verbose readDependencies using package.json deps
+128 silly resolved []
+129 verbose about to build /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/node_modules/bindings
+130 info build /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/node_modules/bindings
+131 verbose from cache /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/node_modules/bindings/package.json
+132 verbose linkStuff [ false,
+132 verbose linkStuff   false,
+132 verbose linkStuff   false,
+132 verbose linkStuff   '/Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/node_modules' ]
+133 info linkStuff bindings@1.0.0
+134 verbose linkBins bindings@1.0.0
+135 verbose linkMans bindings@1.0.0
+136 verbose rebuildBundles bindings@1.0.0
+137 info install bindings@1.0.0
+138 info postinstall bindings@1.0.0
+139 verbose about to build /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt
+140 info build /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt
+141 verbose from cache /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/package.json
+142 verbose linkStuff [ false,
+142 verbose linkStuff   false,
+142 verbose linkStuff   false,
+142 verbose linkStuff   '/Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules' ]
+143 info linkStuff bcrypt@0.7.2
+144 verbose linkBins bcrypt@0.7.2
+145 verbose linkMans bcrypt@0.7.2
+146 verbose rebuildBundles bcrypt@0.7.2
+147 verbose rebuildBundles [ 'bindings' ]
+148 info install bcrypt@0.7.2
+149 verbose unsafe-perm in lifecycle false
+150 verbose set uid from=0 to=501
+151 silly exec sh "-c" "node-gyp rebuild"
+152 silly sh,-c,node-gyp rebuild,/Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt spawning
+153 info bcrypt@0.7.2 Failed to exec install script
+154 info /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt unbuild
+155 verbose from cache /Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules/bcrypt/package.json
+156 info preuninstall bcrypt@0.7.2
+157 info uninstall bcrypt@0.7.2
+158 verbose true,/Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules,/Users/martin/Sites/platsbyggdbokhylla.se/backend/node_modules unbuild bcrypt@0.7.2
+159 info postuninstall bcrypt@0.7.2
+160 error bcrypt@0.7.2 install: `node-gyp rebuild`
+160 error `sh "-c" "node-gyp rebuild"` failed with 1
+161 error Failed at the bcrypt@0.7.2 install script.
+161 error This is most likely a problem with the bcrypt package,
+161 error not with npm itself.
+161 error Tell the author that this fails on your system:
+161 error     node-gyp rebuild
+161 error You can get their info via:
+161 error     npm owner ls bcrypt
+161 error There is likely additional logging output above.
+162 error System Darwin 11.4.2
+163 error command "node" "/usr/local/bin/npm" "install" "bcrypt"
+164 error cwd /Users/martin/Sites/platsbyggdbokhylla.se/backend
+165 error node -v v0.8.1
+166 error npm -v 1.1.33
+167 error code ELIFECYCLE
+168 error message bcrypt@0.7.2 install: `node-gyp rebuild`
+168 error message `sh "-c" "node-gyp rebuild"` failed with 1
+169 verbose exit [ 1, true ]

@@ -10,8 +10,8 @@ This project uses Sass and Compass. Compile CSS from the root directory with the
 
 ## Allmänt
 
-* Facebook. När man ritat klart sin bokhylla, göra det möjligt att lägga upp den på sin vägg med en kommentar och en länk till min hemsida. Exempel text. Det här är min platsbyggda bokhylla. Rita din egen på www.platsbyggdbokhylla.se
 * Sitekarta på google sökning. Det är möjligt att direkt in i ritverktyg från sökresultaten
+> Behövs ej. Dock nya texter för olika undersidor.
 
 ##Ritverktyget
 
@@ -39,3 +39,4 @@ This project uses Sass and Compass. Compile CSS from the root directory with the
 * Text vid generella mått.
 * Prisindikation ny text.: Inkl. moms. Frakt och eventuell monteringskostnad tillkommer
 * När man först klickat fram spara ritning och sedan intresseförfrågan försvinner den rutan bakom den andra.
+* Facebook. När man ritat klart sin bokhylla, göra det möjligt att lägga upp den på sin vägg med en kommentar och en länk till min hemsida. Exempel text. Det här är min platsbyggda bokhylla. Rita din egen på www.platsbyggdbokhylla.se
