@@ -134,8 +134,6 @@ var k = {
 		$$("#sektionform form").each(function(aForm){
 			if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform" && aForm.identify()!="general"){
 				var order = aForm.serialize(true);
-				trace("an order");
-				trace(order);
 				var oneFail = false;
 				Object.keys(order).each(function(item){
 					if(item!="type"){
@@ -156,7 +154,6 @@ var k = {
 					trace("one item failed");
 					sektionLink.addClassName("error");
 				} else {
-					trace("redraw in update order");
 					k.redraw();	
 					sektionLink.removeClassName("error");
 				}	
@@ -205,9 +202,7 @@ var k = {
 		$$("#rita_start .choice").each(function(choice){
 			choice.observe("click",function(){
 				k.baseOrder.template = this.readAttribute("template");
-				trace(".guideform ."+k.baseOrder.template);
 				var guideF = $$(".guideform."+k.baseOrder.template).first();
-				trace(guideF);
 				if(guideF){
 					if(k.baseOrder.modell=="davidhall"){
 						guideF.down(".ribersborg").hide();
@@ -239,7 +234,6 @@ var k = {
 		});
 
 		$("save").observe("click",function(e){
-			trace("save!");
 			$$(".saveMessage").invoke("hide");
 			e.stop();
 			if($("rita_offert").visible()) return;
@@ -251,31 +245,25 @@ var k = {
 
 		$("intresseAnmalan").observe("click",function(e){
 			$$(".saveMessage").invoke("hide");
-			trace("offert!");
 			e.stop();
 			$("rita_offert").show();
 		});
 
 		$$(".closeMessage").each(function(closeButton){
-			trace(closeButton);
 			closeButton.observe("click",function(e){
-				trace("closeOffert!");
 				e.stop();
 				$$(".saveMessage").invoke("hide");
 			});
 		});
 		$("sendIntresseAnmalan").observe("click",function(e){
-			trace("sendIntresseAnmalan!");
 			$$(".saveMessage").invoke("hide");
 			e.stop();
 			k.saveOrder(function(drawingID){
-				trace(drawingID);
 				if(drawingID){
 					$("Order_drawing").setValue(drawingID);
 					$("order_form").request({
 						onSuccess: function(transport){
 							var resp = transport.responseText.evalJSON();
-							trace(resp);
 							$("rita_offert_saved").show();
 						}
 					});
@@ -292,7 +280,6 @@ var k = {
 			
 			
 			var name = this.readAttribute("name")
-			trace("HANDLE CHANGE OF THE GENERAL INPUT:"+name);
 			var firstTime = this.readAttribute("firstTime");
 			var target = this.readAttribute("target");				
 
@@ -303,10 +290,7 @@ var k = {
 			//use the first order for validation
 			var order = {type:"std"};
 			if(k.validate.item($("general"),{val:val,name:target,order:order})){
-				trace("update it");
 				$$("form .item.slave[item="+target+"]").each(function(slaveItem){
-					trace("update slave");
-					trace(slaveItem);
 					slaveItem.down("input").value = val;
 
 				});
@@ -319,16 +303,11 @@ var k = {
 					k.updateOrder();				
 				},300);	
 				}
-				
-			} else {
-				trace("no validate :(");
 			}
 
 			
 		};	
-		trace("------------- GENERAL getInputs");
 		$$("#general input,#general select").each(function(generalInput){
-			trace(generalInput);
 			generalInput.observe("change",handleChange);
 			generalInput.observe("mechanical:change",handleChange);
 		});
@@ -375,14 +354,10 @@ var k = {
 		$$("#general input[name=general_height]").first().value=data.h;
 		$$("#general input[name=general_sockel]").first().value=data.sockel;
 		//set model
-		trace("#############SET MODELL");
 		var options = $$('#general select[name=general_modell] option');
-		trace(options);
-		trace(data.modell);
 		var len = options.length;
 		for (var i = 0; i < len; i++) {
 		    if(data.modell==options[i].value){
-		    	trace("set selected");
 		    	options[i].selected=true;
 		    } else {
 		    	options[i].selected=false;
@@ -390,7 +365,6 @@ var k = {
 		}
 
 		$$("#general input, #general select").each(function(generalInput){
-			trace("FIRE CHANGE!!");
 			generalInput.fire("mechanical:change");
 		});
 		if(data.modell=="davidhall"){
@@ -415,7 +389,6 @@ var k = {
 	        });
 		} else {
 			window.fbAsyncInit = function() {
-				trace("wtf");
 			    FB.init({
 			      appId      : '429742777087819', // App ID
 			      status     : true, // check login status
@@ -487,8 +460,6 @@ var k = {
 	},
 	startUp:function(options){
 		k.order = options.order ? options.order : this.templates[options.template];
-		trace("startup");
-		trace(k.order);
 		var orderCount = k.order.length;
 		var sectionCount = 1;
 		var overCount = 1;
@@ -503,19 +474,15 @@ var k = {
 					stdCount++;
 				}
 			}
-			trace(options.partial);
 			var overW = 1000;
 			var width = Math.ceil((options.partial.w-(ovCoutn*overW))/stdCount);
 			var height = options.partial.h;
 			var sockel = options.partial.sockel;
 			for(var i = 0; i < k.order.length; i++){
 				var orderItem = k.order[i];
-				trace(orderItem);
 				if(orderItem.type=="over"){
 					orderItem.w=overW;
 				} else {
-					trace("set the width");
-					trace(width);
 					orderItem.w=width;
 					orderItem.h=height;
 					if(options.modell=="ribersborg"){
@@ -589,7 +556,6 @@ var k = {
 			name = "Överbyggnad "+(counter);
 		}
 		newForm.down('strong').update(name);
-		trace("hide the FOOOOORM");
 
 		var sektionLink = new Element("li",{"target":"form_"+id}).update(name);
 		sektionLink.observe("click",k.handleSectionActivated);
@@ -618,15 +584,11 @@ var k = {
 		var sliders = newForm.getInputs();
 		sliders.each(function(item){
 			if(item.name!="id" && item.name != "modell"){
-				trace("set the value on a form item");
-				trace(item.name);
-				trace(data[item.name]);
 				item.value = data[item.name];
 			}
 			var eventName = "change";
 			item.observe("change",function(e){
 				if(this.up().hasClassName("slave")){
-					trace("got slaves");
 					var val = this.value;
 					$$("form .item.slave[item="+this.readAttribute("name")+"]").each(function(slaveItem){
 						slaveItem.down("input").value = val;
@@ -750,7 +712,6 @@ var k = {
  						position = 1;
  					}
 				}
-				trace("new hylla, position:"+position+", type:"+type+", modell:"+modell);
 				this.order[i].hylla = new hylla(this.paper,lastX,(o.h+s.margin),o.w,o.h,o.col,o.row,o.sockel,o.bakstycke,o.singledoor,{
 					position:position, type:type, modell:modell
 				});

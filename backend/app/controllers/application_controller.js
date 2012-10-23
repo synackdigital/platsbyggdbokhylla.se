@@ -7,6 +7,7 @@ before('protect from forgery', function () {
 function requireLogin() {
 	//passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' });
 	passport.authenticate('local', function(err, user, info) {
+      console.log("authenticate")
     	if (err) { return next(err) }
     	if (!user) { return res.redirect('/login') }
     	req.logIn(user, function(err) {

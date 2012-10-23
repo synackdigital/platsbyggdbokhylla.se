@@ -1,4 +1,5 @@
 exports.routes = function (map) {
+    map.resources('users');
     map.root('dashboard#index');
     map.get("login","login#index")
     map.post("login","login#post")

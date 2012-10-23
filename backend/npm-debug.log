@@ -31,15 +31,15 @@
 30 verbose url raw bcrypt
 31 verbose url resolving [ 'https://registry.npmjs.org/', './bcrypt' ]
 32 verbose url resolved https://registry.npmjs.org/bcrypt
-33 info retry registry request attempt 1 at 20:30:06
+33 info retry registry request attempt 1 at 22:04:45
 34 verbose etag "7392R794EPZF79A1MTBAHBI30"
 35 http GET https://registry.npmjs.org/bcrypt
-36 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
-37 info retry registry request attempt 2 at 20:31:32
+36 info retry will retry, error on last attempt: Error: connect ECONNREFUSED
+37 info retry registry request attempt 2 at 22:04:56
 38 verbose etag "7392R794EPZF79A1MTBAHBI30"
 39 http GET https://registry.npmjs.org/bcrypt
-40 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
-41 info retry registry request attempt 3 at 20:33:49
+40 info retry will retry, error on last attempt: Error: connect ECONNREFUSED
+41 info retry registry request attempt 3 at 22:05:56
 42 verbose etag "7392R794EPZF79A1MTBAHBI30"
 43 http GET https://registry.npmjs.org/bcrypt
 44 silly registry.get cb [ 304, undefined ]
@@ -156,15 +156,15 @@
 94 verbose url raw bindings/1.0.0
 95 verbose url resolving [ 'https://registry.npmjs.org/', './bindings/1.0.0' ]
 96 verbose url resolved https://registry.npmjs.org/bindings/1.0.0
-97 info retry registry request attempt 1 at 20:35:04
+97 info retry registry request attempt 1 at 22:05:56
 98 verbose etag "9OIIS4YU3XTPWRBT47K46CQMO"
 99 http GET https://registry.npmjs.org/bindings/1.0.0
-100 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
-101 info retry registry request attempt 2 at 20:36:30
+100 info retry will retry, error on last attempt: Error: connect ECONNREFUSED
+101 info retry registry request attempt 2 at 22:06:06
 102 verbose etag "9OIIS4YU3XTPWRBT47K46CQMO"
 103 http GET https://registry.npmjs.org/bindings/1.0.0
-104 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
-105 info retry registry request attempt 3 at 20:38:48
+104 info retry will retry, error on last attempt: Error: connect ECONNREFUSED
+105 info retry registry request attempt 3 at 22:07:06
 106 verbose etag "9OIIS4YU3XTPWRBT47K46CQMO"
 107 http GET https://registry.npmjs.org/bindings/1.0.0
 108 silly registry.get cb [ 304, undefined ]

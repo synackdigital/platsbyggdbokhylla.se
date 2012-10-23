@@ -408,15 +408,12 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, op
 			var planWidth = (this._w - (sideWidth * 2));
 			var startX = this._x + p.side.w;
 			if(options.position==2){
-				trace("pos 2");
 				startX = this._x;
 				planWidth = (this._w - sideWidth);
 			}
 			if(options.position==4){
-				trace("pos 4");
 			}
 			if(options.position	== 1){
-				trace("pos 1");
 				startX = this._x;
 				planWidth = (this._w);
 			}

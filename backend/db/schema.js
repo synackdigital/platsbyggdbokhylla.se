@@ -21,7 +21,7 @@
 
 */
 
-var bcrypt = require("bcrypt"), SALT_WORK_FACTOR = 10;
+var crypto = require('crypto');
 
 
 
@@ -56,29 +56,24 @@ var Drawing = describe('Drawing', function () {
     property('name', String);
     property('password', String);
 });
-/**
-User.pre(save, function(next) {
+
+User.setter.password = function(pwd) {
     var user = this;
     // only hash the password if it has been modified (or is new)
-    if (!user.isModified('password')) return next();
+    var shasum = crypto.createHash('sha1');
+    shasum.update('platsbyggdftw' + user.password);
+    user._password = shasum.digest('hex');
+};
+//TODO MAKE THIS WORK
+/**
+User.validPassword = function(candidatePassword, cb) {
+    var shasum = crypto.createHash('sha1');
+    shasum.update('platsbyggdftw' + candidatePassword);
 
-    // generate a salt
-    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-    if (err) return next(err);
-
-    // hash the password using our new salt
-    bcrypt.hash(user.password, salt, function(err, hash) {
-        if (err) return next(err);
-
-        // override the cleartext password with the hashed one
-        user.password = hash;
-        next();
-    });
-});
-User.methods.validPassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
+    if(shasum.digest('hex')==this.password){
+        cb(true);
+    } else {
+        cb(true);
+    }
 };
 **/

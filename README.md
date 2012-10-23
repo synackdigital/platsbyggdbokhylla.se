@@ -16,7 +16,6 @@ This project uses Sass and Compass. Compile CSS from the root directory with the
 ##Ritverktyget
 
 * Utrymmet mellan botten hyllplanet och det andra är mindre än de i resterande.
-* Hade varit riktigt bra om man efter ritat upp sin Davidhall hylla lätt kunna se hur den hade sett ut som en ribersborg utan att skriva in alla mått igen.
 * Kanske ett explorer problem. När man fyllt i ett nytt värde för bokhyllan måste man klicka i en annan ruta för att bokhyllan ska ritas om. Det räcker således inte med att trycka enter.
 * Verkar bara vara på min dator. Men dörrarna vill inte öppnas när jag klickar/för pekaren över dem.
 
@@ -40,3 +39,4 @@ This project uses Sass and Compass. Compile CSS from the root directory with the
 * När man först klickat fram spara ritning och sedan intresseförfrågan försvinner den rutan bakom den andra.
 * Facebook. När man ritat klart sin bokhylla, göra det möjligt att lägga upp den på sin vägg med en kommentar och en länk till min hemsida. Exempel text. Det här är min platsbyggda bokhylla. Rita din egen på www.platsbyggdbokhylla.se
 * (Bara använda en framåtvänd cd/pocket/dvd etc. per omslag. Alltså en vänd Nirvana platta, en The Clash etc)
+* Hade varit riktigt bra om man efter ritat upp sin Davidhall hylla lätt kunna se hur den hade sett ut som en ribersborg utan att skriva in alla mått igen.
