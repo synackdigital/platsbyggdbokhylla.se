@@ -3,4 +3,4 @@ development:
   google: yes
 production:
   baseURL: 'http://platsbyggdbokhylla.talkative.se/'
-  local: yes
+  google: yes

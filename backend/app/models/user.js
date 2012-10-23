@@ -1,6 +1,5 @@
 exports.findOrCreate = function (data, done) {
     console.log("find and create");
-    /* GOOGLE OPENID */
     if (data.openId) {
         User.all({
             where: {
@@ -18,13 +17,3 @@ exports.findOrCreate = function (data, done) {
     } 
 
 };
-
-exports.verifyPassword = function (password, user_password) {
-    if(!password && !user_password){
-	return false;
-    } 
-    if(password == user_password){
-	return true;
-    } 
-    return false;
-}

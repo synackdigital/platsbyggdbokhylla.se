@@ -8,8 +8,3 @@ action(function index() {
     this.user = {};
     render();
 });
-action(function post() {
-	this.title = 'Platsbyggdbokhylla.se Admin';
-    this.user = {};
-    render();
-});
