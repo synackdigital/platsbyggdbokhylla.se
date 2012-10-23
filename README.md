@@ -9,19 +9,15 @@ This project uses Sass and Compass. Compile CSS from the root directory with the
 # Todos
 
 ## Allmänt
-
 * Sitekarta på google sökning. Det är möjligt att direkt in i ritverktyg från sökresultaten
 - Behövs ej. Dock nya texter för olika undersidor.
 
 ##Ritverktyget
-
 * Utrymmet mellan botten hyllplanet och det andra är mindre än de i resterande.
 * Kanske ett explorer problem. När man fyllt i ett nytt värde för bokhyllan måste man klicka i en annan ruta för att bokhyllan ska ritas om. Det räcker således inte med att trycka enter.
 * Verkar bara vara på min dator. Men dörrarna vill inte öppnas när jag klickar/för pekaren över dem.
 
 ## Backend.
-
-* Lösenord backend
 * Kapnota för överbyggnader
 * Kapnota för Davidhall
 
@@ -30,6 +26,7 @@ This project uses Sass and Compass. Compile CSS from the root directory with the
 * Snygga till bakstycke/dörrknapparna
 
 ## Already done
+* Lösenord backend
 * Ta bort sockelhöjd alternativet för Davidhall
 * Ta bort enkel/dubbeldörr alternativet för Ribersborg.
 * Status alternativ.  Svarat. Offert skickad. Beställning bekräftad. Betald. Under tillverkning. Sprutlackerad. Frakt och montering bokad. Skickad till kund. Kund nöjd.
