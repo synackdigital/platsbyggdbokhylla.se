@@ -2,6 +2,7 @@ load('application');
 
 before(loadDrawing, {only: ['show', 'edit', 'update', 'destroy']});
 skipBeforeFilter('protect from forgery',['create']);
+skipBeforeFilter('auth',['create','show']);
 
 action('new', function () {
     this.title = 'New drawing';
