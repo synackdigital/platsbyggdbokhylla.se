@@ -1,9 +1,10 @@
-var passport = require("passport");
+//var passport = require("passport");
 
 before('protect from forgery', function () {
     protectFromForgery('4a928c31a3efa9fe4031e2b06d677515b3f2848f');
 });
 
+/**
 function requireLogin() {
 	//passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' });
 	passport.authenticate('local', function(err, user, info) {
@@ -18,5 +19,4 @@ function requireLogin() {
 }
 
 before("auth",requireLogin);
-
-
+**/

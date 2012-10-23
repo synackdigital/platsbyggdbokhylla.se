@@ -1,7 +1,9 @@
 var express = require('express');
-var passport = require('passport');
+
+
+//var passport = require('passport');
 var crypto = require('crypto');
-var LocalStrategy = require('passport-local').Strategy;
+//var LocalStrategy = require('passport-local').Strategy;
 
 app.configure(function(){
     var cwd = process.cwd();
@@ -12,7 +14,7 @@ app.configure(function(){
     //process.nextTick(function () {
       //  rwps.loadUser(User);
     //});
-
+    /**
     passport.use(new LocalStrategy(
       function(username, password, done) {
         console.log("lookup user");
@@ -47,7 +49,7 @@ app.configure(function(){
         done(err, user);
       });
     });
-
+  **/
 
     
     app.use(express.static(cwd + '/public', {maxAge: 86400000}));
@@ -59,8 +61,8 @@ app.configure(function(){
     app.use(express.cookieParser('secret'));
     app.use(express.session({secret: 'secret'}));
     app.use(express.methodOverride());
-    app.use(passport.initialize());
-    app.use(passport.session());
+    //app.use(passport.initialize());
+    //app.use(passport.session());
     
     app.use(app.router);
 });
