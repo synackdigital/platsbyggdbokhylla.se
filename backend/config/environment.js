@@ -1,5 +1,5 @@
 var express = require('express');
-
+var rwps = require('railway-passport');
 
 //var passport = require('passport');
 var crypto = require('crypto');
@@ -63,6 +63,12 @@ app.configure(function(){
     app.use(express.methodOverride());
     //app.use(passport.initialize());
     //app.use(passport.session());
+
+    rwps.init();
+    // hook up user model
+    process.nextTick(function () {
+        rwps.loadUser(User);
+    });
     
     app.use(app.router);
 });

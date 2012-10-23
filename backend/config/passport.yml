@@ -2,5 +2,5 @@ development:
   baseURL: 'http://localhost:3000/'
   google: yes
 production:
-  baseURL: 'http://node-js.ru/'
-  google: yes
+  baseURL: 'http://platsbyggdbokhylla.talkative.se/'
+  local: yes

@@ -3,6 +3,7 @@
 	<p>You need to login in order to continue.</p>
 	<p><%- link_to('Visit platsbyggdbokhylla.se &raquo;', link_to_site(), {class: 'btn btn-primary btn-large'}) %></p>
 </div>
+<a href="/auth/google">Login with google</a>
 <% form_for(user, {action: "/login", method: 'POST', id: "login_form", class: 'form-horizontal'}, function (form) { %>
     <div class="control-group">
     	<label class="control-label">Username:</label>

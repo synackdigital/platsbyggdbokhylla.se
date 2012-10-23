@@ -53,27 +53,9 @@ var Drawing = describe('Drawing', function () {
     property('updateDate', Date);
     property('data', String);
 });var User = describe('User', function () {
-    property('name', String);
-    property('password', String);
+    property('username', String);
+    property('email', String);
+    property('googleId', String);
+    
+
 });
-
-User.setter.password = function(pwd) {
-    var user = this;
-    // only hash the password if it has been modified (or is new)
-    var shasum = crypto.createHash('sha1');
-    shasum.update('platsbyggdftw' + user.password);
-    user._password = shasum.digest('hex');
-};
-//TODO MAKE THIS WORK
-/**
-User.validPassword = function(candidatePassword, cb) {
-    var shasum = crypto.createHash('sha1');
-    shasum.update('platsbyggdftw' + candidatePassword);
-
-    if(shasum.digest('hex')==this.password){
-        cb(true);
-    } else {
-        cb(true);
-    }
-};
-**/
