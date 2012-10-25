@@ -16,7 +16,7 @@ before("auth", function requireManager() {
             console.log("find user");
             console.log(user);
             console.log(user.email);
-            if (user && user.email === 'martin@aesculus.se') {
+            if (user && user.access) {
                 req.user = user;
                 next();
             } else {

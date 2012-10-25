@@ -47,7 +47,3 @@ This project uses Sass and Compass. Compile CSS from the root directory with the
 * Facebook. När man ritat klart sin bokhylla, göra det möjligt att lägga upp den på sin vägg med en kommentar och en länk till min hemsida. Exempel text. Det här är min platsbyggda bokhylla. Rita din egen på www.platsbyggdbokhylla.se
 * (Bara använda en framåtvänd cd/pocket/dvd etc. per omslag. Alltså en vänd Nirvana platta, en The Clash etc)
 * Hade varit riktigt bra om man efter ritat upp sin Davidhall hylla lätt kunna se hur den hade sett ut som en ribersborg utan att skriva in alla mått igen.
-
-
-
-

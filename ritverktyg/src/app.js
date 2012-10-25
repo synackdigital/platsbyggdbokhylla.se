@@ -257,7 +257,21 @@ var k = {
 		});
 		$("sendIntresseAnmalan").observe("click",function(e){
 			$$(".saveMessage").invoke("hide");
+
 			e.stop();
+			var validateEmail = function (email) { 
+			    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\
+			".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA
+			-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			    return re.test(email);
+			} 
+			var emailField = $("Order_email");
+			if(!validateEmail(emailField.value)){
+				emailField.up().addClassName("error");
+				return;
+			} else {
+				emailField.up().removedClassName("error");
+			}
 			k.saveOrder(function(drawingID){
 				if(drawingID){
 					$("Order_drawing").setValue(drawingID);
@@ -631,9 +645,11 @@ var k = {
 			oversmall:0,
 			overbig:0,
 			skap:0
-		};		
+		};	
+		var modell = "ribersborg";	
 		
 		for(var i = 0; i < this.order.length; i++){
+			modell = this.order[i].modell;
 			var hyllprice = this.order[i].hylla.price;
 			total.bakstycke+=hyllprice.bakstycke;
 			total.hyllplan+=hyllprice.hyllplan;
@@ -644,7 +660,7 @@ var k = {
 		}	
 		var totalprice = 0;
 
-		if(k.baseOrder.modell=="davidhall"){
+		if(modell=="davidhall"){
 			totalprice = total.gavel*PRICELIST.gavel_davidhall;
 			totalprice += total.bakstycke*PRICELIST.bakstycke;
 			totalprice += total.hyllplan*PRICELIST.hyllplan;

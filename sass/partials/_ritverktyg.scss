@@ -203,6 +203,14 @@
       padding: .5em;
       width: 15%;
     }
+    &.error {
+      label {
+        color: $warning-text-color;
+      }
+      input {
+        color: $warning-text-color;
+      }
+    }
   }
 }
 

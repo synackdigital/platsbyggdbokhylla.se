@@ -2,6 +2,7 @@ load('application');
 
 before(loadOrder, {only: ['show', 'edit', 'update', 'destroy']});
 skipBeforeFilter('protect from forgery',['create']);
+skipBeforeFilter('auth',['create']);
 
 action('new', function () {
     this.title = 'New order';

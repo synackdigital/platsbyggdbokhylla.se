@@ -56,6 +56,5 @@ var Drawing = describe('Drawing', function () {
     property('username', String);
     property('email', String);
     property('googleId', String);
-    
-
+    property('access', Boolean);
 });
