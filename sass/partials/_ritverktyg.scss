@@ -255,7 +255,7 @@
     font-weight: bold;
 
     padding: .5 * $base-vmargin 2 * $base-hmargin;
-    @media screen and (max-width: $break-large) {
+    @media screen and (max-width: 960px) {
       padding: .5 * $base-vmargin 1 * $base-hmargin;
     }
     &.active,
@@ -273,7 +273,7 @@
   border-right: 1px solid darken( $text-color, 5% );
 
   padding: .5 * $base-vmargin 2 * $base-hmargin;
-  @media screen and (max-width: $break-large) {
+  @media screen and (max-width: 960px) {
     padding: .5 * $base-vmargin 1 * $base-hmargin;
   }
   //width: 21em;
@@ -328,7 +328,7 @@
 #fillwith.sektion {
   padding: .5 * $base-vmargin 2 * $base-hmargin;
 
-  @media screen and (max-width: $break-large) {
+  @media screen and (max-width: 960px) {
     padding: .5 * $base-vmargin 1 * $base-hmargin;
   }
 
@@ -387,7 +387,7 @@
 
 
 
-@media screen and (max-width: $break-large) {
+@media screen and (max-width: 960px) {
     #sektionlist {
       float:none;
       width:100%;

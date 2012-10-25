@@ -154,14 +154,14 @@ a {
 /*
  * Media queries
  */
-@media screen and (min-width: $break-large) {
+@media screen and (min-width: 960px) {
   // Larger than $break-large
   body {
     // This adjusts all font sizes and line-heights across the site
     font-size: $base-font-size * 1.1;
   }
 }
-@media screen and (max-width: $break-large) {
+@media screen and (max-width: 960px){
   // Smaller than $break-large
   #header {
     .site-title {
