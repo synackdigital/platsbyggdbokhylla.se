@@ -12,6 +12,9 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, op
 	this._modell = options.modell;
 	this._singledoor = (singledoor == 1) ? true : false;
 	this._bakstycke = (bakstycke == 1) ? true : false;
+
+	trace("this._bakstycke");
+	trace(this._bakstycke);
 	this.lines = [];
 
 	if(this._modell=="davidhall"){
