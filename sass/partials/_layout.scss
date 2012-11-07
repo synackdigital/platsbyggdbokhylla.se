@@ -24,7 +24,7 @@ a {
 /*
  * Main layout
  */
-#header, 
+#header,
 #main {
   // The layout is not adapted to work below 768, so offer a scrollbar instead
   min-width: 768px;
@@ -138,7 +138,7 @@ a {
   background: $bg-color;
   position: absolute;
   bottom: 1.5 * $base-vmargin; left: 2 * $base-hmargin;
-  padding: .5 * $base-vmargin .5 * $base-hmargin; 
+  padding: .5 * $base-vmargin .5 * $base-hmargin;
   z-index: 50;
   img {
     -webkit-transition:all 0.6s ease-in-out;
@@ -147,6 +147,18 @@ a {
   }
   &.small {
     display: none;
+  }
+}
+#attribution {
+  @include border-radius(2px);
+  background: $bg-color;
+  font-size: 11px;
+  position: absolute;
+  bottom: 1.5 * $base-vmargin; right: 2 * $base-hmargin;
+  padding: .25em .75em;
+  z-index: 60;
+  html.rgba & {
+    background: rgba(white, .9);
   }
 }
 
