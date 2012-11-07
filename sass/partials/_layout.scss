@@ -24,7 +24,7 @@ a {
 /*
  * Main layout
  */
-#header, 
+#header,
 #main {
   // The layout is not adapted to work below 768, so offer a scrollbar instead
   min-width: 768px;
@@ -97,7 +97,8 @@ a {
     width: 30%;
     min-width: 300px;
     body.start &,
-    body.funkar & {
+    body.funkar &,
+    body.om & {
       min-width: 640px;
     }
     html.rgba & {
@@ -125,7 +126,7 @@ a {
   body.funkar & {
     background-image: image-url('photos/l/jerker_mg_2013.jpg');
   }
-  body.kontakt & {
+  body.om & {
     background-image: image-url('photos/l/jerker_mg_4071_1.jpg');
   }
 }
@@ -138,7 +139,7 @@ a {
   background: $bg-color;
   position: absolute;
   bottom: 1.5 * $base-vmargin; left: 2 * $base-hmargin;
-  padding: .5 * $base-vmargin .5 * $base-hmargin; 
+  padding: .5 * $base-vmargin .5 * $base-hmargin;
   z-index: 50;
   img {
     -webkit-transition:all 0.6s ease-in-out;
@@ -147,6 +148,18 @@ a {
   }
   &.small {
     display: none;
+  }
+}
+#attribution {
+  @include border-radius(2px);
+  background: $bg-color;
+  font-size: 11px;
+  position: absolute;
+  bottom: 1.5 * $base-vmargin; right: 2 * $base-hmargin;
+  padding: .25em .75em;
+  z-index: 60;
+  html.rgba & {
+    background: rgba(white, .9);
   }
 }
 
