@@ -685,6 +685,9 @@ var k = {
 		this.orderDetails.priceTotal = totalprice;
 
 		$("pricevalue").update(totalprice+":-");
+		var measureCost = Math.round((1000+(totalprice*0.15))/500)*500;
+		$("measurecost").update("Frakt ingår, Mät & Monteringskostnad, "+measureCost+":-");
+		
 
 		
 
