@@ -97,7 +97,8 @@ a {
     width: 30%;
     min-width: 300px;
     body.start &,
-    body.funkar & {
+    body.funkar &,
+    body.om & {
       min-width: 640px;
     }
     html.rgba & {
@@ -125,7 +126,7 @@ a {
   body.funkar & {
     background-image: image-url('photos/l/jerker_mg_2013.jpg');
   }
-  body.kontakt & {
+  body.om & {
     background-image: image-url('photos/l/jerker_mg_4071_1.jpg');
   }
 }
