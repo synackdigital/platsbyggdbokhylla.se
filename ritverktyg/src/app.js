@@ -608,19 +608,40 @@ var k = {
 				item.value = data[item.name];
 			}
 			var eventName = "change";
-			item.observe("change",function(e){
-				if(this.up().hasClassName("slave")){
-					var val = this.value;
-					$$("form .item.slave[item="+this.readAttribute("name")+"]").each(function(slaveItem){
-						slaveItem.down("input").value = val;
-					});
-				}
-				k.updateInterval = clearInterval(k.updateInterval);
-				k.updateInterval = setInterval(function(){
+			if(Prototype.Browser.IE){
+				item.observe("keyup",function(e){
+					if(e.keyCode==Event.KEY_RETURN){
+						trace("has changed");
+						if(this.up().hasClassName("slave")){
+							var val = this.value;
+							$$("form .item.slave[item="+this.readAttribute("name")+"]").each(function(slaveItem){
+								slaveItem.down("input").value = val;
+							});
+						}
+						k.updateInterval = clearInterval(k.updateInterval);
+						k.updateInterval = setInterval(function(){
+							k.updateInterval = clearInterval(k.updateInterval);
+							k.updateOrder();				
+						}.bind(this),300);	
+					}
+				});
+			} else {
+				item.observe("change",function(){
+					trace("has changed");
+					if(this.up().hasClassName("slave")){
+						var val = this.value;
+						$$("form .item.slave[item="+this.readAttribute("name")+"]").each(function(slaveItem){
+							slaveItem.down("input").value = val;
+						});
+					}
 					k.updateInterval = clearInterval(k.updateInterval);
-					k.updateOrder();				
-				}.bind(this),300);
-			});			
+					k.updateInterval = setInterval(function(){
+						k.updateInterval = clearInterval(k.updateInterval);
+						k.updateOrder();				
+					}.bind(this),300);
+				});	
+			}
+					
 			item.observe("mechanical:change",function(e){
 				k.updateOrder(this.up('form'));				
 			});
