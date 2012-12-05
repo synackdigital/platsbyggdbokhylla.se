@@ -72,45 +72,132 @@ action(function show() {
                 } else {
                     kapnota.sektioner++;
                     sekObj.index = kapnota.sektioner;
-                    kapnota.hojdyttermatt = sek.h;
-                    var gavel = sek.col+1;
-                    sekObj.h1 = {
-                        bredd:(sek.w-(gavel*22))/sek.col,
-                        djup:300,
-                        antal:sek.col*2,
-                        tjocklek:22
-                    }
-                    sekObj.h2 = {
-                        bredd:(sek.w-(gavel*22))/sek.col,
-                        djup:284,
-                        antal:sek.col*(sek.row-1),
-                        tjocklek:22
-                    }
-                    sekObj.g1 = {
-                        hojd:sek.h-15,
-                        djup:302,
-                        antal:gavel,
-                        tjocklek:22
-                    }
-                    sekObj.bakstycke = {
-                        bredd:sekObj.h1.bredd+10,
-                        hojd:sek.h - sek.sockel + 34,
-                        antal:sek.col,
-                        tjocklek:4
-                    }
-                    sekObj.sockel = {
-                        bredd:sekObj.h1.bredd,
-                        hojd:sek.sockel,
-                        antal:sek.col,
-                        tjocklek:22
-                    }
-                    sekObj.fastbrada = {
-                        bredd:sekObj.h1.bredd,
-                        hojd:60,
-                        antal:sek.col,
-                        tjocklek:16
-                    }
                     if(kapnota.modell=="ribersborg"){
+                        kapnota.hojdyttermatt = sek.h;
+                        var gavel = sek.col+1;
+                        sekObj.h1 = {
+                            bredd:(sek.w-(gavel*22))/sek.col,
+                            djup:300,
+                            antal:sek.col*2,
+                            tjocklek:22
+                        }
+                        sekObj.h2 = {
+                            bredd:(sek.w-(gavel*22))/sek.col,
+                            djup:284,
+                            antal:sek.col*(sek.row-1),
+                            tjocklek:22
+                        }
+                        sekObj.g1 = {
+                            hojd:sek.h-15,
+                            djup:302,
+                            antal:gavel,
+                            tjocklek:22
+                        }
+                        sekObj.bakstycke = {
+                            bredd:sekObj.h1.bredd+10,
+                            hojd:sek.h - sek.sockel + 34,
+                            antal:sek.col,
+                            tjocklek:4
+                        }
+                        sekObj.sockel = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:sek.sockel,
+                            antal:sek.col,
+                            tjocklek:22
+                        }
+                        sekObj.fastbrada = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:60,
+                            antal:sek.col,
+                            tjocklek:16
+                        }
+                        kapnota.sektionlist.push(sekObj);
+                    }
+                    if(kapnota.modell=="davidhall"){
+                        kapnota.hojdyttermatt = sek.h;
+                        var gavel = sek.col+1;
+                        sekObj.h1 = {
+                            bredd:(sek.w-(gavel*32))/sek.col,
+                            djup:302,
+                            antal:sek.col,
+                            tjocklek:22
+                        }
+                        sekObj.h2 = {
+                            bredd:(sek.w-(gavel*32))/sek.col,
+                            djup:284,
+                            antal:(sek.row-1),
+                            tjocklek:22
+                        }
+                        sekObj.g1 = {
+                            hojd:sek.h-790,
+                            djup:302,
+                            antal:gavel,
+                            tjocklek:32
+                        }
+                        sekObj.bakstycke = {
+                            bredd:sekObj.h1.bredd+10,
+                            hojd:(sek.h - 790) - 12,
+                            antal:sek.col,
+                            tjocklek:4
+                        }
+                        sekObj.sockel = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:sek.sockel,
+                            antal:sek.col,
+                            tjocklek:22
+                        }
+                        sekObj.fastbrada = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:60,
+                            antal:sek.col,
+                            tjocklek:16
+                        }
+
+
+                        sekObj.tacksida = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:60,
+                            antal:sek.col,
+                            tjocklek:16
+                        }
+                        sekObj.skapsgavel = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:60,
+                            antal:sek.col,
+                            tjocklek:16
+                        }
+                        sekObj.bottenplatta = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:60,
+                            antal:sek.col,
+                            tjocklek:16
+                        }
+                        sekObj.hpskap = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:60,
+                            antal:sek.col,
+                            tjocklek:16
+                        }
+                        sekObj.ribbor = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:60,
+                            antal:sek.col,
+                            tjocklek:16
+                        }
+                        sekObj.hpskap = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:60,
+                            antal:sek.col,
+                            tjocklek:16
+                        }
+                        sekObj.bakstyckeskap = {
+                            bredd:sekObj.h1.bredd,
+                            hojd:60,
+                            antal:sek.col,
+                            tjocklek:16
+                        }
+                        
+
                         kapnota.sektionlist.push(sekObj);
                     }
                 }

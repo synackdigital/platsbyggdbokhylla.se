@@ -80,26 +80,6 @@
             </tr>
     </tbody>
 </table>
-<h4>Sockel</h4>
-<table class="table table-bordered">
-    <tbody>
-        <thead>
-            <tr>
-                <th>Antal</th>
-                <th>Bredd</th>
-                <th>Höjd</th>
-                <th>Tjocklek</th>
-            </tr>
-        </thead>    
-        <tbody>
-            <tr>
-                <td><%= sek.sockel.antal %></td>
-                <td><%= sek.sockel.bredd %></td>
-                <td><%= sek.sockel.hojd %></td>
-                <td><%= sek.sockel.tjocklek %></td>
-            </tr>
-    </tbody>
-</table>
 <h4>Fästbrädor</h4>
 <table class="table table-bordered">
     <tbody>
@@ -120,6 +100,150 @@
             </tr>
     </tbody>
 </table>
+
+#skåp#
+<h4>Täcksida</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Höjd</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.tacksida.antal %></td>
+                <td><%= sek.tacksida.bredd %></td>
+                <td><%= sek.tacksida.hojd %></td>
+                <td><%= sek.tacksida.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>Skåpsgavel</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Höjd</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.skapsgavel.antal %></td>
+                <td><%= sek.skapsgavel.bredd %></td>
+                <td><%= sek.skapsgavel.hojd %></td>
+                <td><%= sek.skapsgavel.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>bottenplatta</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Höjd</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.bottenplatta.antal %></td>
+                <td><%= sek.bottenplatta.bredd %></td>
+                <td><%= sek.bottenplatta.hojd %></td>
+                <td><%= sek.bottenplatta.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>hyllplan skåp</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Höjd</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.hpskap.antal %></td>
+                <td><%= sek.hpskap.bredd %></td>
+                <td><%= sek.hpskap.hojd %></td>
+                <td><%= sek.hpskap.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>ribbor skåp</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Höjd</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.ribbor.antal %></td>
+                <td><%= sek.ribbor.bredd %></td>
+                <td><%= sek.ribbor.hojd %></td>
+                <td><%= sek.ribbor.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>Sockel</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Höjd</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.sockel.antal %></td>
+                <td><%= sek.sockel.bredd %></td>
+                <td><%= sek.sockel.hojd %></td>
+                <td><%= sek.sockel.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+<h4>bakstycke skåp</h4>
+<table class="table table-bordered">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Antal</th>
+                <th>Bredd</th>
+                <th>Höjd</th>
+                <th>Tjocklek</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+                <td><%= sek.bakstyckeskap.antal %></td>
+                <td><%= sek.bakstyckeskap.bredd %></td>
+                <td><%= sek.bakstyckeskap.hojd %></td>
+                <td><%= sek.bakstyckeskap.tjocklek %></td>
+            </tr>
+    </tbody>
+</table>
+
+
 <% }); %>  
 <% drawing.kapnota.sektionlist.forEach(function (sek) { %>
 <h2>Överbyggnad <%= sek.index %></h2>

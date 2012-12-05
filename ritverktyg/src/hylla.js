@@ -112,6 +112,8 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, op
 		elHover.toFront();
 		
 		elHover.mouseover(function(e){			
+			trace("over");
+			trace(this);
 			var masterID = e.srcElement.raphaelid;
 			for (var i = 0; i < k.doors_open.length; i++){
 				var openDoor = 	k.doors_open[i];
