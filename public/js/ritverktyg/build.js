@@ -6411,7 +6411,7 @@ var k = {
 				trace("doesn't validate")
 			}
 
-			
+
 
 			var itemElement = theForm.down('.item[item='+item.name+']');
 			itemElement.down(".minmax").update('<span class="minval">'+min+'</span><span class="maxval">'+max+'</span>');
@@ -6430,12 +6430,12 @@ var k = {
 				var msg = (toHigh) ? "Du har valt ett för högt värde" : "Du har valt ett för lågt värde";
 				itemElement.writeAttribute("title",msg);
 				setTimeout(function(){
-					//this.value=newval;	
+					//this.value=newval;
 					//this.fire("mechanical:change");
 				}.bind(itemElement.down("input")),1000);
 				return false;
 			}
-			
+
 			return true;
 		},
 		sockel:{
@@ -6475,15 +6475,15 @@ var k = {
 		},
 		col:{
 			min:function(order) {
-				var min = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.maxw+k.parts.kol.w)); 
+				var min = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.maxw+k.parts.kol.w));
 				if(order.type=="over" && order.w <=1450){
 					return 1;
 				}
 				return min;
 			},
 			max:function(order) {
-				var max = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.minw+k.parts.kol.w)); 
-				
+				var max = Math.ceil((order.w-k.parts.side.w) / (k.parts.kol.minw+k.parts.kol.w));
+
 				(2300-(22))/(350+22)
 				return max;
 			}
@@ -6494,7 +6494,7 @@ var k = {
 				return min;
 			},
 			max:function(order) {
-				var max = Math.ceil((order.h-k.parts.plane.h) / (k.parts.plane.h)); 
+				var max = Math.ceil((order.h-k.parts.plane.h) / (k.parts.plane.h));
 				return max;
 			}
 		}
@@ -6526,13 +6526,13 @@ var k = {
 					trace("one item failed");
 					sektionLink.addClassName("error");
 				} else {
-					k.redraw();	
+					k.redraw();
 					sektionLink.removeClassName("error");
-				}	
+				}
 			}
 		});
-		
-		
+
+
 	},
 	nextGuideStep:function(){
 		var next = $$(".guidestep.unused").first();
@@ -6555,7 +6555,7 @@ var k = {
 	},
 	setup:function(){
 		var windowAddEvent = window.attachEvent || window.addEventListener;
-		
+
 		Event.observe(window,"resize", function(){
 			k.resizePaper();
 		});
@@ -6563,7 +6563,7 @@ var k = {
 		$$(".guidestep").each(function(guidestep){
 			guidestep.hide();
 		});
-		
+
 		$$("#rita_modell .choice").each(function(choice){
 			choice.observe("click",function(){
 				k.baseOrder.modell = this.readAttribute("template");
@@ -6590,7 +6590,7 @@ var k = {
 			k.nextGuideStep();
 			var guideF = $$(".guideform."+k.baseOrder.template).first();
 			var theForm = guideF.down("form");
-			var data = theForm.serialize(true)			
+			var data = theForm.serialize(true)
 			//mechanical:change
 			k.startUp({
 				modell:k.baseOrder.modell,
@@ -6635,15 +6635,15 @@ var k = {
 			});
 		});
 
-		
+
 		$("sendIntresseAnmalan").observe("click",function(e){
 			$$(".saveMessage").invoke("hide");
 
 			e.stop();
-			var validateEmail = function (email) { 
+			var validateEmail = function (email) {
 			    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			    return re.test(email);
-			} 
+			}
 			var emailField = $("Order_email");
 			if(!validateEmail(emailField.value)){
 				emailField.up().addClassName("error");
@@ -6663,18 +6663,18 @@ var k = {
 				}
 			});
 
-			
+
 		});
 
 		$("sektionlink_general").observe("click",k.handleSectionActivated);
 		$("sektionlink_general").observe("machine:click",k.handleSectionActivated);
 
 		var handleChange = function(e){
-			
-			
+
+
 			var name = this.readAttribute("name")
 			var firstTime = this.readAttribute("firstTime");
-			var target = this.readAttribute("target");				
+			var target = this.readAttribute("target");
 
 			var val = this.value;
 			if(target == "bakstycke" || target == "singledoor"){
@@ -6693,13 +6693,13 @@ var k = {
 					k.updateInterval = clearInterval(k.updateInterval);
 				k.updateInterval = setInterval(function(){
 					k.updateInterval = clearInterval(k.updateInterval);
-					k.updateOrder();				
-				},300);	
+					k.updateOrder();
+				},300);
 				}
 			}
 
-			
-		};	
+
+		};
 		$$("#general input,#general select").each(function(generalInput){
 			generalInput.observe("change",handleChange);
 			generalInput.observe("mechanical:change",handleChange);
@@ -6707,7 +6707,7 @@ var k = {
 
 
 
-		
+
 
 		if(document.location.hash){
 			var id = document.location.hash.substring(1);
@@ -6723,7 +6723,7 @@ var k = {
 							order:drawing.data.order
 						});
 					} catch(e){
-						k.nextGuideStep();	
+						k.nextGuideStep();
 					}
 				},
 				onException:function(e,d){
@@ -6738,10 +6738,10 @@ var k = {
 			});
 			return;
 		}
-		
+
 		k.nextGuideStep();
 		return;
-		
+
 	},
 	setGeneral:function(data){
 		$$("#general input[name=general_height]").first().value=data.h;
@@ -6927,7 +6927,7 @@ var k = {
 			aForm.hide();
 		});
 		$(this.readAttribute("target")).show();
-	}, 
+	},
 	addForm:function(id,data,counter,modell){
 		var newForm = $("orderForm").clone(true);
 		newForm.writeAttribute("id","form_"+id);
@@ -6943,7 +6943,7 @@ var k = {
 		newForm.down('input[name=modell]').value = modell;
 		newForm.down('input[name=id]').value=id;
 		newForm.down('input[name=type]').value=data.type;
-		
+
 		var name = "Sektion "+(counter);
 		if(data.type=="over"){
 			name = "Överbyggnad "+(counter);
@@ -6961,19 +6961,19 @@ var k = {
 			});
 			newForm.select(".item.slave").each(function(slave){
 				if(slave.hasClassName("bakstycke") || slave.hasClassName("singledoor")){
-					
+
 				} else {
-					slave.removeClassName("slave");	
+					slave.removeClassName("slave");
 				}
 			});
 		}
 		if(data.type=="std"){
 			newForm.select(".item.slave").each(function(slave){
 				slave.hide();
-			});			
+			});
 		}
 
-		
+
 		var sliders = newForm.getInputs();
 		sliders.each(function(item){
 			if(item.name!="id" && item.name != "modell"){
@@ -7007,15 +7007,15 @@ var k = {
 						});
 					}
 					k.updateInterval = clearInterval(k.updateInterval);
+
 					k.updateInterval = setInterval(function(){
 						k.updateInterval = clearInterval(k.updateInterval);
 						k.updateOrder();				
 					}.bind(this),300);
 				});	
-			}
-					
+			}					
 			item.observe("mechanical:change",function(e){
-				k.updateOrder(this.up('form'));				
+				k.updateOrder(this.up('form'));
 			});
 		});
 		newForm.show();
@@ -7045,9 +7045,9 @@ var k = {
 			oversmall:0,
 			overbig:0,
 			skap:0
-		};	
-		var modell = "ribersborg";	
-		
+		};
+		var modell = "ribersborg";
+
 		for(var i = 0; i < this.order.length; i++){
 			modell = this.order[i].modell;
 			var hyllprice = this.order[i].hylla.price;
@@ -7057,7 +7057,7 @@ var k = {
 			total.oversmall+=hyllprice.oversmall;
 			total.overbig+=hyllprice.overbig;
 			total.skap+=hyllprice.skap;
-		}	
+		}
 		var totalprice = 0;
 
 		if(modell=="davidhall"){
@@ -7065,24 +7065,24 @@ var k = {
 			totalprice += total.bakstycke*PRICELIST.bakstycke;
 			totalprice += total.hyllplan*PRICELIST.hyllplan;
 			totalprice += total.oversmall*PRICELIST.oversmall_davidhall;
-			totalprice += total.overbig*PRICELIST.overbig_davidhall;	
-			totalprice += total.skap*PRICELIST.skap;	
+			totalprice += total.overbig*PRICELIST.overbig_davidhall;
+			totalprice += total.skap*PRICELIST.skap;
 		} else {
 			totalprice = total.gavel*PRICELIST.gavel;
 			totalprice += total.bakstycke*PRICELIST.bakstycke;
 			totalprice += total.hyllplan*PRICELIST.hyllplan;
 			totalprice += total.oversmall*PRICELIST.oversmall;
-			totalprice += total.overbig*PRICELIST.overbig;	
+			totalprice += total.overbig*PRICELIST.overbig;
 		}
 
 		this.orderDetails.priceTotal = totalprice;
 
 		$("pricevalue").update(totalprice+":-");
 		var measureCost = Math.round((1000+(totalprice*0.15))/500)*500;
-		$("measurecost").update("Frakt ingår, Mät & Monteringskostnad, "+measureCost+":-");
-		
+		$("measurecost").update("Mät & Monteringskostnad "+measureCost+":-");
 
-		
+
+
 
 	},
 	redraw:function(){
@@ -7142,10 +7142,10 @@ var k = {
 			Object.keys(this.fillCount).each(function(key){
 				var label = $$("#fillwith label[for="+key+"] .max").first();
 				if(label){
-					label.update(k.fillCount[key]);
+					label.update(' ('+k.fillCount[key]+')');
 				}
 			});
-			
+
 			setTimeout(function(){
 				k.resizePaper();
 			},100);
@@ -7160,7 +7160,7 @@ var k = {
 				},500);
 			},300);
 		}.bind(this),300);
-		
+
 
 	},
 	resizePaper:function(){
@@ -7179,8 +7179,8 @@ var k = {
 	      w = window.innerWidth;
 	      h = window.innerHeight;
 	   }else if(document.documentElement &&
-	           (document.documentElement.clientWidth || 
-	            document.documentElement.clientHeight)) { 
+	           (document.documentElement.clientWidth ||
+	            document.documentElement.clientHeight)) {
 	            w = document.documentElement.clientWidth;
 	            h = document.documentElement.clientHeight;
 	   }

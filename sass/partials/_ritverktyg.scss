@@ -46,7 +46,7 @@
 
 .saveMessage {
   z-index:3000;
-  
+
   position:absolute;
   top:0px;
   bottom:0px;
@@ -63,7 +63,7 @@
       @include box-sizing(border-box);
       width:100%;
     }
-    .drawingID {  
+    .drawingID {
       background-color:#eee;
       padding:5px;
     }
@@ -333,21 +333,14 @@
   }
 
   form {
-    margin-top: $base-vmargin;
+    margin-top: .5 * $base-vmargin;
     .inputgroup {
       display: block;
-      font-weight: bold;
-      margin-bottom: .5 * $base-vmargin;
+      margin-bottom: .25 * $base-vmargin;
     }
     .max {
       color: lighten( $text-color, 30% );
       font-weight: normal;
-      &:before {
-        content: ' (';
-      }
-      &:after {
-        content: ')';
-      }
     }
   }
 }
@@ -357,11 +350,10 @@
  */
 #price {
   float: right;
-  padding: .5 * $base-vmargin 2 * $base-hmargin;
+  padding: .5 * $base-vmargin $base-hmargin;
 
   .price {
     display: block;
-    padding: .5em 0;
   }
 
   text-align: right;
@@ -380,8 +372,9 @@
   }
 
   .button {
-    @include button(soft);
-    margin: .5em auto;
+    @include button(decor);
+    margin: .25em auto;
+    font-size: $small-font-size;
   }
 }
 
