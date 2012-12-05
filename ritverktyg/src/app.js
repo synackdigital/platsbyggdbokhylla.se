@@ -130,7 +130,7 @@ var k = {
 	parts:PARTS,
 	style:STYLE,
 	updateOrder:function(){
-		k.fillCache = {};
+			
 		$$("#sektionform form").each(function(aForm){
 			if(aForm.identify()!="orderForm" && aForm.identify()!="fillwithform" && aForm.identify()!="general"){
 				var order = aForm.serialize(true);
@@ -714,6 +714,20 @@ var k = {
 
 	},
 	redraw:function(){
+
+		k.fillCache = {};
+		var stuff = ["dvd","blueray","cd","pocket","bok"];
+		trace("reset fill cache");
+		for(var i = 0; i < stuff.length; i++){
+			var thing = k.parts[stuff[i]];
+			k.fillCache[thing.id] = [];
+			for(var u = 0; u < thing.open.length; u++){
+				k.fillCache[thing.id].push({
+					thing:thing,
+					open:thing.open[u]
+				});
+			}
+		}
 
 		if($("ritar").hasClassName("show")) return;
 		$("ritar").show();
