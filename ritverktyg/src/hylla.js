@@ -263,7 +263,13 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, op
 		var sideWidth = p.side.w;
 		var perKol = (this._w - ((p.kol.w * (this._kol-1)) + (sideWidth * 2))) / this._kol;
 
-		var perPlan = (this._h - ((p.plane.h * (this._plan-1)))) / this._plan;
+		var perPlan = ((this._h-this._sockel)-p.plane.h) / (this._plan);
+		if(this._modell=="davidhall"){
+			perPlan = ((this._h-p.plane.h)+p.plane.h) / (this._plan);
+			trace("höjd:"+this._h);
+			trace("sockel:"+this._sockel);
+			trace("hyllhöjd:"+p.plane.h);
+		}
 
 		if(options.position==2 || options.position==4){
 			//for single overs on the sides
@@ -329,14 +335,19 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, op
 				}
 				for(var u = 1; u < this._plan; u++){
 					var planY = kolBottom - (u * perPlan);
-					planY  = planY - ((u-1) * p.plane.h);
+					if(this._modell=="ribersborg"){
+						planY = planY - this._sockel;
+					} else {
+						planY = planY + p.plane.h;
+					}
+					trace(planY);
 					this.drawBox(perKol,p.plane.h,(colX),planY,{
 						fillcolor:k.style.planefill
 					});
 					price.hyllplan++;
 
 					//fill the plane up
-					var fits = whatFits(perKol,perPlan);
+					var fits = whatFits(perKol,(perPlan-p.plane.h));
 					if(fits.length>0){
 						var thing = fits[Math.round(Math.random()*(fits.length-1))];
 						this.fillWith(thing,colX,planY,perKol);
@@ -353,6 +364,7 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, op
 			//sockel & top
 			if(this._type=="std" && this._modell=="ribersborg"){
 				//top
+				
 				var planY = kolBottom - (u * perPlan);
 				planY  = planY - ((u-1) * p.plane.h);
 				this.drawBox(perKol,p.plane.h,(colX),((kolBottom-this._h)+p.plane.h),{
@@ -372,20 +384,23 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, op
 					fillcolor:k.style.sockelfill
 				});
 				//fill the bottom plane up
-				var fits = whatFits(perKol,(perPlan-(this._sockel+p.plane.h)));
+				var fits = whatFits(perKol,(perPlan-p.plane.h));
 				var thing = fits[Math.round(Math.random()*(fits.length-1))];
 				this.fillWith(thing,colX,(kolBottom-this._sockel),perKol);
+				
 			} else if(this._type=="std" && this._modell=="davidhall"){
 				//top
+				
 				var planY = kolBottom - (u * perPlan);
 				planY  = planY - ((u-1) * p.plane.h);
 				this.drawBox(perKol,p.plane.h,(colX),((kolBottom-this._h)+p.plane.h),{
 					fillcolor:k.style.planefill
 				});
 				//fill the bottom plane up
-				var fits = whatFits(perKol,(perPlan-(p.plane.h)));
+				var fits = whatFits(perKol,(perPlan-p.plane.h));
 				var thing = fits[Math.round(Math.random()*(fits.length-1))];
 				this.fillWith(thing,colX,(kolBottom+p.plane.h),perKol);
+				
 			} else {
 				
 
