@@ -7739,7 +7739,12 @@ var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, op
 			}
 		}
 		
-		price.bakstycke = (price.gavel>0) ? (price.gavel - 1) : 0;
+		trace("should we have bakstycke?");
+		if(this._bakstycke){
+			price.bakstycke = (price.gavel>0) ? (price.gavel - 1) : 0;
+		} else {
+			price.bakstycke = 0;
+		}
 		price.skap = (price.gavel>0) ? (price.gavel - 1) : 0;
 
 		this.price = price;
