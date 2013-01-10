@@ -265,8 +265,6 @@ var k = {
 
 
 		$("sendIntresseAnmalan").observe("click",function(e){
-			$$(".saveMessage").invoke("hide");
-
 			e.stop();
 			var validateEmail = function (email) {
 			    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -277,8 +275,9 @@ var k = {
 				emailField.up().addClassName("error");
 				return;
 			} else {
-				emailField.up().removedClassName("error");
+				emailField.up().removeClassName("error");
 			}
+			$$(".saveMessage").invoke("hide");
 			k.saveOrder(function(drawingID){
 				if(drawingID){
 					$("Order_drawing").setValue(drawingID);
@@ -339,6 +338,8 @@ var k = {
 
 		if(document.location.hash){
 			var id = document.location.hash.substring(1);
+			id = id.split("?")[0];
+			k.id = id;
 			new Ajax.Request("/data/drawings/"+id,{
 				method:"get",
 				onSuccess:function(transport){
@@ -364,8 +365,27 @@ var k = {
 					k.nextGuideStep();
 				}
 			});
+			if(document.location.href.indexOf("admin=true")>-1){
+				 new Ajax.JSONRequest('http://platsbyggdbokhylla.talkative.se/login/status', {
+				 	callbackParamName:"callback",
+				 	parameters:{},
+				    onCreate: function(instance) {
+				      console.log("create", this);
+				    },
+				    onComplete: function(instance) {
+				      console.log("complete", this);
+				      console.log()
+				      if(instance.responseJSON.online) {k.a = true; $("stage").addClassName("ad");}
+				    },
+				    onFailure: function(instance) {
+				      console.log("fail", this);
+				    }			  
+				});
+				
+			}
 			return;
 		}
+
 
 		k.nextGuideStep();
 		return;
@@ -443,8 +463,12 @@ var k = {
 			});
 			data.order.push(cleanObj);
 		}
-		new Ajax.Request("/data/drawings",{
-			method:"POST",
+		var url = "/data/drawings/";
+		url = k.a ? url + k.id : url;v
+		var theMethod = k.a ? "PUT" : "POST";
+		trace("the Method");
+		new Ajax.Request(url,{
+			method: theMethod,
 			parameters:{
 				"Drawing[data]":Object.toJSON(data)
 			},
@@ -510,6 +534,7 @@ var k = {
 						orderItem.sockel=sockel;
 					}
 				}
+				orderItem.col = k.validate["col"].min(orderItem);
 			}
 		}
 

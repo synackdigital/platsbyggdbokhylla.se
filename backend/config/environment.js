@@ -17,6 +17,7 @@ app.configure(function(){
     app.use(express.cookieParser('secret'));
     app.use(express.session({secret: 'secret'}));
     app.use(express.methodOverride());
+    app.enable("jsonp callback");
 
     rwps.init();
     // hook up user model

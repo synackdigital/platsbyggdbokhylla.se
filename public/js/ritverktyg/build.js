@@ -5999,6 +5999,80 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
   });
 })();
 
+
+Ajax.JSONRequest = Class.create(Ajax.Base, (function() {
+  var id = 0, head = document.getElementsByTagName('head')[0];
+  return {
+    initialize: function($super, url, options) {
+      $super(options);
+      this.options.url = url;
+      this.options.callbackParamName = this.options.callbackParamName || 'callback';
+      this.options.timeout = this.options.timeout || 10000; // Default timeout: 10 seconds
+      this.options.invokeImmediately = (!Object.isUndefined(this.options.invokeImmediately)) ? this.options.invokeImmediately : true ;
+      this.responseJSON = {};
+      if (this.options.invokeImmediately) {
+        this.request();
+      }
+    },
+    
+    /**
+     *  Ajax.JSONRequest#_cleanup() -> "undefined"
+     *  
+     *  Cleans up after the request
+     **/
+    _cleanup: function() {
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+        this.timeout = null;
+      }
+      if (this.script && Object.isElement(this.script)) {
+        this.script.remove();
+        this.script = null;
+      }
+    },
+  
+    /**
+     *  Ajax.JSONRequest#request() -> "undefined"
+     *  
+     *  Invokes the JSON-P request lifecycle
+     **/
+    request: function() {
+      // Define local vars
+      var key = this.options.callbackParamName,
+        name = '_prototypeJSONPCallback_' + (id++);
+      
+      // Add callback as a parameter and build request URL
+      this.options.parameters[key] = name;
+      var url = this.options.url + ((this.options.url.include('?') ? '&' : '?') + Object.toQueryString(this.options.parameters));
+      
+      // Define callback function
+      window[name] = function(json) {
+        this._cleanup(); // Garbage collection
+        window[name] = undefined;
+        if (Object.isFunction(this.options.onComplete)) {
+          this.responseJSON = json;
+          this.options.onComplete.call(this, this);
+        }
+      }.bind(this);
+      
+      this.script = new Element('script', { type: 'text/javascript', src: url });
+      
+      if (Object.isFunction(this.options.onCreate)) {
+        this.options.onCreate.call(this, this);
+      }
+      
+      head.appendChild(this.script);
+ 
+      this.timeout = setTimeout(function() {
+        this._cleanup();
+        window[name] = Prototype.emptyFunction;
+        if (Object.isFunction(this.options.onFailure)) {
+          this.options.onFailure.call(this, this);
+        }
+      }.bind(this), this.options.timeout);
+    }
+  };
+})());
 // ┌────────────────────────────────────────────────────────────────────┐ \\
 // │ Raphaël 2.1.0 - JavaScript Vector Library                          │ \\
 // ├────────────────────────────────────────────────────────────────────┤ \\
@@ -6637,8 +6711,6 @@ var k = {
 
 
 		$("sendIntresseAnmalan").observe("click",function(e){
-			$$(".saveMessage").invoke("hide");
-
 			e.stop();
 			var validateEmail = function (email) {
 			    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -6649,8 +6721,9 @@ var k = {
 				emailField.up().addClassName("error");
 				return;
 			} else {
-				emailField.up().removedClassName("error");
+				emailField.up().removeClassName("error");
 			}
+			$$(".saveMessage").invoke("hide");
 			k.saveOrder(function(drawingID){
 				if(drawingID){
 					$("Order_drawing").setValue(drawingID);
@@ -6711,6 +6784,8 @@ var k = {
 
 		if(document.location.hash){
 			var id = document.location.hash.substring(1);
+			id = id.split("?")[0];
+			k.id = id;
 			new Ajax.Request("/data/drawings/"+id,{
 				method:"get",
 				onSuccess:function(transport){
@@ -6736,8 +6811,27 @@ var k = {
 					k.nextGuideStep();
 				}
 			});
+			if(document.location.href.indexOf("admin=true")>-1){
+				 new Ajax.JSONRequest('http://localhost:3000/login/status', {
+				 	callbackParamName:"callback",
+				 	parameters:{},
+				    onCreate: function(instance) {
+				      console.log("create", this);
+				    },
+				    onComplete: function(instance) {
+				      console.log("complete", this);
+				      console.log()
+				      if(instance.responseJSON.online) {k.a = true; $("stage").addClassName("ad");}
+				    },
+				    onFailure: function(instance) {
+				      console.log("fail", this);
+				    }			  
+				});
+				
+			}
 			return;
 		}
+
 
 		k.nextGuideStep();
 		return;
@@ -6815,8 +6909,10 @@ var k = {
 			});
 			data.order.push(cleanObj);
 		}
-		new Ajax.Request("/data/drawings",{
-			method:"POST",
+		var url = "/data/drawings/";
+		url = k.a ? url + k.id : url;
+		new Ajax.Request(url,{
+			method: (k.a ? "PUT" : "POST"),
 			parameters:{
 				"Drawing[data]":Object.toJSON(data)
 			},
@@ -6882,6 +6978,7 @@ var k = {
 						orderItem.sockel=sockel;
 					}
 				}
+				orderItem.col = k.validate["col"].min(orderItem);
 			}
 		}
 

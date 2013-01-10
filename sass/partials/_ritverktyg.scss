@@ -11,9 +11,17 @@
   &.show {
     bottom: 170px;
   }
+  &.ad {
+    background: #454545;
+    color:#FFF;
+    .saveMessage {
+      color:#000;
+    }
+  }
   background: #fafafa image-url('wallpaper.jpg') no-repeat bottom center;
   @include background-size(cover);
   overflow: hidden;
+
 }
 
 #stageinner {

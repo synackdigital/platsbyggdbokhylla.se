@@ -222,14 +222,21 @@ action(function edit() {
 
 action(function update() {
     this.drawing.updateAttributes(body.Drawing, function (err) {
-        if (!err) {
-            flash('info', 'Drawing updated');
-            redirect(path_to.drawing(this.drawing));
-        } else {
-            flash('error', 'Drawing can not be updated');
-            this.title = 'Edit drawing details';
-            render('edit');
-        }
+        respondTo(function (format) {
+            format.html(function(){
+                if (!err) {
+                    flash('info', 'Drawing updated');
+                    redirect(path_to.drawing(this.drawing));
+                } else {
+                    flash('error', 'Drawing can not be updated');
+                    this.title = 'Edit drawing details';
+                    render('edit');
+                }
+            });
+            format.json(function () {
+                send({id:params.id});
+            }.bind(this));
+        });
     }.bind(this));
 });
 

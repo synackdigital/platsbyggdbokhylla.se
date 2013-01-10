@@ -8,6 +8,9 @@ module.exports = {
 		path = path ? path : "";
 		return "http://www.platsbyggdbokhylla.se/" + path;
 	},
+	link_to_site_admin: function(path) {
+		return "http://www.platsbyggdbokhylla.se/" + path + "?admin=true";
+	},
 	date_format: function (dateStr,format) {
 		var theDate = new Date(dateStr);
 		theDate.setHours(theDate.getHours()+2);
