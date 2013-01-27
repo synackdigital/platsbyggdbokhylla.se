@@ -25,6 +25,9 @@ var Avgrund = (function(){
     function onDocumentClick( event ) {
         if( event.target === cover ) {
             deactivate();
+
+            // FULHACK DELUXE
+            $('#avgrund iframe').attr('src', '');
         }
     }
 
