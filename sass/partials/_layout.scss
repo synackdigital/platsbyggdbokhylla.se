@@ -8,6 +8,15 @@ body {
   font: #{$base-font-size}/#{$base-line-height} $base-font-family;
 }
 
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+html {
+  background-color: #222;
+}
+
 a {
   color: $link-color;
   &:focus,
