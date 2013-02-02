@@ -6812,19 +6812,20 @@ var k = {
 				}
 			});
 			if(document.location.href.indexOf("admin=true")>-1){
-				 new Ajax.JSONRequest('http://localhost:3000/login/status', {
+				 new Ajax.JSONRequest('http://platsbyggdbokhylla.talkative.se/login/status', {
 				 	callbackParamName:"callback",
 				 	parameters:{},
 				    onCreate: function(instance) {
-				      console.log("create", this);
+				      trace("create", this);
 				    },
 				    onComplete: function(instance) {
-				      console.log("complete", this);
-				      console.log()
-				      if(instance.responseJSON.online) {k.a = true; $("stage").addClassName("ad");}
+						if(instance.responseJSON.online) {
+			                k.a = true; $("stage").addClassName("ad");
+		                	$("intresseAnmalan").hide();
+              			}
 				    },
 				    onFailure: function(instance) {
-				      console.log("fail", this);
+				      trace("fail", this);
 				    }			  
 				});
 				
@@ -6910,9 +6911,11 @@ var k = {
 			data.order.push(cleanObj);
 		}
 		var url = "/data/drawings/";
-		url = k.a ? url + k.id : url;
+		url = k.a ? url + k.id : url;v
+		var theMethod = k.a ? "PUT" : "POST";
+		trace("the Method");
 		new Ajax.Request(url,{
-			method: (k.a ? "PUT" : "POST"),
+			method: theMethod,
 			parameters:{
 				"Drawing[data]":Object.toJSON(data)
 			},
@@ -7324,7 +7327,7 @@ var k = {
 
 
 var trace = function(str){
-	console.log(str);
+	//console.log(str);
 }
 var hylla = function(p, x, y, w, h, kol, plan, sockel, bakstycke, singledoor, options){
 	if(!options) options = {position:3, type:"std", modell:"ribersborg"};

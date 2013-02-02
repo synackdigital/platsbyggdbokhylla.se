@@ -370,15 +370,16 @@ var k = {
 				 	callbackParamName:"callback",
 				 	parameters:{},
 				    onCreate: function(instance) {
-				      console.log("create", this);
+				      trace("create", this);
 				    },
 				    onComplete: function(instance) {
-				      console.log("complete", this);
-				      console.log()
-				      if(instance.responseJSON.online) {k.a = true; $("stage").addClassName("ad");}
+						if(instance.responseJSON.online) {
+			                k.a = true; $("stage").addClassName("ad");
+		                	$("intresseAnmalan").hide();
+              			}
 				    },
 				    onFailure: function(instance) {
-				      console.log("fail", this);
+				      trace("fail", this);
 				    }			  
 				});
 				
@@ -880,5 +881,5 @@ var k = {
 
 
 var trace = function(str){
-	console.log(str);
+	//console.log(str);
 }
