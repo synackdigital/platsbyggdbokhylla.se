@@ -6793,6 +6793,9 @@ var k = {
 						$$(".guidestep").invoke("hide");
 						var drawing = transport.responseJSON;
 						k.baseOrder.modell = drawing.data.modell;
+						for(var i = 0; i < drawing.data.order.length; i++){
+			              drawing.data.order[i].bakstycke = (drawing.data.order[i].bakstycke === 1) ? 1 : 0;
+			            }
 						k.startUp({
 							modell:drawing.data.modell,
 							order:drawing.data.order
@@ -6844,6 +6847,9 @@ var k = {
 	setGeneral:function(data){
 		$$("#general input[name=general_height]").first().value=data.h;
 		$$("#general input[name=general_sockel]").first().value=data.sockel;
+		if(data.bakstycke === 1){
+			$$("#general input[name=general_bakstycke]").first().writeAttribute("checked","checked");
+		}
 		//set model
 		var options = $$('#general select[name=general_modell] option');
 		var len = options.length;
@@ -6999,6 +7005,7 @@ var k = {
 		//k.addForm(0,{h:height, w:width, sockel:60, type:"general"},options.modell);
 		var h = 0;
 		var sockel = 0;
+		var bakstycke = 0;
 		k.order.each(function(order,index){
 			if(order.type=="over"){
 				count = overCount++;
@@ -7006,10 +7013,11 @@ var k = {
 				h = order.h;
 				sockel = order.sockel;
 				count = sectionCount++;
+				bakstycke = order.bakstycke;
 			}
 			k.addForm(index,order,count,options.modell);
 		});
-		k.setGeneral({h:h,sockel:sockel,modell:options.modell});
+		k.setGeneral({h:h,sockel:sockel,modell:options.modell,bakstycke:bakstycke});
 		$$("#sektionform form.activated").each(function(aForm){
 			aForm.hide();
 		});
@@ -7081,9 +7089,11 @@ var k = {
 
 		var sliders = newForm.getInputs();
 		sliders.each(function(item){
+			
 			if(item.name!="id" && item.name != "modell"){
 				item.value = data[item.name];
-			}
+			}	
+			
 			var eventName = "change";
 			if(Prototype.Browser.IE){
 				item.observe("keyup",function(e){
