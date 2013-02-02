@@ -373,6 +373,9 @@ var k = {
 				      trace("create", this);
 				    },
 				    onComplete: function(instance) {
+				    	trace("complete", this);
+				      	trace(instance);
+              			trace(instance.responseJSON);
 						if(instance.responseJSON.online) {
 			                k.a = true; $("stage").addClassName("ad");
 		                	$("intresseAnmalan").hide();
@@ -464,10 +467,12 @@ var k = {
 			});
 			data.order.push(cleanObj);
 		}
-		var url = "/data/drawings/";
-		url = k.a ? url + k.id : url;v
-		var theMethod = k.a ? "PUT" : "POST";
-		trace("the Method");
+		var url = "/data/drawings";
+	    if(k.a){
+	      url = "/data/drawings/";
+	    }
+		url = k.a ? url + k.id : url;
+    	var theMethod = k.a ? "PUT" : "POST";
 		new Ajax.Request(url,{
 			method: theMethod,
 			parameters:{
