@@ -54,6 +54,101 @@
           </div>
         </div>
 
+        <div id="rita_presave" class="saveMessage" style="display:none;">
+          <div class="content">
+            <div class="header">
+                <p>Vi vill alltid göra saker bättre här på Jerker Inredning & Form och behöver därför din hjälp. Om du hjälper oss med att svara på fem snabba frågor så ger vi dig ett rabattkod på 1000kr du kan använda dig av när du skickar din offertförfrågan eller så kan du ge bort den till en vän som vill beställa en bokhylla från oss. Rabattkoden gäller i 30dagar och du kan bara använda dig av en per order.</p>
+            </div>
+            <div class="choice">
+              <div class="inner">
+                <div class="offertform">
+                  <form id="questionareForm">
+                    <div class="item radio" item="w">
+                      <p>
+                        Vad tycker du om hemsidans layout/utseende?
+                      </p>
+                      <label>Mycket nöjd</label>
+                      <input type="radio" name="design_page" value="4">
+                      <label>Nöjd</label>
+                      <input type="radio" name="design_page" value="3">
+                      <label>Varken eller</label>
+                      <input type="radio" name="design_page" value="2">
+                      <label>Mindre nöjd</label>
+                      <input type="radio" name="design_page" value="1">
+                      <label>Inte alls nöjd</label>
+                      <input type="radio" name="design_page" value="0">
+                    </div>
+                    <div class="item radio" item="w">
+                      <p>
+                        Vad tycker du om ritverktygets layout/utseende?
+                      </p>
+                      <label>Mycket nöjd</label>
+                      <input type="radio" name="design_ritverktyg" value="4">
+                      <label>Nöjd</label>
+                      <input type="radio" name="design_ritverktyg" value="3">
+                      <label>Varken eller</label>
+                      <input type="radio" name="design_ritverktyg" value="2">
+                      <label>Mindre nöjd</label>
+                      <input type="radio" name="design_ritverktyg" value="1">
+                      <label>Inte alls nöjd</label>
+                      <input type="radio" name="design_ritverktyg" value="0">
+                    </div>
+                    <div class="item radio" item="w">
+                      <p>
+                        Vad tycker du om hemsidans funktionalitet?
+                        <span>Dvs var det lätt att hitta den information du sökte och navigera dig på hemsidan?</span>
+                      </p>
+                      
+                      <label>Mycket nöjd</label>
+                      <input type="radio" name="funktion_hemsida" value="4">
+                      <label>Nöjd</label>
+                      <input type="radio" name="funktion_hemsida" value="3">
+                      <label>Varken eller</label>
+                      <input type="radio" name="funktion_hemsida" value="2">
+                      <label>Mindre nöjd</label>
+                      <input type="radio" name="funktion_hemsida" value="1">
+                      <label>Inte alls nöjd</label>
+                      <input type="radio" name="funktion_hemsida" value="0">
+                    </div>
+                    <div class="item radio" item="w">
+                      <p>
+                        Vad tycker du om ritverktygets funktionalitet?
+                        <span>Dvs lätt att arbeta med, navigera dig bland funktionerna och tydligheten i ritverktyget.</span>
+                      </p>
+                      
+                      <label>Mycket nöjd</label>
+                      <input type="radio" name="funktion_ritverktyg" value="4">
+                      <label>Nöjd</label>
+                      <input type="radio" name="funktion_ritverktyg" value="3">
+                      <label>Varken eller</label>
+                      <input type="radio" name="funktion_ritverktyg" value="2">
+                      <label>Mindre nöjd</label>
+                      <input type="radio" name="funktion_ritverktyg" value="1">
+                      <label>Inte alls nöjd</label>
+                      <input type="radio" name="funktion_ritverktyg" value="0">
+                    </div>
+                    <div class="item radio" item="w">
+                      <p>
+                        Kan du tänka dig att rekommendera oss till andra?
+                      <p>
+                      <label>Ja</label>
+                      <input type="radio" name="recommend" value="1">
+                      <label>Nej</label>
+                      <input type="radio" name="recommend" value="0">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="item" item="email">
+              <label>Ange din epost för att erhålla rabattkod.</label>
+              <input type="text" name="email" id="save_email" value="">
+            </div>
+            <a class="button" href="#" id="saveAndAnswer">Spara och svara.</a>
+            <a class="button closeMessage" id="justSave" href="#">Nej tack, jag vill enbart spara ritningen.</a>
+          </div>
+        </div>
+
         <div id="rita_offert_saved" class="saveMessage" style="display:none;">
           <div class="content">
               <div class="header">

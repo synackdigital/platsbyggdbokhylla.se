@@ -29,6 +29,8 @@ var Drawing = describe('Drawing', function () {
     property('createDate', Date);
     property('updateDate', Date);
     property('data', String);
+    property('email', String,{default:""});
+    property('questionaire', Object,{default:{}});
 });var Order = describe('Order', function () {
     property('new', Boolean);
     property('createDate', Date);
@@ -44,14 +46,6 @@ var Drawing = describe('Drawing', function () {
     property('status', String);
     property('usercomment',String);
     property('comment', String);
-});var Drawing = describe('Drawing', function () {
-    property('createDate', Date);
-    property('updateDate', Date);
-    property('data', String);
-});var Drawing = describe('Drawing', function () {
-    property('createDate', Date);
-    property('updateDate', Date);
-    property('data', String);
 });var User = describe('User', function () {
     property('username', String);
     property('email', String);

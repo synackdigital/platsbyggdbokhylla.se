@@ -17,6 +17,13 @@ module.exports = {
 		var format = format ? format : "yyyy-mm-dd HH:MM";
 		return dateFormat(theDate, format);
 	},
+	int_to_satisfied:function(int){
+		if(int==0) return "Inte alls nöjd";
+		if(int==1) return "Mindre nöjd";
+		if(int==3) return "Nöjd";
+		if(int==4) return "Mycket nöjd";
+		return "Varken eller";
+	},
 	status_selector:function(status,name,id){
 		var selector = '<select name="'+name+'" id="'+id+'">';
 		var statusValues = this.getStatusValues();

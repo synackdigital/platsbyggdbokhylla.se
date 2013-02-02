@@ -6682,12 +6682,27 @@ var k = {
 		$("save").observe("click",function(e){
 			$$(".saveMessage").invoke("hide");
 			e.stop();
-			if($("rita_offert").visible()) return;
+			if($("rita_presave").visible()) return;
+			$("rita_presave").show();
+		});
+
+		$("saveAndAnswer").observe("click",function(e){
+			$$(".saveMessage").invoke("hide");
+			e.stop();
+			k.saveOrder(function(){
+				$("rita_saved").show();
+			});
+		});
+
+		$("justSave").observe("click",function(e){
+			$$(".saveMessage").invoke("hide");
+			e.stop();
 			k.saveOrder(function(){
 
 				$("rita_saved").show();
 			});
 		});
+
 
 		$("intresseAnmalan").observe("click",function(e){
 			$$(".saveMessage").invoke("hide");
@@ -6840,7 +6855,8 @@ var k = {
 		}
 
 
-		k.nextGuideStep();
+		//k.nextGuideStep();
+		$("rita_presave").show();
 		return;
 
 	},
@@ -6925,9 +6941,15 @@ var k = {
 	    }
 		url = k.a ? url + k.id : url;
     	var theMethod = k.a ? "PUT" : "POST";
+    	var questionaire = $("questionareForm").serialize(true);
+    	console.log(questionaire);
+    	var email = $("save_email").getValue();
+    	console.log("saveing order");
 		new Ajax.Request(url,{
 			method: theMethod,
 			parameters:{
+				"Drawing[questionaire]":Object.toJSON(questionaire),
+				"Drawing[email]":email,
 				"Drawing[data]":Object.toJSON(data)
 			},
 			onSuccess:function(transport){

@@ -219,6 +219,30 @@
         color: $warning-text-color;
       }
     }
+    &.radio {
+      label, input {
+        width:8%;
+        display:inline-table;
+      }
+      label {
+        width:10%;
+        margin-right:0px;
+      }
+      input {
+        background:blue;
+        margin-left:0px;
+      }
+      p {
+        font-weight:bold;
+        span {
+          font-weight:normal;
+          display:block;
+        }
+      }
+
+      margin-bottom:10px;
+      border-bottom:solid 1px lighten($text-color, 65%);
+    }
   }
 }
 

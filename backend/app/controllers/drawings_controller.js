@@ -14,6 +14,7 @@ action(function create() {
     var theDraw = req.body.Drawing;
     theDraw.createDate = new Date();
     theDraw.updateDate = new Date();
+    console.log(theDraw);
     Drawing.create(theDraw, function (err, drawing) {
         send({id:drawing.id});
         return;
@@ -50,6 +51,7 @@ action(function show() {
     this.title = 'Drawing show';
     respondTo(function (format) {
         format.html(function(){
+            this.questionaire = JSON.parse(this.drawing.questionaire);
             var drawing = this.drawing;
             var data = JSON.parse(drawing.data);
             var kapnota = {};

@@ -6,8 +6,26 @@
 
 <table class="table table-bordered">
     <tbody>
-        <tr><th>createDate</th><td><%= drawing.createDate %></td></tr>
-        <tr><th>updateDate</th><td><%= drawing.updateDate %></td></tr>
+        <tr><th>Created</th><td><%= date_format(drawing.createDate) %></td></tr>
+        <tr><th>Last updated</th><td><%= date_format(drawing.updateDate) %></td></tr>
+        <tr>
+            <th>Email</th>
+            <td>
+                <% if (drawing.email) { %>
+                    <%- link_to(drawing.email,"mailto:"+drawing.email) %>
+                <% } %>
+                
+            </td>
+        </tr>
+        <tr>
+            <th>Answered questionaire</th>
+            <td>
+                <% if (drawing.questionaire) { %>
+                    <% include _questionaire %>
+                <% } %>
+                
+            </td>
+        </tr>
         <tr><th>Drawing</th><td><a href="<%- link_to_site_admin('ritverktyg/#'+drawing.id) %>">Open/Edit Drawing</a></td></tr>
         <tr><th>data</th><td><%= drawing.data %></td></tr>    
     </tbody>
