@@ -14,7 +14,13 @@ action(function create() {
     var theDraw = req.body.Drawing;
     theDraw.createDate = new Date();
     theDraw.updateDate = new Date();
-    console.log(theDraw);
+    var questionaire = JSON.parse(theDraw.questionaire);
+    if(Object.keys(questionaire).length==0){
+        questionaire.answered = false;
+    } else {
+        questionaire.answered = true;
+    }
+    theDraw.questionaire = JSON.stringify(questionaire);
     Drawing.create(theDraw, function (err, drawing) {
         send({id:drawing.id});
         return;
@@ -40,7 +46,8 @@ action(function create() {
 
 action(function index() {
     this.title = 'Drawings index';
-    Drawing.all(function (err, drawings) {
+    Drawing.all({order:"createDate DESC"},function (err, drawings) {
+        console.log()
         render({
             drawings: drawings
         });
@@ -51,7 +58,11 @@ action(function show() {
     this.title = 'Drawing show';
     respondTo(function (format) {
         format.html(function(){
-            this.questionaire = JSON.parse(this.drawing.questionaire);
+            if(this.drawing.questionaire.length>2){
+                this.questionaire = JSON.parse(this.drawing.questionaire);        
+            } else {
+                this.questionaire = {};
+            }
             var drawing = this.drawing;
             var data = JSON.parse(drawing.data);
             var kapnota = {};

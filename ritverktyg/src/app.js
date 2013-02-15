@@ -409,8 +409,8 @@ var k = {
 		}
 
 
-		//k.nextGuideStep();
-		$("rita_presave").show();
+		k.nextGuideStep();
+		//$("rita_presave").show();
 		return;
 
 	},
@@ -496,9 +496,7 @@ var k = {
 		url = k.a ? url + k.id : url;
     	var theMethod = k.a ? "PUT" : "POST";
     	var questionaire = $("questionareForm").serialize(true);
-    	console.log(questionaire);
     	var email = $("save_email").getValue();
-    	console.log("saveing order");
 		new Ajax.Request(url,{
 			method: theMethod,
 			parameters:{

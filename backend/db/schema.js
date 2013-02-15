@@ -30,7 +30,7 @@ var Drawing = describe('Drawing', function () {
     property('updateDate', Date);
     property('data', String);
     property('email', String,{default:""});
-    property('questionaire', Object,{default:{}});
+    property('questionaire', String,{default:"{}"});
 });var Order = describe('Order', function () {
     property('new', Boolean);
     property('createDate', Date);
