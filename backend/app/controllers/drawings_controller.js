@@ -1,6 +1,7 @@
 load('application');
 
 before(loadDrawing, {only: ['show', 'edit', 'update', 'destroy']});
+before(generateShortCode, {only: ['create']});
 skipBeforeFilter('protect from forgery',['create']);
 skipBeforeFilter('auth',['create','show']);
 
@@ -19,6 +20,7 @@ action(function create() {
         questionaire.answered = false;
     } else {
         questionaire.answered = true;
+        questionaire.code = this.shortcode;
     }
     theDraw.questionaire = JSON.stringify(questionaire);
     Drawing.create(theDraw, function (err, drawing) {
@@ -274,3 +276,41 @@ function loadDrawing() {
         }
     }.bind(this));
 }
+
+function generateShortCode(){
+    var getUnique = function(drawings,cb){
+        console.log("generate shortcode");
+        var pID = getKoremutake();
+        console.log(pID);
+        var unique = true;
+        for(var i=0;i<ypnode.partyList.length;i++){
+            if(ypnode.partyList.id==pID){
+                unique=false;
+                break;
+            }
+        }
+        console.log("Is it unique?");
+        if(!unique){
+            getUnique(drawings,cb);
+        } else {
+            cb(pID);
+        }
+    }
+    Drawing.all({order:"createDate DESC"},function (err, drawings) {
+        getUnique(drawings,function(shortcode){
+            this.shortcode = shortcode;
+            next();
+        });
+    }.bind(this));
+}
+function getKoremutake(){
+    var syllabels = ["BA","BE","BI","BO","BU","BY","DA","DE","DI","DO","DU","DY","FA","FE","FI","FO","FU","FY","GA","GE","GI","GO","GU","GY","HA","HE","HI","HO","HU","HY","JA","JE","JI","JO","JU","JY","KA","KE","KI","KO","KU","KY","LA","LE","LI","LO","LU","LY","MA","ME","MI","MO","MU","MY","NA","NE","NI","NO","NU","NY","PA","PE","PI","PO","PU","PY","RA","RE","RI","RO","RU","RY","SA","SE","SI","SO","SU","SY","TA","TE","TI","TO","TU","TY","VA","VE","VI","VO","VU","VY","BRA","BRE","BRI","BRO","BRU","BRY","DRA","DRE","DRI","DRO","DRU","DRY","FRA","FRE","FRI","FRO","FRU","FRY","GRA","GRE","GRI","GRO","GRU","GRY","PRA","PRE","PRI","PRO","PRU","PRY","STA","STE","STI","STO","STU","STY","TRA","TRE"];
+    var syCount = 2;
+    var koremutake = "";    
+    for(var i=0;i<syCount;i++){
+        var thisSysNum = Math.random()*(syllabels.length-1);
+        thisSysNum = Math.round(thisSysNum);
+        var koremutake = koremutake + syllabels[thisSysNum];
+    }
+    return koremutake.toLowerCase();
+};
