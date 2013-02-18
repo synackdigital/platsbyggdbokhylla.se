@@ -55,8 +55,11 @@ var Avgrund = (function(){
 
         removeClass( container, 'avgrund-active' );
         removeClass( popup, 'avgrund-popup-animate')
-
-        $$('#avgrund iframe').first().writeAttribute('src', "");
+        if(window.Prototype!==undefined){
+            $$('#avgrund iframe').first().writeAttribute('src', "");
+        } else {
+            $('#avgrund iframe').first().attr('src', "");
+        }
     }
 
     function disableBlur() {

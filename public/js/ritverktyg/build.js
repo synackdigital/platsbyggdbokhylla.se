@@ -6855,8 +6855,8 @@ var k = {
 		}
 
 
-		//k.nextGuideStep();
-		$("rita_presave").show();
+		k.nextGuideStep();
+		//$("rita_presave").show();
 		return;
 
 	},
