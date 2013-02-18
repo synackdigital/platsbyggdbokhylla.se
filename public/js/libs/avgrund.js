@@ -55,6 +55,8 @@ var Avgrund = (function(){
 
         removeClass( container, 'avgrund-active' );
         removeClass( popup, 'avgrund-popup-animate')
+
+        $$('#avgrund iframe').first().writeAttribute('src', "");
     }
 
     function disableBlur() {

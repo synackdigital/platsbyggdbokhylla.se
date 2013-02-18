@@ -31,6 +31,7 @@ var Drawing = describe('Drawing', function () {
     property('data', String);
     property('email', String,{default:""});
     property('questionaire', String,{default:"{}"});
+    property('code', String,"");
 });var Order = describe('Order', function () {
     property('new', Boolean);
     property('createDate', Date);

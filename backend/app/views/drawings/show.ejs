@@ -18,6 +18,15 @@
             </td>
         </tr>
         <tr>
+            <th>Discount code</th>
+            <td>
+                <% if (drawing.code != "") { %>
+                    <%= drawing.code %>
+                <% } %>
+                
+            </td>
+        </tr>
+        <tr>
             <th>Answered questionaire</th>
             <td>
                 <% if (drawing.questionaire) { %>
