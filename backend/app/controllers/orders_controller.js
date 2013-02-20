@@ -43,7 +43,7 @@ action(function create() {
 
 action(function index() {
     this.title = 'Orders index';
-    Order.all(function (err, orders) {
+    Order.all({order:"createDate DESC"},function(err, orders) {
         render({
             orders: orders
         });

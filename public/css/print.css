@@ -2,8 +2,11 @@ body {
 	background-color: #FFF;
 }
 #header {
-	display:none;
+	display:none !important;
 }
 #controls {
 	display: none;
+}
+#avgrund, .avgrund-link {
+	display:none !important;	
 }
