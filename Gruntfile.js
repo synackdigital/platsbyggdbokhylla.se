@@ -16,6 +16,7 @@ module.exports = function (grunt) {
   // configurable paths
   var appConfig = {
     src: 'src',
+    components: 'bower_components',
     dist: 'dist'
   };
 
@@ -47,21 +48,51 @@ module.exports = function (grunt) {
     less: {
       development: {
         options: {
-          paths: ['<%= app.src %>/less']
+          paths: [
+            '<%= app.src %>/less',
+            '<%= app.components %>/lesshat',
+            '<%= app.components %>/semantic-grid/stylesheets/less',
+            '<%= app.components %>/font-awesome/less',
+            '<%= app.components %>/flexslider-less',
+            '<%= app.components %>/jquery-popover'
+          ]
         },
         files: {
           '<%= app.src %>/less/main.css': ['<%= app.src %>/less/main.less']
         }
       }
     },
+    useminPrepare: {
+      html: '<%= app.src %>/index.html',
+      options: {
+        dest: '<%= app.dist %>'
+      }
+    },
+    usemin: {
+      html: ['<%= app.dist %>/{,*/}*.html'],
+      css: ['<%= app.dist %>/css/{,*/}*.css'],
+      options: {
+        dirs: ['<%= app.dist %>']
+      }
+    },
     cssmin: {
       dist: {
         files: {
-          '<%= app.dist %>/assets/css/main.css': [
+          '<%= app.dist %>/css/main.css': [
             '.tmp/less/{,*/}*.css',
             '<%= app.src %>/less/{,*/}*.css'
           ]
         }
+      }
+    },
+    imagemin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= app.src %>/images',
+          src: '{,*/}*.{png,jpg,jpeg}',
+          dest: '<%= app.dist %>/images'
+        }]
       }
     },
     htmlmin: {
@@ -105,10 +136,10 @@ module.exports = function (grunt) {
       dist: {
         files: {
           src: [
-            '<%= app.dist %>/assets/js/{,*/}*.js',
-            '<%= app.dist %>/assets/css/{,*/}*.css',
-            '<%= app.dist %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-            '<%= app.dist %>/assets/fonts/{,*/}*.*'
+            '<%= app.dist %>/js/{,*/}*.js',
+            '<%= app.dist %>/css/{,*/}*.css',
+            '<%= app.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
+            '<%= app.dist %>/fonts/{,*/}*.*'
           ]
         }
       }
@@ -118,11 +149,14 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'less',
+    'useminPrepare',
+    'imagemin',
     'htmlmin',
     'cssmin',
     'copy',
     'clean:less',
-    'rev'
+    'rev',
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
