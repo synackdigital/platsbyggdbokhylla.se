@@ -1,0 +1,436 @@
+
+/*
+ * Basic planner layout
+ */
+#planner {
+
+  /* Colors */
+  background-color: darken(@backgroundColor, 4%);
+  border-top: 1px solid darken(@backgroundColor, 8%);
+  border-bottom: 1px solid darken(@backgroundColor, 12%);
+
+  /* Grid */
+  .clearfix();
+  .options,
+  .order {
+    .column(3);
+  }
+  .order {
+    float: right;
+  }
+  .canvas {
+    .column(9);
+  }
+  .legend {
+    .column(9);
+  }
+}
+
+/* Min height */
+#stage {
+  margin-top: @rhythmUnit;
+  min-height: 550px;
+}
+
+/*
+ * Throbber
+ */
+#stage {
+  position: relative;
+
+  .throbber {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -(@rhythmUnit);
+    margin-left: -100px;
+  }
+}
+
+/*
+ * Options
+ */
+#planner .options {
+
+  /* Box */
+  border: 3px double @lineColor;
+  padding: @rhythmUnit;
+  margin-top: @rhythmUnit;
+
+  /* Smaller font */
+  font-size: @smallFont;
+
+  /* Line up elems */
+  > label {
+    display: block;
+    margin-bottom: (.5 * @rhythmUnit);
+  }
+  > fieldset {
+    border: none;
+
+    padding: 0;
+    margin: (.5 * @rhythmUnit) 0;
+
+    &.horizontal {
+      .clearfix();
+
+      label {
+        border-top: 2px solid transparent;
+
+        float: left;
+        clear: right;
+        width: 55%;
+        padding: (.25 * @rhythmUnit) 0 (.25 * @rhythmUnit);
+
+        line-height: (3 * @rhythmUnit);
+        vertical-align: middle;
+
+        .text-overflow();
+      }
+      input,
+      select {
+        float: right;
+        width: 40%;
+      }
+      select {
+        margin-top: .75rem;
+      }
+    }
+  }
+
+  /* Style inputs */
+  input[type='text'] {
+    background-color: @backgroundColor;
+    border: 1px solid darken(@backgroundColor, 16%);
+    .border-radius((2 * @borderRadius));
+  }
+}
+
+/*
+ * Legend
+ */
+#planner .legend {
+  border-top: 1px solid darken(@backgroundColor, 16%);
+  padding-top: @rhythmUnit;
+  margin-top: @rhythmUnit;
+  margin-bottom: @rhythmUnit;
+
+  font-size: @smallFont;
+
+  strong,
+  label {
+    margin-right: 1em;
+  }
+}
+
+/*
+ * Order
+ */
+#planner .order {
+
+  margin-top: @rhythmUnit;
+
+  #total-estimate {
+    .altFontFamily();
+    font-size: @xLargeFont;
+  }
+
+  h2 {
+    .baseFontFamily();
+    font-size: @largeFont;
+    margin-bottom: 0;
+  }
+}
+
+
+// #plan {
+//   .clearfix();
+//   #canvas {
+//    height:550px;
+//    position: relative;
+//    #stage {
+//      position: absolute;
+//      top:0px;
+//      left:0px;
+//      right:0px;
+//      bottom:0px;
+//      #stageinner {
+//        z-index:22;
+//      }
+//    }
+//   }
+
+//   section {
+//     .column(12);
+//   }
+// }
+// .drawingID {
+//  display: block;
+//  width:100%;
+// }
+// #sektionform {
+//  .sektion {
+//    display:none;
+//    &.activated {
+//      display:block;
+//    }
+//    .item {
+//        padding-bottom:4px;
+//        padding-top:4px;
+//        border-bottom: 1px solid @lineColor;
+//        label {
+//          display: inline-block;
+//          margin-right: .5em;
+//          width: 40%;
+//        }
+//        input[type=text], input[type=email] {
+//          display: inline-block;
+//          width: 25%;
+//        }
+//        &.error {
+//          label {
+//            color: #F00;
+//          }
+//          input {
+//            color: #F00;
+//          }
+//        }
+
+//        .minmax {
+//            color: #333;
+//            font-size: 11px;
+//            font-weight: normal;
+
+//            &:before {
+//              content: ' ('
+//            }
+//            &:after {
+//              content: ')'
+//            }
+
+//            .minval {
+//              &:after {
+//                content: '–';
+//              }
+//            }
+//          }
+
+//    }
+//  }
+// }
+// .inputgroup {
+//  display: block;
+//  padding-bottom:4px;
+//  padding-top:4px;
+//  border-bottom: 1px solid @lineColor;
+// }
+
+// #options {
+//  .option {
+//    margin-top: @rhythmUnit;
+//    float:left;
+//    width:60%;
+//  }
+//  .generalSektions {
+//    margin-top: @rhythmUnit;
+//    .generalSektion {
+//      width:25%;
+//      float:left;
+//      text-align: center;
+//    }
+//  }
+//  clear:both;
+// }
+
+// #price {
+//  border: 3px double @lineColor;
+//  float:right !important;
+//  padding:@rhythmUnit;
+//  text-align: right;
+//  width:35% !important;
+//  .label, .note {
+//    display: block;
+//  }
+//  .value {
+//    display: block;
+//    font-size: 18px;
+//    font-weight: bold;
+//  }
+//  .note {
+//    color: #666;
+//    font-size: 13px;
+//  }
+// }
+// #sektionlist {
+//  position: absolute;
+//  bottom:30px;
+//  left:0px;
+//  z-index:23;
+//  .controlLink {
+//    position: absolute;
+//    display: block;
+//    top:0px;
+//    width:20px;
+//    height:20px;
+//    color: @textColor;
+//    overflow: hidden;
+//    text-align: center;
+//    .icon, .name {
+//      line-height: 20px;
+//      font-size: 11px;
+//      font-weight: bold;
+
+//    }
+//    .icon {
+//      display: block;
+//    }
+//    .name {
+//      display: none;
+//    }
+//    &:hover {
+//      width:100px;
+//      margin-left:-40px;
+//      .icon {
+//        display:none;
+//      }
+//      .name {
+//        display:block;
+//      }
+//    }
+//  }
+// }
+// #floor {
+//   background: url('../img/woodfloor.jpg') repeat-x top center;
+//   @include background-size(cover);
+//   border-top: 1px solid #f6e1cb;
+//   position: absolute;
+//   bottom: 0px;
+//   left: 0px;
+//   right: 0px;
+//   height: 100px;
+//   z-index: 20;
+// }
+
+// .popover {
+//  position: absolute;
+//  top: 0; left: 0;
+//  max-height: 240px;
+//  width: 220px;
+//  display: none;
+//  .wrap {
+//    background-color: lighten(@lineColor, 20%);
+//    .border-radius(@borderRadius);
+//      .box-shadow(~"inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)");
+//  }
+
+// }
+// .popover .title {
+//  background-color: lighten(@lineColor, 5%);
+//  color: @textColor;
+//  border: 1px solid @lineColor;
+//  border-bottom-color: darken(@lineColor, 5%);
+//  padding: 8px 8px;
+//  height: 27px;
+// }
+
+// #ritar {
+//   z-index:299;
+//   top:0px;
+//   bottom:0px;
+//   left:0px;
+//   right:0px;
+//   background-color:#eee;
+//   line-height:400px;
+//   text-align:center;
+//   position:absolute;
+//   font-size:30px;
+//   opacity:0;
+//   -webkit-transition:opacity 0.3s ease-in-out;
+//   &.show {
+//     opacity:1;
+//   }
+// }
+
+// .saveDialogs {
+//  background: red;
+//  padding: 0 @rhythmUnit;
+//  .content {
+//    .column(12, 12);
+//    min-height: 550px;
+//    .offertform {
+//      .item {
+//        padding-bottom:4px;
+//        padding-top:4px;
+//        border-bottom: 1px solid @lineColor;
+//        label {
+//          display: inline-block;
+//          margin-right: .5em;
+//          width: 40%;
+//        }
+//        input[type=text], input[type=email] {
+//          display: inline-block;
+//          width: 25%;
+//        }
+//        &.error {
+//          label {
+//            color: #F00;
+//          }
+//          input {
+//            color: #F00;
+//          }
+//        }
+//        &.radio {
+//          label, input {
+//            float:left;
+//          }
+//          label {
+//            width:10%;
+//            margin-right:0px;
+//          }
+//          input {
+//            margin-left:0px;
+//            width:20px;
+//            height:20px;
+//          }
+//          p {
+//            font-weight:bold;
+//            span {
+//              font-weight:normal;
+//              display:block;
+//            }
+//          }
+//        }
+//        &.buttons {
+//          .button {
+//            float:right;
+//          }
+//        }
+
+//        .clearLeft {
+//          clear:left;
+//        }
+//        .clearRight {
+//          clear:right;
+//        }
+
+//        .minmax {
+//          color: #333;
+//          font-size: 11px;
+//          font-weight: normal;
+
+//          &:before {
+//            content: ' ('
+//          }
+//          &:after {
+//            content: ')'
+//          }
+//          .minval {
+//            &:after {
+//              content: '–';
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
+// }

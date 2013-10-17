@@ -1,3 +1,608 @@
-body {
-  background-color: salmon;
+
+// Fonts
+// -------------------------
+@import "fonts";
+
+// Components
+// -------------------------
+@import "lesshat";
+@import "grid";
+@import "font-awesome";
+@import (less) "flexslider.css";
+
+// Variables
+// -------------------------
+@import "variables";
+
+// Partials
+// -------------------------
+@import "mixins";
+@import "normalize";
+@import "utils";
+@import (less) "popover.css";
+@import "planner";
+
+// Main styles
+// -------------------------
+
+/*
+ * Use border-box for everything
+ */
+
+* {
+  box-sizing: border-box;
 }
+
+/*
+ * Base typography
+ */
+
+body {
+  background-color: @backgroundColor;
+  color: @textColor;
+
+  .baseFontFamily();
+  line-height: 2 * @rhythmUnit;
+}
+
+/*
+ * Biggest headers get the alt font family
+ */
+
+h1 {
+  .altFontFamily();
+
+  &.callout {
+    color: @muteColor;
+
+    font-size: @xxLargeFont;
+    font-style: italic;
+    line-height: (4 * @rhythmUnit);
+    letter-spacing: -.1rem;
+
+    /* Line up with vertical rhythm */
+    padding: (.7 * @rhythmUnit) 0 (.9 * @rhythmUnit);
+    margin: @rhythmUnit 0;
+  }
+
+}
+
+/*
+ * Headers
+ */
+
+h1, h2, h3, h4, h5, h6 {
+  color: @strongColor;
+  font-weight: normal;
+}
+
+/*
+ * Grouped headers
+ */
+hgroup {
+  /* Place inline */
+  h1, h2, h3, h4, h5, h6 {
+    display: inline-block;
+  }
+
+  /* Remove margin between headers */
+  h1 + h2,
+  h2 + h3,
+  h3 + h4,
+  h4 + h5,
+  h5 + h6 {
+    margin-top: -@rhythmUnit;
+    color: @muteColor;
+  }
+
+}
+
+/*
+ * Paragraph styles
+ */
+
+p {
+  /* Line up with vertical rhythm */
+  padding: (.5 * @rhythmUnit) 0 (.5 * @rhythmUnit);
+  margin: 0;
+}
+
+/*
+ * Links
+ */
+
+a {
+  color: @linkColor;
+  text-decoration: none;
+
+  // Quick fade color
+  .transition(~"color 150ms linear");
+
+  &:active,
+  &:focus,
+  &:hover {
+    color: @activeColor;
+  }
+}
+
+/*
+ * Buttons
+ */
+.button {
+  background-color: lighten(@lineColor, 5%);
+  color: @textColor;
+  border: 1px solid @lineColor;
+  border-bottom-color: darken(@lineColor, 5%);
+  .border-radius(@borderRadius);
+  .box-shadow(~"inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)");
+
+  display: inline-block;
+  padding: (.5 * @rhythmUnit) @rhythmUnit;
+  margin-bottom: 0;
+
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: (2 * @rhythmUnit);
+  vertical-align: middle;
+  text-align: center;
+
+  .transition(~"color 100ms linear, background-color 200ms linear");
+
+  // Re-declare hidden state
+  &.hide {
+    display: none;
+  }
+
+  // Hover/focus state
+  &:hover,
+  &:focus {
+    background-color: @activeColor;
+    color: @activeContrastColor;
+    border-color: darken(@activeColor, 5%);
+    border-bottom-color: darken(@activeColor, 10%);
+    text-decoration: none;
+  }
+
+  // Active state
+  &.active,
+  &:active {
+    outline: 0;
+    .box-shadow(~"inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05)");
+  }
+
+  // Disabled state
+  &.disabled,
+  &[disabled] {
+    cursor: default;
+    .opacity(50);
+    .box-shadow(none);
+  }
+
+  // Large button
+  &.large {
+    font-size: @largeFont;
+    padding: @rhythmUnit (1.5 * @rhythmUnit);
+    .border-radius((@borderRadius * 1.5));
+  }
+
+  // Primary button
+  &.primary,
+  &[href*="#plan"] {
+    background-color: @decorColor;
+    color: @decorContrastColor;
+    border: 1px solid darken(@decorColor, 5%);
+
+    &:hover,
+    &:focus {
+      background-color: @activeColor;
+      color: @activeContrastColor;
+      border-color: darken(@activeColor, 5%);
+      border-bottom-color: darken(@activeColor, 10%);
+    }
+  }
+}
+
+/*
+ * Text inputs
+ */
+input[type="text"],
+input[type="email"] {
+  display: inline-block;
+  padding: (.25 * @rhythmUnit) (.5 * @rhythmUnit);
+  font-size: 1rem;
+  line-height: (3 * @rhythmUnit);
+  color: @textColor;
+  vertical-align: middle;
+  background-color: @backgroundColor;
+  border: 1px solid @lineColor;
+  border-radius: @borderRadius;
+  .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+  .transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+
+  &:focus {
+    border-color: rgba(82,168,236,.8);
+    outline: 0;
+    .box-shadow(~"inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6)");
+  }
+}
+
+/*
+ * Images are never bigger than containers
+ */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/*
+ * Images have rounded borders by default
+ */
+img {
+  .border-radius(@borderRadius);
+}
+
+
+/*
+ * Main page container(s)
+ */
+
+.wrapper {
+  padding: 0 @rhythmUnit;
+  margin-right: auto;
+  margin-left: auto;
+  min-width: @minWidth;
+  max-width: @maxWidth;
+}
+
+/*
+ * Clear floating grid units in sectioning elements
+ */
+
+header,
+section,
+footer,
+aside {
+  .clearfix();
+  margin-top: @rhythmUnit;
+  margin-bottom: @rhythmUnit;
+}
+
+/*
+ * Languages bar
+ */
+
+#languages {
+
+  /* Typography */
+  .mute();
+  font-size: @smallFont;
+
+  ul {
+    .inline-list();
+
+    /* Line up with vertical rhythm */
+    padding-bottom: .4 * @rhythmUnit;
+    padding-top: .6 * @rhythmUnit;
+  }
+}
+
+/*
+ * Header
+ */
+
+#header {
+
+  /* Float elements */
+  hgroup { float: left; }
+  nav { float: right; }
+  .clearfix();
+
+  /* Reset H1 to base font family */
+  h1 {
+    .baseFontFamily();
+
+    /* Line up with vertical rhythm */
+    padding: (.3 * @rhythmUnit) 0 (.7 * @rhythmUnit);
+  }
+}
+
+/*
+ * Hero section
+ */
+
+#hero {
+
+  margin-bottom: (2 * @rhythmUnit);
+
+  /* FlexSlider */
+  .flexslider {
+
+    /* Reset default styles */
+    margin-bottom: @rhythmUnit;
+    .flex-next,
+    .flex-prev {
+      opacity: 0.8;
+    }
+    .flex-next {
+      right: -36px;
+    }
+    .flex-prev {
+      left: -36px;
+    }
+
+    /* Slide margins */
+    li {
+      margin-left: 2px;
+      margin-right: 2px;
+    }
+
+    /* Figcaptions */
+    figure {
+      position: relative;
+
+      figcaption {
+        position: absolute;
+        bottom: (2 * @rhythmUnit);
+        left: (16 * @rhythmUnit);
+
+        .opacity(0);
+
+        .transition(~"left 400ms ease-out 30ms, opacity 300ms linear 30ms");
+
+        h1 {
+          color: white;
+          font-weight: bold;
+          text-shadow: 0 1px 1px rgba(0,0,0,.8), 0 0 5px rgba(0,0,0,.4), 0 0 10px rgba(0,0,0,.4), 0 0 15px rgba(0,0,0,.4);
+
+          margin: 0;
+        }
+        p {
+          color: white;
+          font-size: @largeFont;
+          font-weight: bold;
+          text-shadow: 0 1px 1px rgba(0,0,0,.8), 0 0 5px rgba(0,0,0,.4), 0 0 10px rgba(0,0,0,.4), 0 0 15px rgba(0,0,0,.4);
+
+          margin: 0;
+        }
+
+        .price {
+          font-size: @xxLargeFont;
+          font-family: @altFontFamily;
+          font-weight: bold;
+          line-height: (3 * @rhythmUnit);
+
+          /* Line up with vertical rhythm */
+          padding: (.181818 * @rhythmUnit) 0 (.363636 * @rhythmUnit);
+          margin: 0;
+        }
+
+        .button {
+          .box-shadow(~"0 1px 2px rgba(0,0,0,.6)");
+          margin-top: @rhythmUnit;
+        }
+      }
+    }
+
+    /* Animation */
+    li {
+      &.animating-to {
+      }
+      &.current {
+        figure figcaption {
+          left: (2 * @rhythmUnit);
+          .opacity(100);
+        }
+      }
+    }
+
+    /* Grayscale effect on non-current images */
+    li img {
+      -webkit-filter: grayscale(0%);
+      .transition(-webkit-filter 900ms linear 600ms);
+    }
+    li:not(.current) img {
+      -webkit-filter: grayscale(100%);
+    }
+  }
+
+}
+
+/*
+ * About section
+ */
+
+#about {
+
+  margin-bottom: (6 * @rhythmUnit);
+
+  text-align: center;
+
+  img {
+    display: block;
+    margin: @rhythmUnit auto (4 * @rhythmUnit);
+  }
+}
+
+/*
+ * Products section
+ */
+
+#products {
+  background-color: white;
+  border-top: 1px solid @lineColor;
+
+  margin-bottom: 0;
+  padding-bottom: (3 * @rhythmUnit);
+  padding-top: (3 * @rhythmUnit);
+
+  .caption {
+    color: @muteColor;
+    margin-bottom: (3 * @rhythmUnit);
+
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: underline;
+    letter-spacing: 1px;
+  }
+  .tabs {
+    clear: both;
+    .clearfix();
+    .unstyled-list();
+
+    // a {
+    //   color: @textColor;
+    // }
+
+    li {
+      .column(3);
+      text-align: center;
+    }
+
+    p {
+      font-size: @smallFont;
+    }
+  }
+  .tab-panes {
+    .clearfix();
+    .unstyled-list();
+
+    /* Colors and borders */
+    .gradient(~"linear-gradient(90deg, white 0%, rgb(250,250,250) 50%, white 100%)");
+    border-bottom: 3px double @lineColor;
+    border-top: 3px double @lineColor;
+
+    /* Make space for borders */
+    margin-bottom: (2 * @rhythmUnit);
+    margin-top: (2 * @rhythmUnit);
+    padding-bottom: @rhythmUnit;
+    padding-top: @rhythmUnit;
+
+    /* Teaser text when no tabs are selected */
+    li.teaser {
+      text-align: center;
+      h3 {
+        position: relative;
+
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        i {
+          background-color: white;
+          .border-radius(50%);
+
+          position: absolute;
+          top: (-1.2 * @xxLargeFont);
+          left: 50%;
+          margin-left: (-.5 * @xxLargeFont);
+
+          font-size: @xxLargeFont;
+        }
+      }
+    }
+
+    /* Tab pane content */
+    li.pane {
+      .callout {
+        text-align: center;
+      }
+      .hero {
+        .column(10);
+        .push(1);
+        .pull(1);
+
+        text-align: center;
+
+        margin-bottom: (2 * @rhythmUnit);
+
+        img {
+          display: block;
+          margin: @rhythmUnit auto;
+        }
+      }
+      .description {
+        .column(5);
+        .push(1);
+
+        &.nospec {
+          .column(6);
+          .push(3);
+        }
+      }
+      .spec {
+        .column(4);
+        .push(1);
+        // .pull(1);
+
+        border: 3px double @lineColor;
+
+        font-size: @smallFont;
+      }
+    }
+  }
+}
+
+/*
+ * Financing info
+ */
+
+#financing {
+  background-color: white;
+  border-bottom: 1px solid @lineColor;
+
+  margin-top: 0;
+  padding-bottom: (3 * @rhythmUnit);
+  padding-top: (3 * @rhythmUnit);
+
+  text-align: left;
+
+  .terms {
+    .column(5);
+  }
+  .more {
+    .column(6);
+    .push(1);
+  }
+}
+
+/*
+ * Footer
+ */
+
+#footer {
+
+  .contact,
+  .about {
+    .column(6, 12);
+  }
+
+  padding-top: (4 * @rhythmUnit);
+  padding-bottom: 12 * @rhythmUnit;
+
+  .support {
+    display: block;
+
+    font-size: @xLargeFont;
+    line-height: (3 * @rhythmUnit);
+
+    /* Line up with vertical rhythm */
+    padding: (.4 * @rhythmUnit) 0 (.6 * @rhythmUnit);
+    margin: @rhythmUnit 0;
+  }
+
+  /* Social links */
+  .social {
+    font-size: @largeFont;
+
+    /* Fill out hit area */
+    a {
+      display: inline-block;
+    }
+
+    /* Icon layout */
+    .icon {
+      vertical-align: middle;
+      margin-right: .1em;
+    }
+  }
+}
+

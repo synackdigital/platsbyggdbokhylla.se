@@ -16,6 +16,7 @@ module.exports = function (grunt) {
   // configurable paths
   var appConfig = {
     src: 'src',
+    components: 'bower_components',
     dist: 'dist'
   };
 
@@ -47,7 +48,14 @@ module.exports = function (grunt) {
     less: {
       development: {
         options: {
-          paths: ['<%= app.src %>/less']
+          paths: [
+            '<%= app.src %>/less',
+            '<%= app.components %>/lesshat',
+            '<%= app.components %>/semantic-grid/stylesheets/less',
+            '<%= app.components %>/font-awesome/less',
+            '<%= app.components %>/flexslider-less',
+            '<%= app.components %>/jquery-popover'
+          ]
         },
         files: {
           '<%= app.src %>/less/main.css': ['<%= app.src %>/less/main.less']
