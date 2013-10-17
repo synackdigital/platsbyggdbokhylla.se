@@ -31,7 +31,8 @@ module.exports = function (grunt) {
       }
     },
     clean: {
-      dist: ['.tmp', '<%= app.dist %>/*']
+      dist: ['.tmp', '<%= app.dist %>/*'],
+      less: ['<%= app.src %>/less/{,*/}*.css']
     },
     jshint: {
       options: {
@@ -120,6 +121,7 @@ module.exports = function (grunt) {
     'htmlmin',
     'cssmin',
     'copy',
+    'clean:less',
     'rev'
   ]);
 
