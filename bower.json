@@ -23,6 +23,7 @@
     "jquery": "~1.9.1",
     "semantic-grid": "latest",
     "raphael": "~2.1.0",
-    "jquery-popover": "~1.1.2"
+    "jquery-popover": "~1.1.2",
+    "scaleraphael": "*"
   }
 }
