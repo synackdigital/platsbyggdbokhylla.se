@@ -70,7 +70,7 @@ module.exports = function (grunt) {
     },
     usemin: {
       html: ['<%= app.dist %>/{,*/}*.html'],
-      css: ['<%= app.dist %>/assets/css/{,*/}*.css'],
+      css: ['<%= app.dist %>/css/{,*/}*.css'],
       options: {
         dirs: ['<%= app.dist %>']
       }
@@ -78,7 +78,7 @@ module.exports = function (grunt) {
     cssmin: {
       dist: {
         files: {
-          '<%= app.dist %>/assets/css/main.css': [
+          '<%= app.dist %>/css/main.css': [
             '.tmp/less/{,*/}*.css',
             '<%= app.src %>/less/{,*/}*.css'
           ]
@@ -91,7 +91,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= app.src %>/images',
           src: '{,*/}*.{png,jpg,jpeg}',
-          dest: '<%= app.dist %>/assets/images'
+          dest: '<%= app.dist %>/images'
         }]
       }
     },
@@ -136,10 +136,10 @@ module.exports = function (grunt) {
       dist: {
         files: {
           src: [
-            '<%= app.dist %>/assets/js/{,*/}*.js',
-            '<%= app.dist %>/assets/css/{,*/}*.css',
-            '<%= app.dist %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-            '<%= app.dist %>/assets/fonts/{,*/}*.*'
+            '<%= app.dist %>/js/{,*/}*.js',
+            '<%= app.dist %>/css/{,*/}*.css',
+            '<%= app.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
+            '<%= app.dist %>/fonts/{,*/}*.*'
           ]
         }
       }
