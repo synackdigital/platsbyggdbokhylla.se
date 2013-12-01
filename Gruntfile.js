@@ -8,53 +8,100 @@
 // templateFramework: 'lodash'
 
 module.exports = function (grunt) {
+
   // show elapsed time at the end
   require('time-grunt')(grunt);
+
   // load all grunt tasks
   require('load-grunt-tasks')(grunt);
 
   // configurable paths
   var appConfig = {
     src: 'src',
-    components: 'bower_components',
-    dist: 'dist'
+    dist: 'dist',
+    lib: 'bower_components'
   };
 
+  // configure tasks
   grunt.initConfig({
+
+    pkg: grunt.file.readJSON('package.json'),
     app: appConfig,
+
     watch: {
       options: {
         nospawn: false
       },
-      less: {
-        files: ['<%= app.src %>/less/{,*/}*.less'],
-        tasks: ['less']
+      files: {
+        files: [
+          'src/*.html',
+          'src/less/{,*/}*.less'
+        ],
+        tasks: ['build']
       }
     },
+
     clean: {
       dist: ['.tmp', '<%= app.dist %>/*'],
       less: ['<%= app.src %>/less/{,*/}*.css']
     },
+
     jshint: {
       options: {
         jshintrc: '.jshintrc'
       },
       all: [
         'Gruntfile.js',
-        '<%= app.src %>/js/{,*/}*.js',
-        '!<%= app.src %>/js/vendor/*'
+        '<%= app.src %>/js/{,*/}*.js'
       ]
     },
+
+    uglify: {
+      options: {
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+        preserveComments: 'some' // none, some, all
+        // beautify: true,
+        // mangle: false,
+        // compress: false
+      },
+      plugins: {
+        src: [
+          '<%= app.lib %>/jquery/jquery.js',
+          '<%= app.lib %>/bootstrap/js/transition.js',
+          // '<%= app.lib %>/bootstrap/js/alert.js',
+          '<%= app.lib %>/bootstrap/js/button.js',
+          // '<%= app.lib %>/bootstrap/js/carousel.js',
+          // '<%= app.lib %>/bootstrap/js/collapse.js',
+          // '<%= app.lib %>/bootstrap/js/dropdown.js',
+          // '<%= app.lib %>/bootstrap/js/modal.js',
+          // '<%= app.lib %>/bootstrap/js/tooltip.js',
+          // '<%= app.lib %>/bootstrap/js/popover.js',
+          // '<%= app.lib %>/bootstrap/js/scrollspy.js',
+          '<%= app.lib %>/bootstrap/js/tab.js',
+          // '<%= app.lib %>/bootstrap/js/affix.js',
+        ],
+        dest: '<%= app.dist %>/js/plugins.js'
+      },
+      main: {
+        src: ['<%= app.src %>/js/main.js'],
+        dest: '<%= app.dist %>/js/main.js'
+      },
+      modernizr: {
+        src: [
+          '<%= app.lib %>/modernizr/modernizr.js'
+        ],
+        dest: '<%= app.dist %>/js/modernizr.js'
+      }
+    },
+
     less: {
       development: {
         options: {
           paths: [
             '<%= app.src %>/less',
-            '<%= app.components %>/lesshat',
-            '<%= app.components %>/semantic-grid/stylesheets/less',
-            '<%= app.components %>/font-awesome/less',
-            '<%= app.components %>/flexslider-less',
-            '<%= app.components %>/jquery-popover'
+            '<%= app.lib %>/flexslider-less',
+            '<%= app.lib %>/font-awesome/less',
+            '<%= app.lib %>/bootstrap/less'
           ]
         },
         files: {
@@ -62,12 +109,14 @@ module.exports = function (grunt) {
         }
       }
     },
+
     useminPrepare: {
       html: '<%= app.src %>/index.html',
       options: {
         dest: '<%= app.dist %>'
       }
     },
+
     usemin: {
       html: ['<%= app.dist %>/{,*/}*.html'],
       css: ['<%= app.dist %>/css/{,*/}*.css'],
@@ -75,6 +124,7 @@ module.exports = function (grunt) {
         dirs: ['<%= app.dist %>']
       }
     },
+
     cssmin: {
       dist: {
         files: {
@@ -85,6 +135,7 @@ module.exports = function (grunt) {
         }
       }
     },
+
     imagemin: {
       dist: {
         files: [{
@@ -95,6 +146,7 @@ module.exports = function (grunt) {
         }]
       }
     },
+
     htmlmin: {
       dist: {
         options: {
@@ -116,6 +168,7 @@ module.exports = function (grunt) {
         }]
       }
     },
+
     copy: {
       dist: {
         files: [{
@@ -132,6 +185,7 @@ module.exports = function (grunt) {
         }]
       }
     },
+
     rev: {
       dist: {
         files: {
@@ -149,6 +203,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'less',
+    'uglify',
     'useminPrepare',
     'imagemin',
     'htmlmin',

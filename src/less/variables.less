@@ -1,40 +1,44 @@
-// Semantic.gs
-@total-width:           100%;
+//
+// Variables
+// --------------------------------------------------
 
-// Page dimensions
-@minWidth:              768px;
-@maxWidth:              1280px;
+// Font Awesome
+// --------------------------------------------------
 
-// Font paths
-@fontPath:              "../fonts";
-@FontAwesomePath:       @fontPath;
+@FontAwesomePath:         @font-path;
+@borderColor:             @gray-lighter;
+@iconMuted:               @gray-lighter;
 
-// Font families
-@baseFontFamily:        "Univers", "Helvetica Neue", Helvetica, Arial, sans-serif;
-@altFontFamily:         "LinotypeDidot", Georgia, "Times New Roman", Times, serif;
+// Global values
+// --------------------------------------------------
 
-// Typographic rhythm
-@rhythmUnit:            .73339rem;    // 11px
-@rootEm:                100%;         // 16px
-@smallFont:             .875rem;      // 14px
-@largeFont:             1.25rem;      // 20px
-@xLargeFont:            1.8125rem;    // 29px
-@xxLargeFont:           2.375rem;     // 38px
+// Grays
+// -------------------------
 
-@borderRadius:          .125rem;      // 3px
+@near-black:              lighten(#000, 4%);
+@gray-darker:             lighten(#000, 16%);
+@gray-dark:               lighten(#000, 36%);
+@gray:                    lighten(#000, 50%);
+@gray-light:              lighten(#000, 64%);
+@gray-lighter:            lighten(#000, 84%);
+@near-white:              lighten(#000, 96%);
 
-// Colors
-@backgroundColor:       rgb(250,250,250);
-@textColor:             rgb(60,60,60);
+// Brand colors
+// -------------------------
 
-@strongColor:           rgb(30,30,30);
-@muteColor:             rgb(150,150,150);
-@lineColor:             rgb(210,210,210);
+@brand-primary:           #3b5998;
+@brand-info:              #99cc72;
 
-@linkColor:             rgb(59,89,152);
-@linkContrastColor:     rgb(255,255,255);
-@decorColor:            rgb(153, 204, 114);
-@decorContrastColor:    rgb(54,67,40);
+// Scaffolding
+// -------------------------
 
-@activeColor:           saturate(mix(@linkColor, @decorColor, 40%), 20%);
-@activeContrastColor:   rgb(255,255,255);
+@body-bg:                 @near-white;
+
+// Typography
+// -------------------------
+
+@font-path:               "../fonts";
+@font-family-sans-serif:  "Univers", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-serif:       "LinotypeDidot", Georgia, "Times New Roman", Times, serif;
+
+@headings-font-family:    @font-family-serif;

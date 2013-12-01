@@ -1,42 +1,42 @@
 
-/*
- * Horizontal description lists
- */
-dl.horizontal {
-  dt {
-    .text-overflow();
-    font-weight: bold;
-    text-align: right;
+// Vertical rhythm helpers
+//
 
-    clear: left;
-    float: left;
-    width: 8em;
-  }
-  dd {
-    margin-left: 9em;
-  }
+.row-before-1 {
+  margin-top: @line-height-computed;
+}
+.row-before-2 {
+  margin-top: (2 * @line-height-computed);
+}
+.row-before-3 {
+  margin-top: (3 * @line-height-computed);
+}
+.row-before-4 {
+  margin-top: (4 * @line-height-computed);
 }
 
-/*
- * Quick hide class
- */
-.hide {
-  display: none;
+.row-after-1 {
+  margin-bottom: @line-height-computed;
+}
+.row-after-2 {
+  margin-bottom: (2 * @line-height-computed);
+}
+.row-after-3 {
+  margin-bottom: (3 * @line-height-computed);
+}
+.row-after-4 {
+  margin-bottom: (4 * @line-height-computed);
 }
 
-/*
- * Quick classes for giving elements space
- */
-.space-above {
-  margin-top: (2 * @rhythmUnit);
-}
-.space-below {
-  margin-bottom: (2 * @rhythmUnit);
+// Emphasized text
+//
+.emphasize {
+  font-style: italic;
 }
 
-/*
- * Radio inputs replaced by images
- */
+// Radio inputs replaced by images
+//
+
 .input-radio-image {
 
   // Enable absolutely positioned input

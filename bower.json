@@ -19,15 +19,12 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "lesshat": "*",
+  "devDependencies": {
+    "bootstrap": "~3.0.2",
     "modernizr": "~2.6.2",
     "font-awesome": "~3.0.2",
-    "flexslider-less": "latest",
     "jquery": "~1.9.1",
-    "semantic-grid": "latest",
     "raphael": "~2.1.0",
-    "jquery-popover": "~1.1.2",
     "scaleraphael": "*"
   }
 }
