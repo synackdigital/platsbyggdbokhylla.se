@@ -1,0 +1,172 @@
+
+/*
+ * Font styles
+ */
+
+.baseFontFamily() {
+  font-family: @baseFontFamily;
+}
+
+.altFontFamily() {
+  font-family: @altFontFamily;
+  font-style: normal;
+  font-weight: normal;
+
+  // Force some antialias
+  text-shadow: 0 0 1px rgba(0,0,0,0.2);
+
+  // Antialias for links
+  a {
+    text-shadow: 0 0 1px fade(@linkColor, 20%);
+  }
+}
+
+/*
+ * Text overflow
+ * Requires inline-block or block for proper styling
+ */
+.text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*
+ * Unstyled list
+ */
+.unstyled-list() {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/*
+ * Inline list
+ */
+
+.inline-list(@margin: .5em, @separator: ~'1px solid rgba(0,0,0,.2)') {
+  .unstyled-list();
+
+  li {
+    border-left: @separator;
+
+    display: inline-block;
+    padding-left: @margin;
+    margin-left: @margin;
+
+    &:first-child {
+      border: none;
+      padding-left: 0;
+      margin-left: 0;
+    }
+  }
+}
+
+/*
+ * Table colum span
+ */
+.column-span(@span: all) {
+  column-span: @span;
+  -webkit-column-span: @span;
+  -moz-column-span: @span;
+  -ms-column-span: @span;
+  -o-column-span: @span;
+}
+
+/*
+ * Muted text and links
+ */
+.mute() {
+  color: @muteColor;
+
+  a:link,
+  a:visited {
+    color: @muteColor;
+
+    // Keep original active color
+    &:active,
+    &:focus,
+    &:hover {
+      color: @activeColor;
+    }
+  }
+}
+
+/* CSS image replacement
+ * Source: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757
+ */
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden() {
+  display: none !important;
+  visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden() {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible() {
+  visibility: hidden;
+}
+
+/*
+ * Fixes transition flicker on items using CSS transitions
+ */
+.fixTransitionFlicker() {
+  // http://stackoverflow.com/a/3461770/222245
+  // http://stackoverflow.com/questions/3461441/prevent-flicker-on-webkit-transition-of-webkit-transform
+
+  -webkit-transform:translate3d(0,0,0);
+  // -webkit-perspective: 1000; // Appears to add another kind of flicker when hovered
+  // -webkit-backface-visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+// .clearfix() {
+//   &:before,
+//   &:after {
+//     content: " "; /* 1 */
+//     display: table; /* 2 */
+//   }
+
+//   &:after {
+//     clear: both;
+//   }
+// }

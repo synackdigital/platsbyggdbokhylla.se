@@ -1,9 +1,0 @@
-<div class="page-header"><h1>Edit order</h1></div>
-
-<% form_for(order, {action: path_to.order(order), method: 'PUT', id: "order_form", class: 'form-horizontal'}, function (form) { %>
-    <%- partial('orders/form.ejs', {locals: {form: form, order: order}}) %>
-    <div class="form-actions">
-        <%- form.submit('<i class="icon-ok icon-white"></i> Update order', {class: 'btn btn-primary'}) %> or
-        <%- link_to('Cancel', path_to.order(order), {class: 'btn'}) %>
-    </div>
-<% });%>

@@ -1,0 +1,110 @@
+
+/*
+ * Horizontal description lists
+ */
+dl.horizontal {
+  dt {
+    .text-overflow();
+    font-weight: bold;
+    text-align: right;
+
+    clear: left;
+    float: left;
+    width: 8em;
+  }
+  dd {
+    margin-left: 9em;
+  }
+}
+
+/*
+ * Quick hide class
+ */
+.hide {
+  display: none;
+}
+
+/*
+ * Quick classes for giving elements space
+ */
+.space-above {
+  margin-top: (2 * @rhythmUnit);
+}
+.space-below {
+  margin-bottom: (2 * @rhythmUnit);
+}
+
+/*
+ * Radio inputs replaced by images
+ */
+.input-radio-image {
+
+  // Enable absolutely positioned input
+  display: inline-block;
+  position: relative;
+
+  // Hide label text
+  label {
+    .hide-text();
+    display: inline-block;
+  }
+
+  // Hide input, but keep it clickable
+  input {
+    // Remove from flow
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    left: 0;
+
+    // Hide input
+    opacity: 0;
+
+    // Make clickable surface stretch across the whole parent
+    width: 100%;
+    height: 100%;
+  }
+
+  // Unique images
+  &#shape-1 label {
+    background-image: url('../img/shape-1.png');
+    width: 16px;
+    height: 22px;
+  }
+  &#shape-1 input:checked + label {
+    background-image: url('../img/shape-1-active.png');
+  }
+  &#shape-2 label {
+    background-image: url('../img/shape-2.png');
+    width: 24px;
+    height: 22px;
+  }
+  &#shape-2 input:checked + label {
+    background-image: url('../img/shape-2-active.png');
+  }
+  &#shape-3 label {
+    background-image: url('../img/shape-3.png');
+    width: 24px;
+    height: 22px;
+  }
+  &#shape-3 input:checked + label {
+    background-image: url('../img/shape-3-active.png');
+  }
+  &#shape-4 label {
+    background-image: url('../img/shape-4.png');
+    width: 40px;
+    height: 22px;
+  }
+  &#shape-4 input:checked + label {
+    background-image: url('../img/shape-4-active.png');
+  }
+  &#shape-5 label {
+    background-image: url('../img/shape-5.png');
+    width: 64px;
+    height: 22px;
+  }
+  &#shape-5 input:checked + label {
+    background-image: url('../img/shape-5-active.png');
+  }
+}
+
