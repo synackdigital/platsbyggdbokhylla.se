@@ -113,7 +113,11 @@ body > header nav {
     max-height: 550px;
     max-width: 100%;
     width: 100%;
-    height: 280px;
+
+    // Fixed height on small screens
+    @media (max-width: @grid-float-breakpoint) {
+      height: 280px;
+    }
   }
 
   // No borders or margin on small screens
