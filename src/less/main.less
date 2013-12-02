@@ -98,30 +98,29 @@ body > header nav {
   }
 
   .slides-container {
-    height: 550px;
+    max-height: 550px;
+    max-width: 100%;
+    width: 100%;
+    height: 280px;
   }
 
   figcaption {
-    background-color: @near-black;
-    background-color: fade(@near-black, 80);
-    color: @near-white;
-    border-top-right-radius: @border-radius-base;
+    background-color: @near-white;
+    background-color: fade(@near-white, 80);
+    color: @near-black;
+    border-bottom-right-radius: @border-radius-base;
+    border-bottom-left-radius: @border-radius-base;
 
     position: absolute;
     bottom: 0;
     left: 0;
+    right: 0;
     padding: @padding-base-vertical @padding-base-horizontal;
 
-    .model,
-    small {
-      display: block;
+    .btn {
+      .pull-right;
+      .btn-sm;
     }
-  }
-
-  .btn {
-    position: absolute;
-    bottom: @padding-base-vertical;
-    right: @padding-base-horizontal;
   }
 }
 
