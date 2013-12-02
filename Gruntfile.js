@@ -36,7 +36,9 @@ module.exports = function (grunt) {
         files: [
           'Gruntfile.js',
           '<%= app.src %>/*.html',
+          '<%= app.src %>/**/{,*/}*.js',
           '<%= app.src %>/**/{,*/}*.less',
+          '<%= app.lib %>/**/{,*/}*.js',
           '<%= app.lib %>/**/{,*/}*.less'
         ],
         tasks: ['build']
@@ -69,6 +71,8 @@ module.exports = function (grunt) {
       plugins: {
         src: [
           '<%= app.lib %>/jquery/jquery.js',
+          '<%= app.lib %>/jquery.animate-enhanced/jquery.animate-enhanced.min.js',
+          '<%= app.lib %>/jquery.superslides/dist/jquery.superslides.js',
           '<%= app.lib %>/bootstrap/js/transition.js',
           // '<%= app.lib %>/bootstrap/js/alert.js',
           '<%= app.lib %>/bootstrap/js/button.js',
@@ -103,6 +107,7 @@ module.exports = function (grunt) {
             '<%= app.src %>/less',
             '<%= app.lib %>/flexslider-less',
             '<%= app.lib %>/font-awesome/less',
+            '<%= app.lib %>/jquery.superslides/dist/stylesheets',
             '<%= app.lib %>/bootstrap/less'
           ]
         },

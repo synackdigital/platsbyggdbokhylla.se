@@ -1,34 +1,38 @@
 
-// Frameworks
+// Imports
 // -------------------------
+
+// Bootstrap
+//
 
 @import "bootstrap";
 
 
 // Variables
-// -------------------------
+//
 
 @import "variables";
 
 
 // Fonts
-// -------------------------
+//
 
 @import "fonts";
 
 
 // Components
-// -------------------------
+//
 
-@import (less) "flexslider.css";
+@import (less) "superslides.css";
 
 
 // Partials
-// -------------------------
+//
 
 @import "mixins";
 @import "utils";
 @import "planner";
+
 
 // Main styles
 // -------------------------
@@ -71,7 +75,7 @@ section.alternate {
 
 body > header h1 {
   font-family: @font-family-base;
-  font-size: @font-size-h3;
+  font-size: @font-size-h1;
 }
 
 // Header nav
@@ -79,6 +83,46 @@ body > header h1 {
 
 body > header nav {
   margin-top: @line-height-computed;
+}
+
+// Gallery slideshow
+//
+
+#slides {
+  border: 3px solid @gray-dark;
+  border-radius: @border-radius-large;
+
+  li,
+  img {
+    border-radius: @border-radius-base;
+  }
+
+  .slides-container {
+    height: 550px;
+  }
+
+  figcaption {
+    background-color: @near-black;
+    background-color: fade(@near-black, 80);
+    color: @near-white;
+    border-top-right-radius: @border-radius-base;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: @padding-base-vertical @padding-base-horizontal;
+
+    .model,
+    small {
+      display: block;
+    }
+  }
+
+  .btn {
+    position: absolute;
+    bottom: @padding-base-vertical;
+    right: @padding-base-horizontal;
+  }
 }
 
 // Responsive tagline
