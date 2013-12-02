@@ -28,8 +28,8 @@ This runs `grunt build` whenever any changes in `/src/` and `/bower_components/`
 TODO
 ----
 
+- [x] Consolidate dev branches into master
+- [x] Replace GoldenGrid and LESSHat with Bootstrap
+- [x] Replace FlexSlider with Superslides
 - [ ] Set up `grunt deploy` for automatic deployment after build
 - [ ] Set up `grunt server` for livereload sweetness
-- [x] Replace FlexSlider with Superslides
-- [x] Replace GoldenGrid and LESSHat with Bootstrap
-- [x] Consolidate dev branches into master
