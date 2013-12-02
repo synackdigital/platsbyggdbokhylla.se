@@ -31,5 +31,6 @@ TODO
 - [x] Consolidate dev branches into master
 - [x] Replace GoldenGrid and LESSHat with Bootstrap
 - [x] Replace FlexSlider with Superslides
+- [ ] Create a leaner build process for development
 - [ ] Set up `grunt deploy` for automatic deployment after build
 - [ ] Set up `grunt server` for livereload sweetness
