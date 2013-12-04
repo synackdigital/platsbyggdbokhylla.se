@@ -64,10 +64,14 @@ section.alternate {
 }
 
 // Alternate rows
-.row.alternate {
+.shade {
   #gradient > .horizontal-three-colors(white, @near-white, 50%, white);
   border: 1px solid @hr-border;
   border-width: 1px 0;
+
+  &.shade-inverse {
+    #gradient > .horizontal-three-colors(@near-white, white, 50%, @near-white);
+  }
 }
 
 // Site title
